@@ -1,0 +1,16 @@
+#footer{
+    background:#333333;
+    color:#ffffff;
+    text-align:center;
+    height: 25px;
+    margin-top:10px;
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.input-group-addon {
+    min-width:120px;
+    text-align:left;
+}
