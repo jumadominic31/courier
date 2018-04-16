@@ -581,57 +581,62 @@ class CusportalController extends Controller
         return view('portal.shipments.edit',['txn'=> $txn, 'companies' => $companies, 'parcel_statuses' => $parcel_statuses, 'parcel_types' => $parcel_types, 'zones' => $zones, 'origin_addr' => $origin_addr, 'dest_addr' => $dest_addr, 'drivers' => $drivers, 'vehicles' => $vehicles, 'statusDet' => $statusDet]);
     }
 
+    public function cancel(Request $request, $id)
+    {
+        return redirect('/portal/shipments');
+    }
+
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'parcel_status_id' => 'required',
+            // 'parcel_status_id' => 'required',
             'origin_addr' => 'required',
             'dest_addr' => 'required',
-            'sender_name' => 'required',
-            'sender_phone' => 'required',
+            // 'sender_name' => 'required',
+            // 'sender_phone' => 'required',
             'receiver_name' => 'required',
             'receiver_phone' => 'required'
         ]);
 
         $user = Auth::user();
         $company_id = Auth::user()->company_id;
-        $price = $request->input('price');
-        $vat = 0.16 * $price;
+        // $price = $request->input('price');
+        // $vat = 0.16 * $price;
 
         $txn = Txn::find($id);
         $txn->parcel_type_id = $request->input('parcel_type_id');
-        $txn->price = $price;
-        $txn->vat = $vat;
+        // $txn->price = $price;
+        // $txn->vat = $vat;
         $txn->mode = $request->input('mode');
         $txn->round = $request->input('round');
         $txn->units = $request->input('units');
-        $txn->sender_name = $request->input('sender_name');
-        $txn->sender_phone = $request->input('sender_phone');
+        // $txn->sender_name = $request->input('sender_name');
+        // $txn->sender_phone = $request->input('sender_phone');
         $txn->sender_id_num = $request->input('sender_id_num');
         $txn->receiver_name = $request->input('receiver_name');
         $txn->receiver_phone = $request->input('receiver_phone');
         $txn->receiver_id_num = $request->input('receiver_id_num');
         $txn->updated_by = $user->id;
 
-        if ($txn->parcel_status_id != $request->input('parcel_status_id')) {
-            $txnlog = new TxnLog;
-            $txnlog->awb_id = $txn->id;
-            $txnlog->status_id = $request->input('parcel_status_id');
-            $txnlog->origin_id = $txn->origin_id;
-            if ($txn->dest_id != $request->input('dest_id')) {
-                $txnlog->dest_id = $request->input('dest_id');
-            }
-            else {
-                $txnlog->dest_id = $txn->dest_id; 
-            }
-            $txnlog->updated_by = $user->id;
-            $txnlog->company_id = $company_id;
-            $txnlog->save();
-        }
+        // if ($txn->parcel_status_id != $request->input('parcel_status_id')) {
+        //     $txnlog = new TxnLog;
+        //     $txnlog->awb_id = $txn->id;
+        //     $txnlog->status_id = $request->input('parcel_status_id');
+        //     $txnlog->origin_id = $txn->origin_id;
+        //     if ($txn->dest_id != $request->input('dest_id')) {
+        //         $txnlog->dest_id = $request->input('dest_id');
+        //     }
+        //     else {
+        //         $txnlog->dest_id = $txn->dest_id; 
+        //     }
+        //     $txnlog->updated_by = $user->id;
+        //     $txnlog->company_id = $company_id;
+        //     $txnlog->save();
+        // }
 
         $txn->origin_addr = $request->input('origin_addr');
         $txn->dest_addr = $request->input('dest_addr');
-        $txn->parcel_status_id = $request->input('parcel_status_id');
+        // $txn->parcel_status_id = $request->input('parcel_status_id');
         $txn->save();
 
         $userlog = new UserLog();
@@ -641,6 +646,10 @@ class CusportalController extends Controller
         $userlog->useragent = $_SERVER['HTTP_USER_AGENT'];
         $userlog->company_id = $company_id;
         $userlog->save();
+
+        if ($request->submitBtn == 'Cancel Booking') {
+            return redirect('/portal/shipments');
+        }
         
         return redirect('/portal/shipments')->with('success', 'Shipment details updated for '. $txn->awb_num);
     }

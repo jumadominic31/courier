@@ -256,6 +256,11 @@ Route::group(['middleware' => 'auth'] , function () {
         'as' => 'portal.shipments.update'
     ]);
 
+    Route::match(array('PUT', 'PATCH'), '/portal/shipment/cancel/{awb}', [
+        'uses' => 'CusportalController@cancel' , 
+        'as' => 'portal.shipments.cancel'
+    ]);
+
     //Rates
     Route::get('/portal/rates', [
         'uses' => 'CusportalController@getRates',
