@@ -10,7 +10,11 @@
             {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Station Name'])}}
         </div>
         <div class="form-group">
-            {{Form::label('status', 'Company Active Status')}}
+            {{Form::label('zone_id', 'Zone')}}
+            {{Form::select('zone_id', ['' => ''] + $zones , '', ['class' => 'form-control'])}}
+        </div>
+        <div class="form-group">
+            {{Form::label('status', 'Station Active Status')}}
             {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], 1, ['class' => 'form-control', 'placeholder' => 'Station Active Status'])}}
         </div>
         @if(Auth::user()->usertype == 'superadmin')

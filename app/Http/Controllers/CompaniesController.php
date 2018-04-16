@@ -132,6 +132,9 @@ class CompaniesController extends Controller
         $company->updated_by = $user_id;
         $company->save();
 
+        $company->parent_company_id = $company->id;
+        $company->save();
+
         return redirect('/company')->with('success', 'Company Created');
     }
 

@@ -80,6 +80,9 @@ class UsersController extends Controller
 
         $credentials1 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'superadmin', 'status' => 1);
         $credentials2 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'admin', 'status' => 1);
+        $credentials3 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'cusadmin', 'status' => 1);
+        $credentials4 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'cusclerk', 'status' => 1);
+        $credentials5 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'clerk', 'status' => 1);
 
         if (Auth::attempt($credentials1)) {
             if (Session::has('oldUrl')) {
@@ -95,9 +98,41 @@ class UsersController extends Controller
             $userlogin->useragent = $_SERVER['HTTP_USER_AGENT'];
             $userlogin->save();
 
+            //Userdetails
+            $userdetails = User::join('companies', 'users.company_id', '=', 'companies.id')->select('users.id', 'users.username','users.company_id', 'companies.name', 'companies.address', 'companies.city', 'companies.phone', 'companies.email', 'companies.logo' )->where('users.username', '=', $username)->get();
+            $companyname = $userdetails[0]->name;
+            $companylogo = $userdetails[0]->logo;
+
+            session(['courier.companyname' => $companyname]);
+            session(['courier.companylogo' => $companylogo]);
+
             return redirect()->route('dashboard.index');
         }
-        else if (Auth::attempt($credentials2)) {
+        else if (Auth::attempt($credentials3 ) OR Auth::attempt($credentials4 )) {
+            if (Session::has('oldUrl')) {
+                $oldUrl = Session::get('oldUrl');
+                Session::forget('oldUrl');
+                return redirect()->to($oldUrl);
+            }
+            //to log user signin to user_logs table
+            $userlogin = new UserLog();
+            $userlogin->username = $request->input('username');
+            $userlogin->activity = "Login";
+            $userlogin->ipaddress = $_SERVER['REMOTE_ADDR'];
+            $userlogin->useragent = $_SERVER['HTTP_USER_AGENT'];
+            $userlogin->save();
+
+            //Userdetails
+            $userdetails = User::join('companies', 'users.company_id', '=', 'companies.id')->select('users.id', 'users.username','users.company_id', 'companies.name', 'companies.address', 'companies.city', 'companies.phone', 'companies.email', 'companies.logo' )->where('users.username', '=', $username)->get();
+            $companyname = $userdetails[0]->name;
+            $companylogo = $userdetails[0]->logo;
+
+            session(['courier.companyname' => $companyname]);
+            session(['courier.companylogo' => $companylogo]);
+
+            return redirect()->route('dashboard.customer');
+        }
+        else if (Auth::attempt($credentials2) OR Auth::attempt($credentials5 )) {
             if (Session::has('oldUrl')) {
                 $oldUrl = Session::get('oldUrl');
                 Session::forget('oldUrl');
@@ -342,7 +377,7 @@ class UsersController extends Controller
             'username' => 'required|unique:users',
             'firstname' => 'required',
             'lastname' => 'required',
-            'phone' => array('required', 'unique:users', 'regex:/^[0-9]{12}$/'),
+            'phone' => array('required', 'regex:/^[0-9]{12}$/'),
             'status' => 'required',
             'usertype' => 'required' 
         ]);
@@ -445,7 +480,7 @@ class UsersController extends Controller
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
-            'phone' => ['required', Rule::unique('users')->ignore($id), 'regex:/^[0-9]{12}$/'],
+            'phone' => ['required', 'regex:/^[0-9]{12}$/'],
             'status' => 'required',
             'usertype' => 'required'
         ]);

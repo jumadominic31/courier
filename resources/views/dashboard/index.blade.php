@@ -30,8 +30,6 @@
                         </div>
                     </a>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-3">
                     <a href="{{ route('shipments.index') }}" style='text-decoration: none; color: black'>
                         <div class="well dash-box">
@@ -44,15 +42,7 @@
                     <a href="{{ route('shipments.index') }}" style='text-decoration: none; color: black'>
                         <div class="well dash-box">
                             <h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> {{$dispatched}} </h2>
-                            <h4>Today Dispatched</h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-3">
-                    <a href="{{ route('shipments.index') }}" style='text-decoration: none; color: black'>
-                        <div class="well dash-box">
-                            <h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> {{$delivered}} </h2>
-                            <h4>Today Delivered</h4>
+                            <h4>Today Picked</h4>
                         </div>
                     </a>
                 </div>
@@ -108,17 +98,17 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Top 3 Stations - Sales</h3>
+            <h3 class="panel-title">Top 3 Sales - Customer</h3>
         </div>
         <div class="panel-body">
             <table class="table table-striped">
                 <tr>
-	                <th class="col-md-6">Station Name</th>
+	                <th class="col-md-6">Customer Name</th>
 	                <th class="col-md-6">Total Sales</th>
                 </tr>
                 @foreach($topsales as $topsale)
                 <tr>
-                    <td class="col-md-6">{{$topsale['origin']['name']}}</td>
+                    <td class="col-md-6">{{$topsale['sender_company']['name']}}</td>
                     <td class="col-md-6">{{$topsale['total_sales']}}</td>
                 </tr>
                 @endforeach
@@ -131,21 +121,17 @@
         <div class="panel-body">
             <table class="table table-striped table-hover">
                 <tr>
-	                <th class="col-sm-2">Station Name</th>
-	                <th class="col-sm-2">Created</th>
-                    <th class="col-sm-2">Dispatched</th>
-                    <th class="col-sm-2">Delivered</th>
+	                <th class="col-sm-2">Customer Name</th>
+	                <th class="col-sm-2">Booked</th>
+                    <th class="col-sm-2">Picked</th>
                     <th class="col-sm-2">Received</th>
-                    <th class="col-sm-2">Lost</th>
                 </tr>
                 @foreach($parcels as $parcel)
                 <tr>
-                    <td class="col-sm-2">{{$parcel['origin']['name']}}</td>
-                    <td class="col-sm-2">{{$parcel['created']}}</td>
-                    <td class="col-sm-2">{{$parcel['dispatched']}}</td>
-                    <td class="col-sm-2">{{$parcel['delivered']}}</td>
+                    <td class="col-sm-2">{{$parcel['sender_company']['name']}}</td>
+                    <td class="col-sm-2">{{$parcel['booked']}}</td>
+                    <td class="col-sm-2">{{$parcel['picked']}}</td>
                     <td class="col-sm-2">{{$parcel['received']}}</td>
-                    <td class="col-sm-2">{{$parcel['lost']}}</td>
                 </tr>
                 @endforeach
                 

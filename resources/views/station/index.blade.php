@@ -15,6 +15,7 @@
           <table class="table table-striped" >
 	          <tr>
 		          <th>Station Name</th>
+		          <th>Zone</th>
 		          <th>Status</th>
 		          @if(Auth::user()->usertype == 'superadmin')
 	              <th>Company</th>
@@ -25,6 +26,7 @@
 	          @foreach($stations as $station)
 	          <tr>
 		          <td>{{$station['name']}}</td>
+		          <td>{{$station['zone']['name']}}</td>
 		          <td><?php if ($station['status'] == 1 ) {echo "Active";} else {echo "Inactive";} ?></td>
 		          @if(Auth::user()->usertype == 'superadmin')
 	              <td>{{$station['company']['name']}}</td>

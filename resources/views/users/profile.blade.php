@@ -51,7 +51,9 @@
     	<div class="panel-footer">
         	<a href="{{ route('users.edit', ['user' => $user->id ]) }}" class="btn btn-success">Edit User Details</a>
         	<a href="{{ route('users.resetindividualpass') }}" class="btn btn-success">Reset Password</a>
-        	<a href="{{ route('company.edit', ['company' => $company[0]['id'] ]) }}" class="btn btn-success">Edit Company Details</a>
+        	@if(Auth::user()->usertype != 'clerk')
+        		<a href="{{ route('company.edit', ['company' => $company[0]['id'] ]) }}" class="btn btn-success">Edit Company Details</a>
+        	@endif
         </div>
       
         

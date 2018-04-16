@@ -12,6 +12,7 @@ use App\Company;
 use App\User;
 use App\UserLog;
 use App\Station;
+use App\Zone;
 use App\ParcelStatus;
 use App\ParcelType;
 use App\Vehicle;
@@ -113,7 +114,7 @@ class TxnsController extends Controller
             //     $atgusername   = env('ATGUSERNAME');
             //     $atgapikey     = env('ATGAPIKEY');
             //     $recipients = '+'.$sender_phone;
-            //     $message    = "Dear sender, Your parcel is booked under AWB ".$txn->awb_num.". Cost = ".$txn->price. ". Check status at http://bit.ly/2Cr4KuL";
+            //     $message    = "Dear sender, Your parcel is booked under AWB ".$txn->awb_num.". Cost = ".$txn->price. ". Check status at http://bit.ly/2Dv9o7m";
             //     $gateway    = new AfricasTalkingGateway($atgusername, $atgapikey);
             //     try 
             //     { 
@@ -130,7 +131,7 @@ class TxnsController extends Controller
         //         $atgusername   = env('ATGUSERNAME');
         //         $atgapikey     = env('ATGAPIKEY');
         //         $recipients = '+'.$receiver_phone;
-        //         $message    = "Dear receiver, please expect parcel booked under AWB ".$txn->awb_num.". Your code is ".$receiver_code. ". Check status at http://bit.ly/2Cr4KuL";
+        //         $message    = "Dear receiver, please expect parcel booked under AWB ".$txn->awb_num.". Your code is ".$receiver_code. ". Check status at http://bit.ly/2Dv9o7m";
         //         $gateway    = new AfricasTalkingGateway($atgusername, $atgapikey);
         //         try 
         //         { 
@@ -616,19 +617,23 @@ class TxnsController extends Controller
         $curr_date = date('Y-m-d');
         
         $parcel_status = ParcelStatus::pluck('name', 'id')->all();
-        $clerks = User::where('usertype','=','clerk')->where('company_id', '=', $company_id)->pluck('fullname', 'id')->all();
-        $stations = Station::where('company_id', '=', $company_id)->pluck('name', 'id')->all();
+        // $clerks = User::where('usertype','=','clerk')->where('company_id', '=', $company_id)->pluck('fullname', 'id')->all();
+        // $stations = Station::where('company_id', '=', $company_id)->pluck('name', 'id')->all();
+        $riders = User::where('usertype','=','driver')->where('company_id', '=', $company_id)->pluck('fullname', 'id')->all();
+        $zones = Zone::where('company_id', '=', $company_id)->pluck('name', 'id')->all();
+        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name', 'id')->all();
         $tot_coll = 0;
 
         $awb_num = $request->input('awb_num');
         $origin_id = $request->input('origin_id');
         $dest_id = $request->input('dest_id');
-        $sender_name = $request->input('sender_name');
-        $receiver_name = $request->input('receiver_name');
+        //$sender_name = $request->input('sender_name');
+        $sender_company_id = $request->input('sender_company_id');
+        // $receiver_name = $request->input('receiver_name');
         $parcel_status_id = $request->input('parcel_status_id');
         $first_date = $request->input('first_date');
         $last_date = $request->input('last_date');
-        $clerk_id = $request->input('clerk_id');
+        $rider_id = $request->input('rider_id');
 
         if ($request->isMethod('POST')){
             $txns = Txn::where('company_id', '=', $company_id);
@@ -646,14 +651,18 @@ class TxnsController extends Controller
                 $txns = $txns->where('dest_id','=', $dest_id);
                 $tot_coll = $tot_coll->where('dest_id','=', $dest_id);
             }
-            if ($sender_name != NULL){
-                $txns = $txns->where('sender_name','like','%'.$sender_name.'%');
-                $tot_coll = $tot_coll->where('sender_name','like','%'.$sender_name.'%');
+            // if ($sender_name != NULL){
+            //     $txns = $txns->where('sender_name','like','%'.$sender_name.'%');
+            //     $tot_coll = $tot_coll->where('sender_name','like','%'.$sender_name.'%');
+            // }
+            if ($sender_company_id != NULL){
+                $txns = $txns->where('sender_company_id','=', $sender_company_id);
+                $tot_coll = $tot_coll->where('sender_company_id','=', $sender_company_id);
             }
-            if ($receiver_name != NULL){
-                $txns = $txns->where('receiver_name','like','%'.$receiver_name.'%');
-                $tot_coll = $tot_coll->where('receiver_name','like','%'.$receiver_name.'%');
-            }
+            // if ($receiver_name != NULL){
+            //     $txns = $txns->where('receiver_name','like','%'.$receiver_name.'%');
+            //     $tot_coll = $tot_coll->where('receiver_name','like','%'.$receiver_name.'%');
+            // }
             if ($parcel_status_id != NULL){
                 $txns = $txns->where('parcel_status_id','=', $parcel_status_id);
                 $tot_coll = $tot_coll->where('parcel_status_id','=', $parcel_status_id);
@@ -668,9 +677,9 @@ class TxnsController extends Controller
                     $tot_coll = $tot_coll->where(DB::raw('date(created_at)'), '=', $first_date);
                 }
             }
-            if ($clerk_id != NULL){
-                $txns = $txns->where('clerk_id','=', $clerk_id);
-                $tot_coll = $tot_coll->where('clerk_id','=', $clerk_id);
+            if ($rider_id != NULL){
+                $txns = $txns->where('driver_id','=', $rider_id);
+                $tot_coll = $tot_coll->where('driver_id','=', $rider_id);
             }
 
             $txns = $txns->orderBy('id','desc')->limit(50)->get();
@@ -693,7 +702,7 @@ class TxnsController extends Controller
             }
         }
 
-        return view('shipments.index', ['txns' => $txns, 'stations' => $stations, 'clerks' => $clerks, 'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll]);
+        return view('shipments.index', ['txns' => $txns, 'zones' => $zones, 'cuscompanies' => $cuscompanies, 'riders' => $riders, 'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll]);
     }
 
     public function getAwbsearch(Request $request)
@@ -707,8 +716,8 @@ class TxnsController extends Controller
                 'awb_num' => 'required'
             ]);
             $txn = DB::table('txns')
-                ->join('stations as s1', 'txns.origin_id', '=', 's1.id')
-                ->join('stations as s2', 'txns.dest_id', '=', 's2.id')
+                ->join('zones as s1', 'txns.origin_id', '=', 's1.id')
+                ->join('zones as s2', 'txns.dest_id', '=', 's2.id')
                 ->join('parcel_types', 'txns.parcel_type_id', '=', 'parcel_types.id')
                 ->join('parcel_statuses', 'txns.parcel_status_id', '=', 'parcel_statuses.id')
                 ->select('txns.id', 'txns.awb_num', 'txns.clerk_id', 'txns.origin_id', 's1.name as origin_name', 'txns.dest_id',  's2.name as dest_name', 'txns.parcel_status_id', 'txns.parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_status_id', 'parcel_statuses.name as parcel_status_name', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.driver_id', 'txns.vehicle_id', 'txns.updated_by')
@@ -774,10 +783,14 @@ class TxnsController extends Controller
     {
         $company_id = Auth::user()->company_id;
         $txn = Txn::where('company_id', '=', $company_id)->find($id);
+        if ($txn == null){
+            return redirect('/shipments')->with('error', 'Txn not found');
+        }
         $origin_id = $txn->origin_id;
         $parcel_statuses = ParcelStatus::pluck('name','id')->all();
         $parcel_types = ParcelType::pluck('name','id')->all();
-        $stations = Station::where('id', '!=', $origin_id)->pluck('name','id')->all();
+        // $stations = Station::where('id', '!=', $origin_id)->pluck('name','id')->all();
+        $stations = Zone::pluck('name','id')->all();
         $drivers = User::where('usertype', '=', 'driver')->pluck('fullname','id')->all();
         $vehicles = Vehicle::pluck('name','id')->all();
         $statusDet = DB::table('txn_logs as t')
@@ -788,9 +801,7 @@ class TxnsController extends Controller
                 ->where('tx.id', '=', $id)
                 ->orderby('t.id', 'desc')
                 ->get();
-        if ($txn == null){
-            return redirect('/shipments')->with('error', 'Txn not found');
-        }
+        
         $companies = Company::pluck('name','id');
         return view('shipments.edit',['txn'=> $txn, 'companies' => $companies, 'parcel_statuses' => $parcel_statuses, 'parcel_types' => $parcel_types, 'stations' => $stations, 'drivers' => $drivers, 'vehicles' => $vehicles, 'statusDet' => $statusDet]);
     }
@@ -816,6 +827,9 @@ class TxnsController extends Controller
         $txn->parcel_type_id = $request->input('parcel_type_id');
         $txn->price = $price;
         $txn->vat = $vat;
+        // $txn->mode = $request->input('mode');
+        // $txn->round = $request->input('round');
+        // $txn->units = $request->input('units');
         $txn->sender_name = $request->input('sender_name');
         $txn->sender_phone = $request->input('sender_phone');
         $txn->sender_id_num = $request->input('sender_id_num');
@@ -953,5 +967,131 @@ class TxnsController extends Controller
         // }
 
         return redirect()->back()->with('success', 'Receiver code reset for shipment '.$txn->awb_num. ' ' .$receiver_code);
+    }
+
+    public function addShipment()
+    {   
+        $user_id = Auth::user()->id;
+        $company_id = Auth::user()->company_id;
+        $origin_id = Auth::user()->station_id;
+        $parcel_types = ParcelType::where('company_id', '=', $company_id)->pluck('name','id')->all();
+        $stations = Station::where('company_id', '=', $company_id)->pluck('name','id')->all();
+        return view('shipments.add', ['company_id' => $company_id,'origin_id' => $origin_id, 'parcel_types' => $parcel_types, 'stations' => $stations]);
+    }
+
+    public function storeShipment(Request $request)
+    {   
+        $this->validate($request, [
+            'sender_name' => 'required',
+            'sender_company' => 'required',
+            'sender_phone' => 'required',
+            'receiver_name' => 'required',
+            'receiver_company' => 'required',
+            'receiver_phone' => 'required',
+            'dest_id' => 'required',
+            'dest_addr' => 'required',
+            'parcel_type_id' => 'required',
+            'mode' =>'required',
+            'price' => 'required'            
+        ]);
+
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $company_id = Auth::user()->company_id;
+
+        $prefix = Company::where('id', '=', $company_id)->pluck('name')->first();
+        $prefix = strtoupper($prefix);
+        $prefix = substr($prefix, 0, 3);
+        function randomDigits($length){
+            $num = '';
+            $numbers = range(0,9);
+            shuffle($numbers);
+            for($i = 0;$i < $length;$i++)
+               $num .= $numbers[$i];
+            return $num;
+        }
+        $newawbnum = randomDigits(5);
+        $newawbnum = $prefix.date('ymd').$newawbnum;
+        $price = $request->input('price');
+        $vat = 0.16 * $price;
+        $receiver_code = randomDigits(6);
+        $receiver_code_hash = Hash::make($receiver_code);
+
+        $parcel_desc = $request->input('parcel_desc');
+
+        $txn = new Txn;
+        $txn->awb_num = $newawbnum;
+        $txn->clerk_id = $user_id;
+        $txn->origin_id = $user->station_id;
+        $txn->dest_id = $request->input('dest_id');
+        $txn->mode = $request->input('mode');
+        $txn->company_id = $company_id;
+        $txn->parcel_status_id = '7';
+        $txn->parcel_type_id = $request->input('parcel_type_id');
+        if ($parcel_desc != NULL){
+            $txn->parcel_desc = $parcel_desc;
+        }
+        $txn->price = $price;
+        $txn->vat = $vat;
+        $txn->sender_name = $request->input('sender_name');
+        $txn->sender_company = $request->input('sender_company');
+        $txn->sender_phone = $request->input('sender_phone');
+        $txn->receiver_name = $request->input('receiver_name');
+        $txn->receiver_company = $request->input('receiver_company');
+        $txn->receiver_phone = $request->input('receiver_phone');
+        $txn->dest_addr = $request->input('dest_addr');
+        $txn->receiver_code = $receiver_code_hash;
+        $txn->updated_by = $user->id;
+        $txn->save();
+
+        $txnlog = new TxnLog;
+        $txnlog->awb_id = $txn->id;
+        $txnlog->status_id = $txn->parcel_status_id;
+        $txnlog->origin_id = $txn->origin_id;
+        $txnlog->dest_id = $txn->dest_id;
+        $txnlog->updated_by = $user->id;
+        $txnlog->company_id = $company_id;
+        $txnlog->save();
+
+        // $sender_phone = '254'.$request->input('sender_phone');
+        // $receiver_phone = '254'.$request->input('receiver_phone');
+        // Send password via SMS
+        // if ($sender_phone != NULL)
+        // {
+        //     $atgusername   = env('ATGUSERNAME');
+        //     $atgapikey     = env('ATGAPIKEY');
+        //     $recipients = '+'.$sender_phone;
+        //     $message    = "Dear sender, Your parcel is booked under AWB ".$txn->awb_num.". Cost = ".$txn->price. ". Check status at http://bit.ly/2Dv9o7m";
+        //     $gateway    = new AfricasTalkingGateway($atgusername, $atgapikey);
+        //     try 
+        //     { 
+        //       $send_results = $gateway->sendMessage($recipients, $message);
+        //     }
+        //     catch ( AfricasTalkingGatewayException $e )
+        //     {
+        //       echo 'Encountered an error while sending: '.$e->getMessage();
+        //     }
+        // }
+
+        //     if ($receiver_phone != NULL)
+        //     {
+        //         $atgusername   = env('ATGUSERNAME');
+        //         $atgapikey     = env('ATGAPIKEY');
+        //         $recipients = '+'.$receiver_phone;
+        //         $message    = "Dear receiver, please expect parcel booked under AWB ".$txn->awb_num.". Your code is ".$receiver_code. ". Check status at http://bit.ly/2Dv9o7m";
+        //         $gateway    = new AfricasTalkingGateway($atgusername, $atgapikey);
+        //         try 
+        //         { 
+        //           $rec_results = $gateway->sendMessage($recipients, $message);
+        //         }
+        //         catch ( AfricasTalkingGatewayException $e )
+        //         {
+        //           echo 'Encountered an error while sending: '.$e->getMessage();
+        //         }
+        //     }
+            
+        //     //return response()->json(['txn' => $txn, 'send_results' => $send_results, 'rec_results' => $rec_results], 201);
+
+        return redirect('/shipments')->with('success', 'Shipment Booked');
     }
 }

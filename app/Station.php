@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Station extends Model
 {
-    //
+    public function zone()
+    {
+        return $this->belongsTo('App\Zone', 'zone_id');
+    }
 }

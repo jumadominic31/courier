@@ -44,7 +44,22 @@ Route::group(['middleware' => 'auth'] , function () {
         'as' => 'dashboard.index'
     ]);
 
+    Route::get('/portal/dashboard', 
+        ['uses' => 'DashboardController@customer' , 
+        'as' => 'dashboard.customer']
+    );
+
     //transactions
+    Route::get('/shipments/add', [
+        'uses' => 'TxnsController@addShipment',
+        'as' => 'shipments.add'
+    ]);
+
+    Route::post('/shipments/store', [
+        'uses' => 'TxnsController@storeShipment' , 
+        'as' => 'shipments.store'
+    ]);
+
     Route::get('/shipments', [
         'uses' => 'TxnsController@getShipments',
         'as' => 'shipments.index'
@@ -148,8 +163,145 @@ Route::group(['middleware' => 'auth'] , function () {
         'as' => 'company.destroy'
     ]);
 
+    Route::get('/cususers/{id}', [
+        'uses' => 'CustomersController@cususers' , 
+        'as' => 'cususers.index'
+    ]);
+
+    Route::delete('/cususers/{id}', [
+        'uses' => 'CustomersController@cususerdestroy' , 
+        'as' => 'cususers.cususerdestroy'
+    ]);
+
+    Route::get('/cususers/new/create', [
+        'uses' => 'CustomersController@cuscreate' , 
+        'as' => 'cususers.create'
+    ]);
+
+    Route::post('/cususers/new/store', [
+        'uses' => 'CustomersController@cusstore' , 
+        'as' => 'cususers.store'
+    ]);
+
+    //////Customer portal
+    //users
+    Route::get('/portal/users', [
+        'uses' => 'CusportalController@cususers' , 
+        'as' => 'portal.users.index'
+    ]);
+
+    Route::get('/portal/users/create', [
+        'uses' => 'CusportalController@cuscreate' , 
+        'as' => 'portal.users.create'
+    ]);
+
+    Route::post('/portal/users/store', [
+        'uses' => 'CusportalController@cusstore' , 
+        'as' => 'portal.users.store'
+    ]);
+
+    Route::get('/portal/users/profile', [
+        'uses' => 'CusportalController@getProfile',
+        'as' => 'portal.users.profile'
+    ]);
+
+    Route::get('/portal/users/{id}/edit', [
+        'uses' => 'CusportalController@editUser' , 
+        'as' => 'portal.users.edit'
+    ]);
+
+    Route::match(array('PUT', 'PATCH'), '/portal/users/{id}', [
+        'uses' => 'CusportalController@updateUser' , 
+        'as' => 'portal.users.update'
+    ]);
+
+    Route::get('/portal/users/resetpass', [
+        'uses' => 'CusportalController@resetpass',
+        'as' => 'portal.users.resetindividualpass'
+    ]);
+
+    Route::post('/portal/users/resetpass', [
+        'uses' => 'CusportalController@postResetpass',
+        'as' => 'portal.users.postResetindividualpass'
+    ]);
+
+    //shipment transactions
+    Route::get('/portal/shipments', [
+        'uses' => 'CusportalController@getShipments',
+        'as' => 'portal.shipments.index'
+    ]);
+
+    Route::post('/portal/shipments', [
+        'uses' => 'CusportalController@getShipments',
+        'as' => 'portal.shipments.index'
+    ]);
+
+    Route::get('/portal/shipments/add', [
+        'uses' => 'CusportalController@addShipment',
+        'as' => 'portal.shipments.add'
+    ]);
+
+    Route::post('/portal/shipments/store', [
+        'uses' => 'CusportalController@storeShipment' , 
+        'as' => 'portal.shipments.store'
+    ]);
+
+    Route::get('/portal/shipment/{txn}/edit', [
+        'uses' => 'CusportalController@edit' , 
+        'as' => 'portal.shipments.edit'
+    ]);
+
+    Route::match(array('PUT', 'PATCH'), '/portal/shipment/{awb}', [
+        'uses' => 'CusportalController@update' , 
+        'as' => 'portal.shipments.update'
+    ]);
+
+    //Rates
+    Route::get('/portal/rates', [
+        'uses' => 'CusportalController@getRates',
+        'as' => 'portal.rates.index'
+    ]);
+
+    //Awb search
+
+    Route::get('/portal/awb', [
+        'uses' => 'CusportalController@getAwb',
+        'as' => 'portal.shipments.awb'
+    ]);
+
+    Route::post('/portal/awb', [
+        'uses' => 'CusportalController@getAwb',
+        'as' => 'portal.shipments.awb'
+    ]);
+
+    //Parcels
+    Route::get('/portal/parcel', [
+        'uses' => 'CusportalController@getParcels',
+        'as' => 'portal.parcel.index'
+    ]);
+
+    //Company edit
+    Route::get('/portal/company/{id}/edit', [
+        'uses' => 'CusportalController@editCompany' , 
+        'as' => 'portal.company.edit'
+    ]);
+
+    Route::match(array('PUT', 'PATCH'), '/portal/company/{id}', [
+        'uses' => 'CusportalController@updateCompany' , 
+        'as' => 'portal.company.update'
+    ]);
+
+
+    //////End Customer portal
+
+    //stations admin        
+    Route::resource('customer', 'CustomersController');
+
     //stations admin        
     Route::resource('station', 'StationsController');
+
+    //zones admin        
+    Route::resource('zone', 'ZonesController');
 
     //vehicles admin        
     Route::resource('vehicle', 'VehiclesController');

@@ -45,6 +45,11 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
+        // 'cususers' => [
+        //     'driver' => 'jwt',
+        //     'provider' => 'cususers',
+        // ],
     ],
 
     /*
@@ -69,6 +74,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+
+        // 'cususers' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\CusUser::class,
+        // ],
 
         // 'users' => [
         //     'driver' => 'database',

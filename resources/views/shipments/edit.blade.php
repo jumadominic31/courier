@@ -5,13 +5,7 @@
     <div ><h2>Edit Shipment <br> <a href="{{ route('shipments.index') }}" class=" btn btn-default btn-xs">Go Back</a></h2></div>
 </div>
 <div class="row">
-    <div class="col-md-6 col-md-offset-4">
-        <span class="center-block">
-            {!!Form::open(['action' => ['TxnsController@resetDrivercode', $txn->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure you want to reset driver code?")'])!!}
-              {{Form::hidden('_method', 'POST')}}
-              {{Form::submit('Reset Driver Code', ['class' => 'btn btn-danger'])}}
-            {!! Form::close() !!}
-        </span>
+    <div class="col-md-6 col-md-offset-5">
         <span class="center-block">
             {!!Form::open(['action' => ['TxnsController@resetReceivercode', $txn->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure you want to reset receiver code?")'])!!}
               {{Form::hidden('_method', 'POST')}}
@@ -53,7 +47,7 @@
                     <h3 class="panel-title">Origin</h3>
                 </div>
                 <div class="panel-body">
-                    {{$txn['origin']['name']}}
+                    {{$txn['zone_origin']['name']}}
                 </div>
             </div>
         </div>

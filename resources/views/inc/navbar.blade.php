@@ -24,19 +24,29 @@
 
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                @if(Auth::user()->usertype != 'clerk')
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @if(Auth::user()->usertype == 'superadmin')
+                                <li><a href="{{ route('company.index') }}">Companies</a></li>
+                            @endif
+                            <li><a href="{{ route('customer.index') }}">Customers</a></li>
+                            <li><a href="{{ route('users.index') }}">Users</a></li>
+                            <li><a href="{{ route('zone.index') }}">Zones</a></li>
+                            <li><a href="{{ route('station.index') }}">Stations</a></li>
+                            <li><a href="{{ route('vehicle.index') }}">Vehicles</a></li>
+                            <li><a href="{{ route('parcel.index') }}">Parcels</a></li>
+                         </ul>
+                    </li>
+                @endif
+                
                 <li>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        @if(Auth::user()->usertype == 'superadmin')
-                            <li><a href="{{ route('company.index') }}">Companies</a></li>
-                        @endif
-                        <li><a href="{{ route('users.index') }}">Users</a></li>
-                        <li><a href="{{ route('station.index') }}">Stations</a></li>
-                        <li><a href="{{ route('vehicle.index') }}">Vehicles</a></li>
-                        <li><a href="{{ route('parcel.index') }}">Parcels</a></li>
-                     </ul>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shipments <span class="caret"></span></a>
+                    <ul class="dropdown-menu"> 
+                        <li><a href="{{ route('shipments.index') }}">Manage Shipments</a></li>
+                    </ul>
                 </li>
-                <li><a href="{{ route('shipments.index') }}">Manage Shipments</a></li>
                 <li><a href="{{ route('shipments.awb') }}">AWB Search</a></li>
                 
             </ul>

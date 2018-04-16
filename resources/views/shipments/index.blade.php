@@ -8,31 +8,31 @@
 <input type="checkbox" autocomplete="off" onchange="checkfilter(this.checked);"/>
 <div id="filteroptions" style="display: none ;">
   {!! Form::open(['action' => 'TxnsController@getShipments', 'method' => 'POST']) !!}
-    <table class="table">
+    <table class="table" width="100%" table-layout="fixed">
       <tbody>
       <tr>
-        <td>
+        <td width="33.3%">
           <div class="form-group">
               {{Form::label('awb_num', 'AWB #')}}
               {{Form::text('awb_num', '', ['class' => 'form-control'])}}
           </div></td>
-          <td><div class="form-group">
+          <td width="33.3%"><div class="form-group">
               {{Form::label('origin_id', 'Origin')}}
-              {{Form::select('origin_id', ['' => ''] + $stations, '', ['class' => 'form-control', 'id' => 'origin_id'])}}
+              {{Form::select('origin_id', ['' => ''] + $zones, '', ['class' => 'form-control', 'id' => 'origin_id'])}}
           </div></td>
-          <td><div class="form-group">
+          <td width="33.3%"><div class="form-group">
               {{Form::label('dest_id', 'Destination')}}
-              {{Form::select('dest_id', ['' => ''] + $stations, '', ['class' => 'form-control', 'id' => 'dest_id'])}}
+              {{Form::select('dest_id', ['' => ''] + $zones, '', ['class' => 'form-control', 'id' => 'dest_id'])}}
           </div></td>
       </tr>
       <tr>
         <td><div class="form-group">
-              {{Form::label('sender_name', 'Sender Name')}}
-              {{Form::text('sender_name', '', ['class' => 'form-control'])}}
+              {{Form::label('sender_company_id', 'Customer Company')}}
+              {{Form::select('sender_company_id', ['' => ''] + $cuscompanies + [0 => 'Others'] ,'', ['class' => 'form-control'])}}
           </div></td>
         <td><div class="form-group">
-              {{Form::label('receiver_name', 'Receiver Name')}}
-              {{Form::text('receiver_name', '', ['class' => 'form-control'])}}
+              {{Form::label('rider_id', 'Rider')}}
+              {{Form::select('rider_id', ['' => ''] + $riders, '', ['class' => 'form-control', 'id' => 'rider_id'])}}
           </div></td>
         <td><div class="form-group">
               {{Form::label('parcel_status_id', 'Parcel Status')}}
@@ -41,10 +41,6 @@
       </tr>
       <tr>
         <td><div class="form-group">
-              {{Form::label('clerk_id', 'Clerk')}}
-              {{Form::select('clerk_id', ['' => ''] + $clerks, '', ['class' => 'form-control', 'id' => 'clerk_id'])}}
-          </div></td>
-        <td><div class="form-group">
               {{Form::label('first_date', 'First Date')}}
               {{Form::text('first_date', '', ['class' => ' first_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
@@ -52,6 +48,7 @@
             {{Form::label('last_date', 'Last Date')}}
             {{Form::text('last_date', '', ['class' => 'last_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
         </div></td>
+        <td></td>
       </tr>
       </tbody>
     </table>
@@ -77,7 +74,8 @@
     </div>
       <table class="table table-striped" >
           <tr>
-	        <th>AWB#</th>
+	          <th>AWB#</th>
+            <th>Cust Company</th>
             <th>Origin</th>
             <th>Destination</th>
             <th>Parcel Type</th>
@@ -91,13 +89,18 @@
             <th>Receiver Phone</th>
 		    <th>Date Created</th>
             <th>Parcel Status</th>
-            <th>Clerk</th>
+            <th>Rider</th>
           </tr>
           @foreach($txns as $txn)
           <tr class='clickable-row' data-href="{{ route('shipments.edit', ['awb' => $txn->id ]) }}">
-	          <td>{{$txn['awb_num']}}</td>
-              <td>{{$txn['origin']['name']}}</td>
-              <td>{{$txn['dest']['name']}}</td>
+	            <td>{{$txn['awb_num']}}</td>
+              @if ($txn['sender_company_id'] == 0)
+                <td>{{$txn['sender_company_name']}}</td>
+              @else
+                <td>{{$txn['sender_company']['name']}}</td>
+              @endif
+              <td>{{$txn['zone_origin']['name']}}</td>
+              <td>{{$txn['zone_dest']['name']}}</td>
               <td>{{$txn['parcel_type']['name']}}</td>
               <td>{{$txn['price']}}</td>
               <td>{{$txn['vat']}}</td>
@@ -109,7 +112,7 @@
               <td>{{$txn['receiver_phone']}}</td>
               <td>{{$txn['created_at']}}</td>
               <td>{{$txn['parcel_status']['name']}}</td>
-              <td>{{$txn['clerk']['fullname']}}</td>
+              <td>{{$txn['rider']['fullname']}}</td>
 	      </tr>
           @endforeach
       </table>

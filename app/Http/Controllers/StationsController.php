@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\Station;
 use App\Company;
 use App\User;
+use App\Zone;
 use Auth;
 
 class StationsController extends Controller
 {
-        public function index()
+    public function index()
     {   
         if (Auth::user()->usertype == 'superadmin') {
             $stations = Station::orderBy('company_id','asc')->paginate(10);
@@ -37,18 +38,21 @@ class StationsController extends Controller
     public function edit($id)
     {
         $company_id = Auth::user()->company_id;
+        $zones = Zone::where('company_id', '=', $company_id)->pluck('name', 'id')->all();
         $station = Station::where('company_id', '=', $company_id)->find($id);
+
         if ($station == null){
             return redirect('/station')->with('error', 'Station not found');
         }
         $companies = Company::pluck('name','id');
-        return view('station.edit',['station'=> $station, 'companies' => $companies]);
+        return view('station.edit',['station'=> $station, 'companies' => $companies, 'zones' => $zones]);
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
+            'zone_id' => 'required',
             'status' => 'required'
         ]);
 
@@ -57,6 +61,7 @@ class StationsController extends Controller
         
         $station = Station::find($id);
         $station->name = $request->input('name');
+        $station->zone_id = $request->input('zone_id');
         $station->status = $request->input('status');
         if (Auth::user()->usertype == 'superadmin') {
             $station->company_id = $request->input('company_id');;
@@ -72,14 +77,17 @@ class StationsController extends Controller
 
     public function create()
     {
+        $company_id = Auth::user()->company_id;
         $companies = Company::pluck('name','id');
-        return view('station.create', ['companies' => $companies]);
+        $zones = Zone::where('company_id', '=', $company_id)->pluck('name', 'id')->all();
+        return view('station.create', ['companies' => $companies, 'zones' => $zones]);
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'name' => ['required'],
+            'zone_id' => 'required',
             'status' => 'required'
         ]);
 
@@ -95,6 +103,7 @@ class StationsController extends Controller
 
         $station = new Station;
         $station->name = $request->input('name');
+        $station->zone_id = $request->input('zone_id');
         $station->status = $request->input('status');
         if (Auth::user()->usertype == 'superadmin') {
             $station->company_id = $request->input('company_id');;

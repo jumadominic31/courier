@@ -21,6 +21,11 @@ class Txn extends Model
         return $this->belongsTo('App\User', 'clerk_id');
     }
 
+    public function rider()
+    {
+        return $this->belongsTo('App\User', 'driver_id');
+    }
+
     public function driver()
     {
         return $this->belongsTo('App\User', 'driver_id');
@@ -39,5 +44,20 @@ class Txn extends Model
     public function parcel_type()
     {
         return $this->belongsTo('App\ParcelType', 'parcel_type_id');
+    }
+
+    public function zone_origin()
+    {
+        return $this->belongsTo('App\Zone', 'origin_id');
+    }
+
+    public function zone_dest()
+    {
+        return $this->belongsTo('App\Zone', 'dest_id');
+    }
+
+    public function sender_company()
+    {
+        return $this->belongsTo('App\Company', 'sender_company_id');
     }
 }

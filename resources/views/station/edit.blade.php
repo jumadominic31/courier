@@ -12,6 +12,10 @@
                         {{Form::text('name', $station->name, ['class' => 'form-control', 'placeholder' => 'Station Name'])}}
                     </div>
                     <div class="form-group">
+                        {{Form::label('zone_id', 'Zone')}}
+                        {{Form::select('zone_id', ['' => ''] + $zones , $station->zone_id, ['class' => 'form-control'])}}
+                    </div>
+                    <div class="form-group">
                         {{Form::label('status', 'Station Active Status')}}
                         {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], $station->status, ['class' => 'form-control', 'placeholder' => 'Station Active Status'])}}                    
                     </div>
