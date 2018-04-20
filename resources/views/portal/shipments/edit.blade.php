@@ -144,10 +144,10 @@
         <div class="col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Driver Details</h3>
+                    <h3 class="panel-title">Rider Details</h3>
                 </div>
                 <div class="panel-body">
-                    <input type="text" id="driver_id" name="driver_id" value="{{$txn['driver_id']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
+                    <input type="text" id="driver_id" name="driver_id" value="{{$txn['driver']['fullname']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
                     <!-- {{Form::select('driver_id', ['' => ''] + $drivers, $txn['driver_id'], ['class' => 'form-control'])}} -->
                     <!-- {{Form::select('vehicle_id', ['' => ''] + $vehicles, $txn->vehicle_id, ['class' => 'form-control'])}} -->
                 </div>

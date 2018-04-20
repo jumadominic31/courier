@@ -55,7 +55,7 @@
                             <h3 class="panel-title">Origin</h3>
                         </div>
                         <div class="panel-body">
-                            {{$txn[0]->origin_name}}
+                            {{$txn[0]->origin_addr}}
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                             <h3 class="panel-title">Destination</h3>
                         </div>
                         <div class="panel-body">
-                            {{$txn[0]->dest_name}}
+                            {{$txn[0]->dest_addr}}
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                             {{$txn[0]->sender_name}} <br>
                             Phone: 	{{$txn[0]->sender_phone}} <br>
                             ID Num: {{$txn[0]->sender_id_num}} <br>
-                            <img src="{{$txn[0]->sender_sign}}" alt="Sender Sign" style="width:80px; height:80px">
+                            <!-- <img src="{{$txn[0]->sender_sign}}" alt="Sender Sign" style="width:80px; height:80px"> -->
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                             {{$txn[0]->receiver_name}} <br>
                             Phone: 	{{$txn[0]->receiver_phone}} <br>
                             ID Num: {{$txn[0]->receiver_id_num}} <br>
-                            <img src="{{$txn[0]->receiver_sign}}" alt="Receiver Sign" style="width:80px; height:80px">
+                            <!-- <img src="{{$txn[0]->receiver_sign}}" alt="Receiver Sign" style="width:80px; height:80px"> -->
                         </div>
                     </div>
                 </div>
@@ -102,12 +102,12 @@
             	<div class="col-sm-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Driver and Vehicle Details</h3>
+                            <h3 class="panel-title">Rider Details</h3>
                         </div>
                         <div class="panel-body">
                             {{$txn[0]->driver['fullname']}} <br>
                             {{$txn[0]->vehicle['name']}} <br>
-                            <img src="{{$txn[0]->pick_driver_sign}}" alt="Driver Sign" style="width:80px; height:80px">
+                            <!-- <img src="{{$txn[0]->pick_driver_sign}}" alt="Driver Sign" style="width:80px; height:80px"> -->
                         </div>
                     </div>
                 </div>

@@ -271,7 +271,7 @@ class CusportalController extends Controller
         $curr_date = date('Y-m-d');
         
         $parcel_status = ParcelStatus::pluck('name', 'id')->all();
-        $clerks = User::where(function($q) { $q->where('usertype','=','cusclerk')->orWhere('usertype','=','cusadmin'); })->where('company_id', '=', $company_id)->pluck('fullname', 'id')->all();
+        // $clerks = User::where(function($q) { $q->where('usertype','=','cusclerk')->orWhere('usertype','=','cusadmin'); })->where('company_id', '=', $company_id)->pluck('fullname', 'id')->all();
         // $stations = Station::where('company_id', '=', $company_id)->pluck('name', 'id')->all();
         $zones = Zone::where('company_id', '=', $parent_company_id)->pluck('name','id')->all();
         $tot_coll = 0;
@@ -294,14 +294,14 @@ class CusportalController extends Controller
                 $txns = $txns->where('awb_num','like','%'.$awb_num.'%');
                 $tot_coll = $tot_coll->where('awb_num','like','%'.$awb_num.'%');
             }
-            if ($origin_id != NULL){
-                $txns = $txns->where('origin_id','=', $origin_id);
-                $tot_coll = $tot_coll->where('origin_id','=', $origin_id);
-            }
-            if ($dest_id != NULL){
-                $txns = $txns->where('dest_id','=', $dest_id);
-                $tot_coll = $tot_coll->where('dest_id','=', $dest_id);
-            }
+            // if ($origin_id != NULL){
+            //     $txns = $txns->where('origin_id','=', $origin_id);
+            //     $tot_coll = $tot_coll->where('origin_id','=', $origin_id);
+            // }
+            // if ($dest_id != NULL){
+            //     $txns = $txns->where('dest_id','=', $dest_id);
+            //     $tot_coll = $tot_coll->where('dest_id','=', $dest_id);
+            // }
             if ($sender_name != NULL){
                 $txns = $txns->where('sender_name','like','%'.$sender_name.'%');
                 $tot_coll = $tot_coll->where('sender_name','like','%'.$sender_name.'%');
@@ -324,10 +324,10 @@ class CusportalController extends Controller
                     $tot_coll = $tot_coll->where(DB::raw('date(created_at)'), '=', $first_date);
                 }
             }
-            if ($clerk_id != NULL){
-                $txns = $txns->where('clerk_id','=', $clerk_id);
-                $tot_coll = $tot_coll->where('clerk_id','=', $clerk_id);
-            }
+            // if ($clerk_id != NULL){
+            //     $txns = $txns->where('clerk_id','=', $clerk_id);
+            //     $tot_coll = $tot_coll->where('clerk_id','=', $clerk_id);
+            // }
 
             $txns = $txns->orderBy('id','desc')->limit(50)->get();
             $tot_coll = $tot_coll->groupBy('sender_company_id')->pluck('tot_coll')->first();
@@ -349,7 +349,7 @@ class CusportalController extends Controller
             }
         }
 
-        return view('portal.shipments.index', ['txns' => $txns, 'zones' => $zones, 'clerks' => $clerks, 'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll]);
+        return view('portal.shipments.index', ['txns' => $txns, 'zones' => $zones,  'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll]);
     }
 
     public function addShipment()
@@ -673,13 +673,14 @@ class CusportalController extends Controller
             $this->validate($request, [
                 'awb_num' => 'required'
             ]);
-            $txn = Txn::join('stations as s1', 'txns.origin_id', '=', 's1.id')
-                ->join('stations as s2', 'txns.dest_id', '=', 's2.id')
-                ->join('parcel_types', 'txns.parcel_type_id', '=', 'parcel_types.id')
+            $txn = Txn::join('parcel_types', 'txns.parcel_type_id', '=', 'parcel_types.id')
                 ->join('parcel_statuses', 'txns.parcel_status_id', '=', 'parcel_statuses.id')
+                // ->join('stations as s1', 'txns.origin_id', '=', 's1.id')
+                // ->join('stations as s2', 'txns.dest_id', '=', 's2.id')
+                
                 // ->join('users as u', 'txns.driver_id', '=', 'u.id')
                 // ->join('vehicles as v', 'txns.vehicle_id', '=', 'v.id')
-                ->select('txns.id', 'txns.awb_num', 'txns.clerk_id', 'txns.origin_id', 's1.name as origin_name', 'txns.dest_id',  's2.name as dest_name', 'txns.parcel_status_id', 'txns.parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_status_id', 'parcel_statuses.description', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.receiver_sign', 'txns.driver_id', 'txns.pick_driver_sign', 'txns.vehicle_id', 'txns.updated_by')
+                ->select('txns.id', 'txns.awb_num', 'txns.clerk_id', 'txns.origin_id', 'txns.origin_addr', 'txns.dest_id',  'txns.dest_addr', 'txns.parcel_status_id', 'txns.parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_status_id', 'parcel_statuses.description', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.receiver_sign', 'txns.driver_id', 'txns.pick_driver_sign', 'txns.vehicle_id', 'txns.updated_by')
                 ->where('txns.awb_num', '=', $awb_num)
                 ->where('txns.sender_company_id', '=', $company_id)
                 ->get();

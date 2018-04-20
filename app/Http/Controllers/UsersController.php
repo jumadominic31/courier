@@ -316,7 +316,7 @@ class UsersController extends Controller
             return redirect('/users')->with('error', 'User not found');
         }
         if ($user->usertype == 'driver'){
-            $user->password = bcrypt('1234'); //temporary for testing
+            $user->password = bcrypt($password); //temporary for testing
             $user->updated_by = $user_id;
             $user->save();
         }

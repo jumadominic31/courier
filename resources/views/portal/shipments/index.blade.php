@@ -17,18 +17,18 @@
               {{Form::text('awb_num', '', ['class' => 'form-control'])}}
           </div></td>
           <td width="33.3%"><div class="form-group">
-              {{Form::label('origin_id', 'Origin')}}
-              {{Form::select('origin_id', ['' => ''] + $zones, '', ['class' => 'form-control', 'id' => 'origin_id'])}}
+            {{Form::label('first_date', 'Booked Date')}}
+            {{Form::text('first_date', '', ['class' => ' first_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
           <td width="33.3%"><div class="form-group">
-              {{Form::label('dest_id', 'Destination')}}
-              {{Form::select('dest_id', ['' => ''] + $zones, '', ['class' => 'form-control', 'id' => 'dest_id'])}}
+            {{Form::label('last_date', 'Booked Date')}}
+            {{Form::text('last_date', '', ['class' => 'last_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
       </tr>
       <tr>
         <td><div class="form-group">
-              {{Form::label('clerk_id', 'Clerk')}}
-              {{Form::select('clerk_id', ['' => ''] + $clerks, '', ['class' => 'form-control', 'id' => 'clerk_id'])}}
+              {{Form::label('sender_name', 'Sender Name')}}
+              {{Form::text('sender_name', '', ['class' => 'form-control'])}}
           </div></td>
         <td><div class="form-group">
               {{Form::label('receiver_name', 'Receiver Name')}}
@@ -39,17 +39,7 @@
               {{Form::select('parcel_status_id', ['' => ''] + $parcel_status, '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
           </div></td>
       </tr>
-      <tr>
-        <td><div class="form-group">
-              {{Form::label('first_date', 'First Date')}}
-              {{Form::text('first_date', '', ['class' => ' first_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
-          </div></td>
-        <td><div class="form-group">
-            {{Form::label('last_date', 'Last Date')}}
-            {{Form::text('last_date', '', ['class' => 'last_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
-        </div></td>
-        <td></td>
-      </tr>
+      
       </tbody>
     </table>
     {{Form::submit('Submit', ['class'=>'btn btn-primary', 'name' => 'submitBtn'])}}
