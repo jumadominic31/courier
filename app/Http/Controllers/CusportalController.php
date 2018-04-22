@@ -158,8 +158,7 @@ class CusportalController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'phone' => ['required', 'regex:/^[0-9]{12}$/'],
-            'status' => 'required',
-            'usertype' => 'required'
+            'status' => 'required'
         ]);
         
         
@@ -177,7 +176,6 @@ class CusportalController extends Controller
             $user->station_id = $station_id;
         }
         $user->status = $request->input('status');
-        $user->usertype = $request->input('usertype');
         if (Auth::user()->usertype == 'superadmin') {
             $user->company_id = $request->input('company_id');;
         } 
@@ -583,6 +581,29 @@ class CusportalController extends Controller
 
     public function cancel(Request $request, $id)
     {
+        $user = Auth::user();
+        $company_id = Auth::user()->company_id;
+
+        $txn = Txn::find($id);
+        $txn->parcel_status_id = '6';
+        $txn->updated_by = $user->id;
+        $txn->save();
+
+        $txnlog = new TxnLog();
+        $txnlog->awb_id = $id;
+        $txnlog->status_id = '6';
+        $txnlog->updated_by = $user->id;
+        $txnlog->company_id = $company_id;
+        $txnlog->save();
+
+        $userlog = new UserLog();
+        $userlog->username = $user->username;
+        $userlog->activity = "Updated txn ".$txn->awb_num;
+        $userlog->ipaddress = $_SERVER['REMOTE_ADDR'];
+        $userlog->useragent = $_SERVER['HTTP_USER_AGENT'];
+        $userlog->company_id = $company_id;
+        $userlog->save();
+
         return redirect('/portal/shipments');
     }
 

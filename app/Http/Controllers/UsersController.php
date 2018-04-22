@@ -83,6 +83,7 @@ class UsersController extends Controller
         $credentials3 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'cusadmin', 'status' => 1);
         $credentials4 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'cusclerk', 'status' => 1);
         $credentials5 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'clerk', 'status' => 1);
+        $credentials6 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'couradmin', 'status' => 1);
 
         if (Auth::attempt($credentials1)) {
             if (Session::has('oldUrl')) {
@@ -155,6 +156,30 @@ class UsersController extends Controller
             session(['courier.companylogo' => $companylogo]);
 
             return redirect()->route('dashboard.index', ['companyname' => $companyname, 'companylogo' => $companylogo]);
+        }
+        else if (Auth::attempt($credentials6)) {
+            if (Session::has('oldUrl')) {
+                $oldUrl = Session::get('oldUrl');
+                Session::forget('oldUrl');
+                return redirect()->to($oldUrl);
+            }
+            //to log user signin to user_logs table
+            $userlogin = new UserLog();
+            $userlogin->username = $request->input('username');
+            $userlogin->activity = "Login";
+            $userlogin->ipaddress = $_SERVER['REMOTE_ADDR'];
+            $userlogin->useragent = $_SERVER['HTTP_USER_AGENT'];
+            $userlogin->save();
+
+            //Userdetails
+            $userdetails = User::join('companies', 'users.company_id', '=', 'companies.id')->select('users.id', 'users.username','users.company_id', 'companies.name', 'companies.address', 'companies.city', 'companies.phone', 'companies.email', 'companies.logo' )->where('users.username', '=', $username)->get();
+            $companyname = $userdetails[0]->name;
+            $companylogo = $userdetails[0]->logo;
+
+            session(['courier.companyname' => $companyname]);
+            session(['courier.companylogo' => $companylogo]);
+
+            return redirect()->route('dashboard.courier', ['companyname' => $companyname, 'companylogo' => $companylogo]);
         }
         return redirect()->back()->with('error', 'Incorrect username/password');
     }
@@ -481,8 +506,7 @@ class UsersController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'phone' => ['required', 'regex:/^[0-9]{12}$/'],
-            'status' => 'required',
-            'usertype' => 'required'
+            'status' => 'required'
         ]);
         
         
@@ -500,7 +524,6 @@ class UsersController extends Controller
             $user->station_id = $station_id;
         }
         $user->status = $request->input('status');
-        $user->usertype = $request->input('usertype');
         if (Auth::user()->usertype == 'superadmin') {
             $user->company_id = $request->input('company_id');;
         } 

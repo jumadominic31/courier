@@ -35,7 +35,7 @@
                 @else
                     <div class="form-group">
                         {{Form::label('usertype', 'User Type')}}
-                        {{Form::select('usertype', ['admin' => 'Admin', 'clerk' => 'Clerk', 'driver' => 'Driver'], $user->usertype, ['class' => 'form-control'])}}
+                        {{Form::text('usertype', $user->usertype, ['class' => 'form-control', 'disabled' => 'true'])}}
                     </div>
                 @endif
                 <div class="form-group">
