@@ -16,6 +16,7 @@
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
     <script type="text/javascript" src="{{ URL::to('js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ URL::to('js/bootstrap-datepicker.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="{{ asset('css/theme.css') }}" rel="stylesheet">
     <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
 </head>

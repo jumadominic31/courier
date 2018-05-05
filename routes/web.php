@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'] , function () {
 
 
     //dashboard
-    Route::group(['middleware' => 'auth.courclerk'] , function () {
+    // Route::group(['middleware' => 'auth.courclerk'] , function () {
         Route::get('/', 
             ['uses' => 'DashboardController@index' , 
             'as' => 'dashboard.index']
@@ -188,9 +188,9 @@ Route::group(['middleware' => 'auth'] , function () {
             'uses' => 'CustomersController@cusstore' , 
             'as' => 'cususers.store'
         ]);
-    });
+    // });
     //////Customer portal
-    Route::group(['middleware' => 'auth.custclerk'] , function () {
+    // Route::group(['middleware' => 'auth.custclerk'] , function () {
         //dashboard
         Route::get('/portal/dashboard', 
             ['uses' => 'DashboardController@customer' , 
@@ -284,7 +284,7 @@ Route::group(['middleware' => 'auth'] , function () {
         ]);
 
         //Customer admin portal
-        Route::group(['middleware' => 'auth.custadmin'] , function () {
+        // Route::group(['middleware' => 'auth.custadmin'] , function () {
             Route::get('/portal/users', [
                 'uses' => 'CusportalController@cususers' , 
                 'as' => 'portal.users.index'
@@ -310,9 +310,9 @@ Route::group(['middleware' => 'auth'] , function () {
                 'uses' => 'CusportalController@updateCompany' , 
                 'as' => 'portal.company.update'
             ]);
-        });
+        // });
         ///end custadmin portal
-    });
+    // });
 
     //////End Customer portal
 

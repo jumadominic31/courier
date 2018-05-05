@@ -5,6 +5,10 @@
 /vendor
 /.idea
 /.vagrant
+/*.png
+/public/*.png
+/public/storage/receiver_sign/*.png
+/public/storage/sender_sign/*.png
 Homestead.json
 Homestead.yaml
 npm-debug.log

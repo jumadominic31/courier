@@ -8,6 +8,7 @@
 <input type="checkbox" autocomplete="off" onchange="checkfilter(this.checked);"/>
 <div id="filteroptions" style="display: none ;">
   {!! Form::open(['action' => 'TxnsController@getShipments', 'method' => 'POST']) !!}
+
     <table class="table" width="100%" table-layout="fixed">
       <tbody>
       <tr>
@@ -17,22 +18,24 @@
               {{Form::text('awb_num', '', ['class' => 'form-control'])}}
           </div></td>
           <td width="33.3%"><div class="form-group">
-              {{Form::label('origin_id', 'Origin')}}
-              {{Form::select('origin_id', ['' => ''] + $zones, '', ['class' => 'form-control', 'id' => 'origin_id'])}}
-          </div></td>
-          <td width="33.3%"><div class="form-group">
-              {{Form::label('dest_id', 'Destination')}}
-              {{Form::select('dest_id', ['' => ''] + $zones, '', ['class' => 'form-control', 'id' => 'dest_id'])}}
-          </div></td>
-      </tr>
-      <tr>
-        <td><div class="form-group">
               {{Form::label('sender_company_id', 'Customer Company')}}
               {{Form::select('sender_company_id', ['' => ''] + $cuscompanies + [0 => 'Others'] ,'', ['class' => 'form-control'])}}
           </div></td>
-        <td><div class="form-group">
+          <td width="33.3%"><div class="form-group">
               {{Form::label('rider_id', 'Rider')}}
               {{Form::select('rider_id', ['' => ''] + $riders, '', ['class' => 'form-control', 'id' => 'rider_id'])}}
+          </div></td>
+
+          
+      </tr>
+      <tr>
+        <td><div class="form-group">
+              {{Form::label('sender_name', 'Sender Name')}}
+              {{Form::text('sender_name', '', ['class' => 'form-control'])}}
+          </div></td>
+        <td><div class="form-group">
+              {{Form::label('receiver_name', 'Receiver Name')}}
+              {{Form::text('receiver_name', '', ['class' => 'form-control'])}}
           </div></td>
         <td><div class="form-group">
               {{Form::label('parcel_status_id', 'Parcel Status')}}
@@ -40,16 +43,17 @@
           </div></td>
       </tr>
       <tr>
-        <td><div class="form-group">
-              {{Form::label('first_date', 'First Date')}}
-              {{Form::text('first_date', '', ['class' => ' first_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
+        <td ><div class="form-group">
+            {{Form::label('first_date', 'Booked Date')}}
+            {{Form::text('first_date', '', ['class' => ' first_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
-        <td><div class="form-group">
-            {{Form::label('last_date', 'Last Date')}}
+          <td ><div class="form-group">
+            {{Form::label('last_date', 'Booked Date')}}
             {{Form::text('last_date', '', ['class' => 'last_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
-        </div></td>
-        <td></td>
+          </div></td>
+          <td></td>
       </tr>
+      
       </tbody>
     </table>
     {{Form::submit('Submit', ['class'=>'btn btn-primary', 'name' => 'submitBtn'])}}
@@ -72,51 +76,47 @@
         </div>
       </div>
     </div>
+      
       <table class="table table-striped" >
           <tr>
-	          <th>AWB#</th>
-            <th>Cust Company</th>
-            <th>Origin</th>
-            <th>Destination</th>
-            <th>Parcel Type</th>
-            <th>Price</th>
-            <th>VAT</th>
-            <th>Sender Name</th>
-            <th>Sender ID#</th>
-            <th>Sender Phone</th>
-            <th>Receiver Name</th>
-            <th>Receiver ID#</th>
-            <th>Receiver Phone</th>
-		    <th>Date Created</th>
-            <th>Parcel Status</th>
-            <th>Rider</th>
+            <th width="11.33%">Sender Company</th>
+            <th width="9.33%">AWB#</th>
+            <th width="8.33%">Origin</th>
+            <th width="8.33%">Destination</th>
+            <th width="8.33%">Parcel Type</th>
+            <th width="8.33%">Price</th>
+            <th width="7.33%">VAT</th>
+            <th width="8.33%">Parcel Status</th>
+            <th width="8.33%">Rider</th>
+            <th width="8.33%">Mode</th>
+            <th width="5.33%">Round Trip</th>            
+            <th width="8.33%">Date/Time Created</th>
           </tr>
           @foreach($txns as $txn)
           <tr class='clickable-row' data-href="{{ route('shipments.edit', ['awb' => $txn->id ]) }}">
-	            <td>{{$txn['awb_num']}}</td>
-              @if ($txn['sender_company_id'] == 0)
-                <td>{{$txn['sender_company_name']}}</td>
-              @else
-                <td>{{$txn['sender_company']['name']}}</td>
-              @endif
-              <td>{{$txn['zone_origin']['name']}}</td>
-              <td>{{$txn['zone_dest']['name']}}</td>
+              <td>{{$txn['sender_company_name']}}</td>
+              <td>{{$txn['awb_num']}}</td>
+              <td>{{$txn['origin_addr']}}</td>
+              <td>{{$txn['dest_addr']}}</td>
               <td>{{$txn['parcel_type']['name']}}</td>
               <td>{{$txn['price']}}</td>
               <td>{{$txn['vat']}}</td>
-              <td>{{$txn['sender_name']}}</td>
-              <td>{{$txn['sender_id_num']}}</td>
-              <td>{{$txn['sender_phone']}}</td>
-              <td>{{$txn['receiver_name']}}</td>
-              <td>{{$txn['receiver_id_num']}}</td>
-              <td>{{$txn['receiver_phone']}}</td>
-              <td>{{$txn['created_at']}}</td>
               <td>{{$txn['parcel_status']['name']}}</td>
-              <td>{{$txn['rider']['fullname']}}</td>
-	      </tr>
+              <td>{{$txn['driver']['fullname']}}</td>
+              @if ($txn['mode'] == 0)
+              <td>Normal</td>
+              @else ($txn['mode'] == 1)
+              <td>Express</td>
+              @endif
+              @if ($txn['round'] == 0)
+              <td>No</td>
+              @else ($txn['round'] == 1)
+              <td>Yes</td>
+              @endif
+              <td>{{$txn['created_at']}}</td>
+        </tr>
           @endforeach
       </table>
-
 @else
   <p>No Transactions To Display</p>
 @endif

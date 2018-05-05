@@ -184,6 +184,7 @@ class RiderController extends Controller
             // $txnlog->dest_id = $txn->dest_id;
             $txnlog->updated_by = $user->id;
             $txnlog->company_id = $company_id;
+            $txnlog->sender_company_id = $sender_company_id;
             $txnlog->save();
 
             //Create return AWB
@@ -238,6 +239,7 @@ class RiderController extends Controller
                 // $txnlog->dest_id = $txn->dest_id;
                 $txnlog->updated_by = $user->id;
                 $txnlog->company_id = $company_id;
+                $txnlog->sender_company_id = $sender_company_id;
                 $txnlog->save();
             }
 
@@ -333,6 +335,7 @@ class RiderController extends Controller
         $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
         $station_id = $user->station_id;
 
+        // select('txns.id', 'txns.awb_num', 'txns.clerk_id', 'txns.origin_addr', 'txns.dest_addr',  'txns.parcel_status_id', 'txns.parcel_type_id','txns.parcel_status_id', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.driver_id', 'txns.vehicle_id', 'txns.updated_by')
         $txn = DB::table('txns')
                 ->select('txns.id', 'txns.awb_num', 'txns.clerk_id', 'txns.origin_addr', 'txns.dest_addr',  'txns.parcel_status_id', 'txns.parcel_type_id','txns.parcel_status_id', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.driver_id', 'txns.vehicle_id', 'txns.updated_by')
                 ->where('txns.company_id', '=', $company_id)
@@ -410,6 +413,8 @@ class RiderController extends Controller
                         $sender_phone = $txn->sender_phone;
                         $receiver_phone = $txn->receiver_phone;
 
+                        $sender_company_id = $txn->sender_company_id;
+
                         $txnlog = new TxnLog;
                         $txnlog->awb_id = $txn->id;
                         $txnlog->status_id = '8';
@@ -420,6 +425,7 @@ class RiderController extends Controller
                         }
                         $txnlog->updated_by = $user->id;
                         $txnlog->company_id = $company_id;
+                        $txnlog->sender_company_id = $sender_company_id;
                         $txnlog->save();
 
                         // $atgusername   = SmsApi::select('atgusername')->where('company_id', '=', $company_id)->pluck('atgusername')->first();
@@ -472,7 +478,7 @@ class RiderController extends Controller
                         //     }
                         // }
 
-                        array_push($txn_success, $id['awb']);
+                        array_push($txn_success, $id['awb_num']);
                     // }
                     // else {
                     //     array_push($txn_failed, $id['awb']);
@@ -558,6 +564,8 @@ class RiderController extends Controller
                 $txn->updated_by = $user->id;
                 $txn->save();
 
+                $sender_company_id = $txn->sender_company_id;
+                
                 $txnlog = new TxnLog;
                 $txnlog->awb_id = $txn->id;
                 $txnlog->status_id = '4';
@@ -568,6 +576,7 @@ class RiderController extends Controller
                 }
                 $txnlog->updated_by = $user->id;
                 $txnlog->company_id = $company_id;
+                $txnlog->sender_company_id = $sender_company_id;
                 $txnlog->save();
 
                 return response()->json(['txn' => $txn], 201);
@@ -620,7 +629,7 @@ class RiderController extends Controller
                 // ->join('zones as s2', 'txns.dest_id', '=', 's2.id')
                 ->join('parcel_types', 'txns.parcel_type_id', '=', 'parcel_types.id')
                 ->join('parcel_statuses', 'txns.parcel_status_id', '=', 'parcel_statuses.id')
-                ->select('txns.id', 'txns.clerk_id', 'txns.origin_addr', 'txns.dest_addr', 'txns.parcel_status_id', 'txns.parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_status_id', 'parcel_statuses.name as parcel_status_name', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_company_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_company_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.driver_id', 'txns.vehicle_id', 'txns.updated_by')
+                ->select('txns.id', 'txns.clerk_id', 'txns.origin_addr', 'txns.dest_addr', 'txns.parcel_status_id', 'txns.parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_status_id', 'parcel_statuses.name as parcel_status_name', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.mode', 'txns.round', 'txns.sender_name', 'txns.sender_company_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_company_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.driver_id', 'txns.vehicle_id', 'txns.updated_by')
                 ->where('txns.company_id', '=', $company_id)
                 ->where('txns.awb_num', '=', $awb_num)
                 ->get();

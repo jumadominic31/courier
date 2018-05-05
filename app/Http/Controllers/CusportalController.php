@@ -461,6 +461,7 @@ class CusportalController extends Controller
         // $txnlog->dest_id = $txn->dest_id;
         $txnlog->updated_by = $user->id;
         $txnlog->company_id = $parent_company_id;
+        $txnlog->sender_company_id = $company_id;
         $txnlog->save();
 
         //Create return AWB
@@ -510,6 +511,7 @@ class CusportalController extends Controller
             // $txnlog->dest_id = $txn->dest_id;
             $txnlog->updated_by = $user->id;
             $txnlog->company_id = $parent_company_id;
+            $txnlog->sender_company_id = $company_id;
             $txnlog->save();
         }
 
@@ -589,11 +591,14 @@ class CusportalController extends Controller
         $txn->updated_by = $user->id;
         $txn->save();
 
+        $sender_company_id = $txn->sender_company_id;
+
         $txnlog = new TxnLog();
         $txnlog->awb_id = $id;
         $txnlog->status_id = '6';
         $txnlog->updated_by = $user->id;
         $txnlog->company_id = $company_id;
+        $txnlog->sender_company_id = $sender_company_id;
         $txnlog->save();
 
         $userlog = new UserLog();

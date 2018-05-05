@@ -612,6 +612,7 @@ class TxnsController extends Controller
     public function getShipments(Request $request)
     {
 
+        /*
         $company_id = Auth::user()->company_id;
         $company_details = Company::where('id', '=', $company_id)->get();
         $curr_date = date('Y-m-d');
@@ -702,7 +703,105 @@ class TxnsController extends Controller
             }
         }
 
-        return view('shipments.index', ['txns' => $txns, 'zones' => $zones, 'cuscompanies' => $cuscompanies, 'riders' => $riders, 'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll]);
+        return view('shipments.index', ['txns' => $txns, 'zones' => $zones, 'cuscompanies' => $cuscompanies, 'riders' => $riders, 'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll]);*/
+
+        $company_id = Auth::user()->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $company_details = Company::where('id', '=', $company_id)->get();
+        $curr_date = date('Y-m-d');
+        
+        $parcel_status = ParcelStatus::pluck('name', 'id')->all();
+        // $clerks = User::where(function($q) { $q->where('usertype','=','cusclerk')->orWhere('usertype','=','cusadmin'); })->where('company_id', '=', $company_id)->pluck('fullname', 'id')->all();
+        // $stations = Station::where('company_id', '=', $company_id)->pluck('name', 'id')->all();
+        $zones = Zone::where('company_id', '=', $parent_company_id)->pluck('name','id')->all();
+        $riders = User::where('usertype','=','driver')->where('company_id', '=', $company_id)->pluck('fullname', 'id')->all();
+        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name', 'id')->all();
+        $tot_coll = 0;
+
+        $awb_num = $request->input('awb_num');
+        $origin_id = $request->input('origin_id');
+        $dest_id = $request->input('dest_id');
+        $sender_name = $request->input('sender_name');
+        $receiver_name = $request->input('receiver_name');
+        $parcel_status_id = $request->input('parcel_status_id');
+        $first_date = $request->input('first_date');
+        $last_date = $request->input('last_date');
+        $clerk_id = $request->input('clerk_id');
+        $sender_company_id = $request->input('sender_company_id');
+        $rider_id = $request->input('rider_id');
+
+        if ($request->isMethod('POST')){
+            $txns = Txn::where('company_id', '=', $company_id);
+            $tot_coll = Txn::select('company_id', DB::raw('sum(price) as tot_coll'))->where('company_id', '=', $company_id);
+
+            if ($awb_num != NULL){
+                $txns = $txns->where('awb_num','like','%'.$awb_num.'%');
+                $tot_coll = $tot_coll->where('awb_num','like','%'.$awb_num.'%');
+            }
+            // if ($origin_id != NULL){
+            //     $txns = $txns->where('origin_id','=', $origin_id);
+            //     $tot_coll = $tot_coll->where('origin_id','=', $origin_id);
+            // }
+            // if ($dest_id != NULL){
+            //     $txns = $txns->where('dest_id','=', $dest_id);
+            //     $tot_coll = $tot_coll->where('dest_id','=', $dest_id);
+            // }
+            if ($sender_name != NULL){
+                $txns = $txns->where('sender_name','like','%'.$sender_name.'%');
+                $tot_coll = $tot_coll->where('sender_name','like','%'.$sender_name.'%');
+            }
+            if ($receiver_name != NULL){
+                $txns = $txns->where('receiver_name','like','%'.$receiver_name.'%');
+                $tot_coll = $tot_coll->where('receiver_name','like','%'.$receiver_name.'%');
+            }
+            if ($parcel_status_id != NULL){
+                $txns = $txns->where('parcel_status_id','=', $parcel_status_id);
+                $tot_coll = $tot_coll->where('parcel_status_id','=', $parcel_status_id);
+            }
+            if ($first_date != NULL){
+                if ($last_date != NULL){
+                    $txns = $txns->where(DB::raw('date(created_at)'), '<=', $last_date)->where(DB::raw('date(created_at)'),'>=',$first_date);
+                    $tot_coll = $tot_coll->where(DB::raw('date(created_at)'), '<=', $last_date)->where(DB::raw('date(created_at)'),'>=',$first_date);
+                } 
+                else{
+                    $txns = $txns->where(DB::raw('date(created_at)'), '=', $first_date);
+                    $tot_coll = $tot_coll->where(DB::raw('date(created_at)'), '=', $first_date);
+                }
+            }
+            if ($rider_id != NULL){
+                $txns = $txns->where('driver_id','=', $rider_id);
+                $tot_coll = $tot_coll->where('driver_id','=', $rider_id);
+            }
+            if ($sender_company_id != NULL){
+                $txns = $txns->where('sender_company_id','=', $sender_company_id);
+                $tot_coll = $tot_coll->where('sender_company_id','=', $sender_company_id);
+            }
+            // if ($clerk_id != NULL){
+            //     $txns = $txns->where('clerk_id','=', $clerk_id);
+            //     $tot_coll = $tot_coll->where('clerk_id','=', $clerk_id);
+            // }
+
+            $txns = $txns->orderBy('id','desc')->limit(50)->get();
+            $tot_coll = $tot_coll->groupBy('company_id')->pluck('tot_coll')->first();
+            if ($tot_coll == NULL) {
+                $tot_coll = 0;
+            }
+            
+            if ($request->submitBtn == 'CreatePDF') {
+                $pdf = PDF::loadView('portal.pdf.shipments', ['txns' => $txns, 'company_details' => $company_details, 'curr_date' => $curr_date, 'tot_coll' => $tot_coll]);
+                $pdf->setPaper('A4', 'landscape');
+                return $pdf->stream('shipments.pdf');
+            }
+        }
+        else {
+            $txns = Txn::where('company_id','=',$company_id)->orderBy('id','desc')->limit(50)->get();
+            $tot_coll = Txn::select('company_id', DB::raw('sum(price) as tot_coll'))->where('company_id', '=', $company_id)->groupBy('company_id')->pluck('tot_coll')->first();
+            if ($tot_coll == NULL) {
+                $tot_coll = 0;
+            }
+        }
+
+        return view('shipments.index', ['txns' => $txns, 'zones' => $zones,  'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll, 'cuscompanies' => $cuscompanies, 'riders' => $riders]);
     }
 
     public function getAwbsearch(Request $request)
@@ -790,6 +889,8 @@ class TxnsController extends Controller
         $parcel_statuses = ParcelStatus::pluck('name','id')->all();
         $parcel_types = ParcelType::pluck('name','id')->all();
         // $stations = Station::where('id', '!=', $origin_id)->pluck('name','id')->all();
+        $origin_addr = $txn->origin_addr;
+        $dest_addr = $txn->dest_addr;
         $stations = Zone::pluck('name','id')->all();
         $drivers = User::where('usertype', '=', 'driver')->pluck('fullname','id')->all();
         $vehicles = Vehicle::pluck('name','id')->all();
@@ -803,18 +904,18 @@ class TxnsController extends Controller
                 ->get();
         
         $companies = Company::pluck('name','id');
-        return view('shipments.edit',['txn'=> $txn, 'companies' => $companies, 'parcel_statuses' => $parcel_statuses, 'parcel_types' => $parcel_types, 'stations' => $stations, 'drivers' => $drivers, 'vehicles' => $vehicles, 'statusDet' => $statusDet]);
+        return view('shipments.edit',['txn'=> $txn, 'companies' => $companies, 'parcel_statuses' => $parcel_statuses, 'parcel_types' => $parcel_types, 'stations' => $stations,  'origin_addr' => $origin_addr, 'dest_addr' => $dest_addr, 'drivers' => $drivers, 'vehicles' => $vehicles, 'statusDet' => $statusDet]);
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'parcel_status_id' => 'required',
-            'dest_id' => 'required',
-            'sender_name' => 'required',
-            'sender_phone' => 'required',
-            'receiver_name' => 'required',
-            'receiver_phone' => 'required',
+            // 'parcel_status_id' => 'required',
+            // 'dest_id' => 'required',
+            // 'sender_name' => 'required',
+            // 'sender_phone' => 'required',
+            // 'receiver_name' => 'required',
+            // 'receiver_phone' => 'required',
             'price' => 'required'
         ]);
 
@@ -824,38 +925,38 @@ class TxnsController extends Controller
         $vat = 0.16 * $price;
 
         $txn = Txn::find($id);
-        $txn->parcel_type_id = $request->input('parcel_type_id');
+        // $txn->parcel_type_id = $request->input('parcel_type_id');
         $txn->price = $price;
         $txn->vat = $vat;
         // $txn->mode = $request->input('mode');
         // $txn->round = $request->input('round');
         // $txn->units = $request->input('units');
-        $txn->sender_name = $request->input('sender_name');
-        $txn->sender_phone = $request->input('sender_phone');
-        $txn->sender_id_num = $request->input('sender_id_num');
-        $txn->receiver_name = $request->input('receiver_name');
-        $txn->receiver_phone = $request->input('receiver_phone');
-        $txn->receiver_id_num = $request->input('receiver_id_num');
+        // $txn->sender_name = $request->input('sender_name');
+        // $txn->sender_phone = $request->input('sender_phone');
+        // $txn->sender_id_num = $request->input('sender_id_num');
+        // $txn->receiver_name = $request->input('receiver_name');
+        // $txn->receiver_phone = $request->input('receiver_phone');
+        // $txn->receiver_id_num = $request->input('receiver_id_num');
         $txn->updated_by = $user->id;
 
-        if ($txn->parcel_status_id != $request->input('parcel_status_id')) {
-            $txnlog = new TxnLog;
-            $txnlog->awb_id = $txn->id;
-            $txnlog->status_id = $request->input('parcel_status_id');
-            $txnlog->origin_id = $txn->origin_id;
-            if ($txn->dest_id != $request->input('dest_id')) {
-                $txnlog->dest_id = $request->input('dest_id');
-            }
-            else {
-                $txnlog->dest_id = $txn->dest_id; 
-            }
-            $txnlog->updated_by = $user->id;
-            $txnlog->company_id = $company_id;
-            $txnlog->save();
-        }
+        // if ($txn->parcel_status_id != $request->input('parcel_status_id')) {
+        //     $txnlog = new TxnLog;
+        //     $txnlog->awb_id = $txn->id;
+        //     $txnlog->status_id = $request->input('parcel_status_id');
+        //     $txnlog->origin_id = $txn->origin_id;
+        //     if ($txn->dest_id != $request->input('dest_id')) {
+        //         $txnlog->dest_id = $request->input('dest_id');
+        //     }
+        //     else {
+        //         $txnlog->dest_id = $txn->dest_id; 
+        //     }
+        //     $txnlog->updated_by = $user->id;
+        //     $txnlog->company_id = $company_id;
+        //     $txnlog->save();
+        // }
 
-        $txn->dest_id = $request->input('dest_id');
-        $txn->parcel_status_id = $request->input('parcel_status_id');
+        // $txn->dest_id = $request->input('dest_id');
+        // $txn->parcel_status_id = $request->input('parcel_status_id');
         $txn->save();
 
         $userlog = new UserLog();

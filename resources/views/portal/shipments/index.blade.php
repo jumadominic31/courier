@@ -88,7 +88,7 @@
               <td>{{$txn['sender_name']}}</td>
               <td>{{$txn['receiver_name']}}</td>
               <td>{{$txn['receiver_company_name']}}</td>
-              <td>{{$txn['created_at']}}</td>
+              <td>{{$txn['updated_at']}}</td>
               <td>{{$txn['parcel_status']['name']}}</td>
               @if ($txn['round'] == 0)
               <td>No</td>

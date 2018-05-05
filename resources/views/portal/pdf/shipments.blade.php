@@ -49,8 +49,8 @@
           @foreach($txns as $txn)
           <tr>
             <td>{{$txn['awb_num']}}</td>
-              <td>{{$txn['origin']['name']}}</td>
-              <td>{{$txn['dest']['name']}}</td>
+              <td>{{$txn['origin_addr']}}</td>
+              <td>{{$txn['dest_addr']}}</td>
               <td>{{$txn['parcel_type']['name']}}</td>
               <td>{{$txn['price']}}</td>
               <td>{{$txn['vat']}}</td>
