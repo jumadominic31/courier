@@ -729,7 +729,7 @@ class TxnsController extends Controller
         $clerk_id = $request->input('clerk_id');
         $sender_company_id = $request->input('sender_company_id');
         $rider_id = $request->input('rider_id');
-
+        
         if ($request->isMethod('POST')){
             $txns = Txn::where('company_id', '=', $company_id);
             $tot_coll = Txn::select('company_id', DB::raw('sum(price) as tot_coll'))->where('company_id', '=', $company_id);
@@ -786,9 +786,35 @@ class TxnsController extends Controller
             if ($tot_coll == NULL) {
                 $tot_coll = 0;
             }
+
+            //setting defaults for options
+            if ($awb_num == NULL){
+                $awb_num = 'All';
+            }
+            if ($sender_company_id == '0') {
+                $sender_company_name = 'Others';
+            } 
+            else if ($sender_company_id != NULL) {
+                $sender_company_name = Company::where('id', '=', $sender_company_id)->pluck('name')->first();
+            } 
+            else {
+                $sender_company_name = 'All';
+            }
+            if ($rider_id != NULL) {
+                $rider_name = User::where('id', '=', $rider_id)->pluck('fullname')->first();
+            } 
+            else {
+                $rider_name = 'All';
+            }
+            if ($parcel_status_id != NULL) {
+                $parcel_status_name = ParcelStatus::where('id', '=', $parcel_status_id)->pluck('name')->first();
+            } 
+            else {
+                $parcel_status_name = 'All';
+            }
             
             if ($request->submitBtn == 'CreatePDF') {
-                $pdf = PDF::loadView('portal.pdf.shipments', ['txns' => $txns, 'company_details' => $company_details, 'curr_date' => $curr_date, 'tot_coll' => $tot_coll]);
+                $pdf = PDF::loadView('pdf.shipments', ['txns' => $txns, 'company_details' => $company_details, 'curr_date' => $curr_date, 'tot_coll' => $tot_coll, 'awb_num' => $awb_num, 'sender_company_name' => $sender_company_name, 'rider_name' => $rider_name, 'parcel_status_name' => $parcel_status_name, 'first_date' => $first_date, 'last_date' => $last_date]);
                 $pdf->setPaper('A4', 'landscape');
                 return $pdf->stream('shipments.pdf');
             }

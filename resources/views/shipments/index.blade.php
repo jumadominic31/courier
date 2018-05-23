@@ -30,20 +30,10 @@
       </tr>
       <tr>
         <td><div class="form-group">
-              {{Form::label('sender_name', 'Sender Name')}}
-              {{Form::text('sender_name', '', ['class' => 'form-control'])}}
-          </div></td>
-        <td><div class="form-group">
-              {{Form::label('receiver_name', 'Receiver Name')}}
-              {{Form::text('receiver_name', '', ['class' => 'form-control'])}}
-          </div></td>
-        <td><div class="form-group">
               {{Form::label('parcel_status_id', 'Parcel Status')}}
               {{Form::select('parcel_status_id', ['' => ''] + $parcel_status, '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
           </div></td>
-      </tr>
-      <tr>
-        <td ><div class="form-group">
+          <td ><div class="form-group">
             {{Form::label('first_date', 'Booked Date')}}
             {{Form::text('first_date', '', ['class' => ' first_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
@@ -51,7 +41,6 @@
             {{Form::label('last_date', 'Booked Date')}}
             {{Form::text('last_date', '', ['class' => 'last_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
-          <td></td>
       </tr>
       
       </tbody>
