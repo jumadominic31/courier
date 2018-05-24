@@ -31,14 +31,14 @@
       <tr>
         <td><div class="form-group">
               {{Form::label('parcel_status_id', 'Parcel Status')}}
-              {{Form::select('parcel_status_id', ['' => ''] + $parcel_status, '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
+              {{Form::select('parcel_status_id', ['' => '', '7' => 'Booked', '8' => 'Picked', '4' => 'Received', '6' => 'Cancelled', '5' => 'Lost' ], '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
           </div></td>
           <td ><div class="form-group">
-            {{Form::label('first_date', 'Booked Date')}}
+            {{Form::label('first_date', 'First Booked Date')}}
             {{Form::text('first_date', '', ['class' => ' first_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
           <td ><div class="form-group">
-            {{Form::label('last_date', 'Booked Date')}}
+            {{Form::label('last_date', 'End Booked Date')}}
             {{Form::text('last_date', '', ['class' => 'last_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
       </tr>
@@ -61,48 +61,49 @@
             <h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> 
             {{$tot_coll}} </h2>
             <h4>Total Sales</h4>
-          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-12 col-xs-12">
+        <div class="well dash-box">
+            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
+            {{$tot_count}} </h2>
+            <h4>No of Transactions</h4>
         </div>
       </div>
     </div>
-      
+  </div>
+      Up to 50 records
       <table class="table table-striped" >
           <tr>
-            <th width="11.33%">Sender Company</th>
+            <th width="10.33%">Sender Company</th>
             <th width="9.33%">AWB#</th>
-            <th width="8.33%">Origin</th>
-            <th width="8.33%">Destination</th>
+            <th width="13.33%">Origin</th>
+            <th width="13.33%">Destination</th>
             <th width="8.33%">Parcel Type</th>
-            <th width="8.33%">Price</th>
-            <th width="7.33%">VAT</th>
-            <th width="8.33%">Parcel Status</th>
+            <th width="4.33%">Price</th>
+            <th width="4.33%">VAT</th>
             <th width="8.33%">Rider</th>
             <th width="8.33%">Mode</th>
-            <th width="5.33%">Round Trip</th>            
-            <th width="8.33%">Date/Time Created</th>
+            <th width="8.33%">Parcel Status</th>         
+            <th width="11.33%">Date/Time Created</th>
           </tr>
           @foreach($txns as $txn)
           <tr class='clickable-row' data-href="{{ route('shipments.edit', ['awb' => $txn->id ]) }}">
-              <td>{{$txn['sender_company_name']}}</td>
-              <td>{{$txn['awb_num']}}</td>
-              <td>{{$txn['origin_addr']}}</td>
-              <td>{{$txn['dest_addr']}}</td>
-              <td>{{$txn['parcel_type']['name']}}</td>
-              <td>{{$txn['price']}}</td>
-              <td>{{$txn['vat']}}</td>
-              <td>{{$txn['parcel_status']['name']}}</td>
-              <td>{{$txn['driver']['fullname']}}</td>
-              @if ($txn['mode'] == 0)
-              <td>Normal</td>
-              @else ($txn['mode'] == 1)
-              <td>Express</td>
-              @endif
-              @if ($txn['round'] == 0)
-              <td>No</td>
-              @else ($txn['round'] == 1)
-              <td>Yes</td>
-              @endif
-              <td>{{$txn['created_at']}}</td>
+            <td>{{$txn['sender_company_name']}}</td>
+            <td>{{$txn['awb_num']}}</td>
+            <td>{{$txn['origin_addr']}}</td>
+            <td>{{$txn['dest_addr']}}</td>
+            <td>{{$txn['parcel_type']['name']}}</td>
+            <td>{{$txn['price']}}</td>
+            <td>{{$txn['vat']}}</td>
+            <td>{{$txn['driver']['fullname']}}</td>
+            @if ($txn['mode'] == 0)
+            <td>Normal</td>
+            @else ($txn['mode'] == 1)
+            <td>Express</td>
+            @endif
+            <td>{{$txn['parcel_status']['name']}}</td>
+            <td>{{$txn['created_at']}}</td>
         </tr>
           @endforeach
       </table>

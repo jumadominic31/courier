@@ -273,6 +273,7 @@ class CusportalController extends Controller
         // $stations = Station::where('company_id', '=', $company_id)->pluck('name', 'id')->all();
         $zones = Zone::where('company_id', '=', $parent_company_id)->pluck('name','id')->all();
         $tot_coll = 0;
+        $tot_count = 0;
 
         $awb_num = $request->input('awb_num');
         $origin_id = $request->input('origin_id');
@@ -327,19 +328,38 @@ class CusportalController extends Controller
             //     $tot_coll = $tot_coll->where('clerk_id','=', $clerk_id);
             // }
 
+            $tot_count = $txns->count();
             $txns = $txns->orderBy('id','desc')->limit(50)->get();
             $tot_coll = $tot_coll->groupBy('sender_company_id')->pluck('tot_coll')->first();
             if ($tot_coll == NULL) {
                 $tot_coll = 0;
             }
             
+            //setting defaults for options
+            if ($awb_num == NULL){
+                $awb_num = 'All';
+            }
+            if ($sender_name == NULL) {
+                $sender_name = 'All';
+            } 
+            if ($receiver_name == NULL) {
+                $receiver_name = 'All';
+            } 
+            if ($parcel_status_id != NULL) {
+                $parcel_status_name = ParcelStatus::where('id', '=', $parcel_status_id)->pluck('name')->first();
+            } 
+            else {
+                $parcel_status_name = 'All';
+            }
+
             if ($request->submitBtn == 'CreatePDF') {
-                $pdf = PDF::loadView('portal.pdf.shipments', ['txns' => $txns, 'company_details' => $company_details, 'curr_date' => $curr_date, 'tot_coll' => $tot_coll]);
+                $pdf = PDF::loadView('portal.pdf.shipments', ['txns' => $txns, 'company_details' => $company_details, 'curr_date' => $curr_date, 'tot_coll' => $tot_coll, 'tot_count' => $tot_count, 'awb_num' => $awb_num, 'sender_name' => $sender_name, 'receiver_name' => $receiver_name, 'parcel_status_name' => $parcel_status_name, 'first_date' => $first_date, 'last_date' => $last_date]);
                 $pdf->setPaper('A4', 'landscape');
                 return $pdf->stream('shipments.pdf');
             }
         }
         else {
+            $tot_count = Txn::where('sender_company_id','=',$company_id)->count();
             $txns = Txn::where('sender_company_id','=',$company_id)->orderBy('id','desc')->limit(50)->get();
             $tot_coll = Txn::select('sender_company_id', DB::raw('sum(price) as tot_coll'))->where('sender_company_id', '=', $company_id)->groupBy('sender_company_id')->pluck('tot_coll')->first();
             if ($tot_coll == NULL) {
@@ -347,7 +367,7 @@ class CusportalController extends Controller
             }
         }
 
-        return view('portal.shipments.index', ['txns' => $txns, 'zones' => $zones,  'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll]);
+        return view('portal.shipments.index', ['txns' => $txns, 'zones' => $zones,  'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll, 'tot_count' => $tot_count]);
     }
 
     public function addShipment()

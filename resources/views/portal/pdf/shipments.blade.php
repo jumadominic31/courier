@@ -56,19 +56,19 @@
       <tbody>
         <tr>
           <td width="14.6%"><strong>AWB #</strong></td>
-          <td width="16.6%"></td>
-          <td width="16.6%"><strong>Customer Company</strong></td>
-          <td width="18.6%"></td>
-          <td width="16.6%"><strong>Rider</strong></td>
-          <td width="16.6%"></td>
+          <td width="16.6%">{{$awb_num}}</td>
+          <td width="16.6%"><strong>Sender Name</strong></td>
+          <td width="18.6%">{{$sender_name}}</td>
+          <td width="16.6%"><strong>Receiver Name</strong></td>
+          <td width="16.6%">{{$receiver_name}}</td>
         </tr>
         <tr>
           <td width="14.6%"><strong>Parcel Status</strong></td>
-          <td width="16.6%"></td>
+          <td width="16.6%">{{$parcel_status_name}}</td>
           <td width="16.6%"><strong>First Booked Date</strong></td>
-          <td width="18.6%"></td>
+          <td width="18.6%">{{$first_date}}</td>
           <td width="16.6%"><strong>End Booked Date</strong></td>
-          <td width="16.7%"></td>
+          <td width="16.7%">{{$last_date}}</td>
         </tr>
       </tbody>
     </table>
@@ -77,43 +77,52 @@
   <!-- End options -->
   <div class="container">
     <br>
-    Total <strong> KShs. {{$tot_coll}} </strong><br><br>
+    Total <strong> KShs. {{$tot_coll}} </strong><br>
+    No of transactions<strong>{{$tot_count}} </strong><br>
   </div>
 
   <h3>Transaction Details</h3>
+  Up to 50 records <br>
+  
+  <?php $i = 1 ?>
 
   <table class="table table-striped" width=100% style="font-size:11px" >
       <tr>
-        <th width="7.69%">AWB#</th>
-        <th width="7.69%">Origin</th>
-        <th width="9.69%">Destination</th>
-        <th width="6.69%">Parcel Type</th>
-        <th width="4.69%">Price</th>
-        <th width="4.69%">VAT</th>
-        <th width="8.69%">Sender <br>Name</th>
-        <th width="7.69%">Sender <br>Phone</th>
-        <th width="7.69%">Receiver <br>Name</th>
-        <th width="7.69%">Receiver <br>Phone</th>
-        <th width="10.69%">Date <br>Booked</th>
-        <th width="6.69%">Parcel <br>Status</th>
-        <th width="9.69%">Clerk</th>
+        <th></th>
+        <th width="7.33%">AWB#</th>
+        <th width="11.33%">Origin</th>
+        <th width="11.33%">Destination</th>
+        <th width="8.33%">Parcel Type</th>
+        <th width="4.33%">Price</th>
+        <th width="4.33%">VAT</th>
+        <th width="9.33%">Sender <br>Name</th>
+        <th width="9.33%">Receiver <br>Name</th>
+        <th width="8.33%">Receiver <br>Company</th>
+        <th width="7.33%">Mode</th>
+        <th width="7.33%">Parcel <br>Status</th>
+        <th width="11.33%">Date <br>Booked</th>
       </tr>
       @foreach($txns as $txn)
       <tr>
+        <td>{{$i}}</td>
         <td>{{$txn['awb_num']}}</td>
-          <td>{{$txn['origin_addr']}}</td>
-          <td>{{$txn['dest_addr']}}</td>
-          <td>{{$txn['parcel_type']['name']}}</td>
-          <td>{{$txn['price']}}</td>
-          <td>{{$txn['vat']}}</td>
-          <td>{{$txn['sender_name']}}</td>
-          <td>{{$txn['sender_phone']}}</td>
-          <td>{{$txn['receiver_name']}}</td>
-          <td>{{$txn['receiver_phone']}}</td>
-          <td>{{$txn['created_at']}}</td>
-          <td>{{$txn['parcel_status']['name']}}</td>
-          <td>{{$txn['clerk']['fullname']}}</td>
-    </tr>
+        <td>{{$txn['origin_addr']}}</td>
+        <td>{{$txn['dest_addr']}}</td>
+        <td>{{$txn['parcel_type']['name']}}</td>
+        <td>{{$txn['price']}}</td>
+        <td>{{$txn['vat']}}</td>
+        <td>{{$txn['sender_name']}}</td>
+        <td>{{$txn['receiver_name']}}</td>
+        <td>{{$txn['receiver_company_name']}}</td>
+        @if ($txn['mode'] == 0)
+        <td>Normal</td>
+        @else ($txn['mode'] == 1)
+        <td>Express</td>
+        @endif
+        <td>{{$txn['parcel_status']['name']}}</td>
+        <td>{{$txn['created_at']}}</td>
+      </tr>
+      <?php $i++ ?>
       @endforeach
   </table>
 
