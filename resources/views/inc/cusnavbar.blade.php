@@ -36,10 +36,11 @@
                 </li>
                 
                 <li>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shipments <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporting <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ route('portal.shipments.add') }}">Add Shipment</a></li>
-                        <li><a href="{{ route('portal.shipments.index') }}">Manage Shipments</a></li>
+                        <li><a href="{{ route('portal.shipments.index') }}">Shipments</a></li>
+                        <li><a href="{{ route('portal.shipments.index') }}">Invoices</a></li>
+                        <li><a href="{{ route('portal.shipments.index') }}">Payments</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ route('portal.shipments.awb') }}">AWB Search</a></li>

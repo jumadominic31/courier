@@ -633,6 +633,7 @@ class TxnsController extends Controller
         $parcel_status_id = $request->input('parcel_status_id');
         $first_date = $request->input('first_date');
         $last_date = $request->input('last_date');
+        $invoiced = $request->input('invoiced');
         $clerk_id = $request->input('clerk_id');
         $sender_company_id = $request->input('sender_company_id');
         $rider_id = $request->input('rider_id');
@@ -675,6 +676,10 @@ class TxnsController extends Controller
                     $tot_coll = $tot_coll->where(DB::raw('date(created_at)'), '=', $first_date);
                 }
             }
+            if ($invoiced != NULL){
+                $txns = $txns->where('invoiced','=', $invoiced);
+                $tot_coll = $tot_coll->where('invoiced','=', $invoiced);      
+            }
             if ($rider_id != NULL){
                 $txns = $txns->where('driver_id','=', $rider_id);
                 $tot_coll = $tot_coll->where('driver_id','=', $rider_id);
@@ -689,7 +694,7 @@ class TxnsController extends Controller
             // }
 
             $tot_count = $txns->count();
-            $txns = $txns->orderBy('id','desc')->limit(50)->get();
+            
             $tot_coll = $tot_coll->groupBy('company_id')->pluck('tot_coll')->first();
 
             if ($tot_coll == NULL) {
@@ -723,14 +728,17 @@ class TxnsController extends Controller
             }
             
             if ($request->submitBtn == 'CreatePDF') {
+                $txns = $txns->orderBy('id','desc')->limit(50)->get();
                 $pdf = PDF::loadView('pdf.shipments', ['txns' => $txns, 'company_details' => $company_details, 'curr_date' => $curr_date, 'tot_coll' => $tot_coll, 'tot_count' => $tot_count, 'awb_num' => $awb_num, 'sender_company_name' => $sender_company_name, 'rider_name' => $rider_name, 'parcel_status_name' => $parcel_status_name, 'first_date' => $first_date, 'last_date' => $last_date]);
                 $pdf->setPaper('A4', 'landscape');
                 return $pdf->stream('shipments.pdf');
             }
+
+            $txns = $txns->orderBy('id','desc')->paginate(10);
         }
         else {
             $tot_count = Txn::where('company_id','=',$company_id)->count();
-            $txns = Txn::where('company_id','=',$company_id)->orderBy('id','desc')->limit(50)->get();
+            $txns = Txn::where('company_id','=',$company_id)->orderBy('id','desc')->paginate(10);
             $tot_coll = Txn::select('company_id', DB::raw('sum(price) as tot_coll'))->where('company_id', '=', $company_id)->groupBy('company_id')->pluck('tot_coll')->first();
             if ($tot_coll == NULL) {
                 $tot_coll = 0;
