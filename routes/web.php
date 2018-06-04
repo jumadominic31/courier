@@ -110,7 +110,43 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'shipments.awb'
         ]);
 
-        
+        //invoices
+        Route::get('/invoice', [
+            'uses' => 'InvoicesController@getInvoices',
+            'as' => 'invoice.index'
+        ]);
+
+        Route::post('/invoice', [
+            'uses' => 'InvoicesController@getInvoices',
+            'as' => 'invoice.index'
+        ]);
+
+        Route::get('/invoice/seltxns/{id}', [
+            'uses' => 'InvoicesController@selTxns',
+            'as' => 'invoice.seltxns'
+        ]);
+
+        Route::get('/invoice/add', [
+            'uses' => 'InvoicesController@addInvoice',
+            'as' => 'invoice.add'
+        ]);
+
+        Route::post('/invoice/store', [
+            'uses' => 'InvoicesController@storeInvoice' , 
+            'as' => 'invoice.store'
+        ]);
+
+        Route::get('/invoice/{txn}/edit', [
+            'uses' => 'InvoicesController@editInvoice' , 
+            'as' => 'invoice.edit'
+        ]);
+
+        Route::match(array('PUT', 'PATCH'), '/invoice/{invoice}', [
+            'uses' => 'InvoicesController@updateInvoice' , 
+            'as' => 'invoice.update'
+        ]);
+
+        //users
 
         Route::get('/users/profile', [
             'uses' => 'UsersController@getProfile',

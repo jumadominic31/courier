@@ -283,6 +283,7 @@ class CusportalController extends Controller
         $parcel_status_id = $request->input('parcel_status_id');
         $first_date = $request->input('first_date');
         $last_date = $request->input('last_date');
+        $invoiced = $request->input('invoiced');
         $clerk_id = $request->input('clerk_id');
 
         if ($request->isMethod('POST')){
@@ -312,6 +313,10 @@ class CusportalController extends Controller
             if ($parcel_status_id != NULL){
                 $txns = $txns->where('parcel_status_id','=', $parcel_status_id);
                 $tot_coll = $tot_coll->where('parcel_status_id','=', $parcel_status_id);
+            }
+            if ($invoiced != NULL){
+                $txns = $txns->where('invoiced','=', $invoiced);
+                $tot_coll = $tot_coll->where('invoiced','=', $invoiced);      
             }
             if ($first_date != NULL){
                 if ($last_date != NULL){

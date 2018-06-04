@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="panel-heading"><h1>Manage Shipments </h1> </div>
+<a href="{{ route('portal.shipments.add') }}" class="btn btn-success">Add Shipment</a><br>
 <div><a class="pull-right btn btn-default" href="{{ route('portal.shipments.index') }}">Reset</a> </div>
 <hr>
 <strong>Filter Options: </strong>
@@ -39,7 +40,14 @@
             {{Form::text('last_date', '', ['class' => 'last_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
       </tr>
-      
+      <tr>
+        <td><div class="form-group">
+              {{Form::label('invoiced', 'Invoiced')}}
+              {{Form::select('invoiced', ['' => '', '0' => 'No', '1' => 'Yes'], '', ['class' => 'form-control', 'id' => 'invoiced'])}}
+          </div></td>
+        <td></td>
+        <td></td>
+      </tr>
       </tbody>
     </table>
     {{Form::submit('Submit', ['class'=>'btn btn-primary', 'name' => 'submitBtn'])}}
@@ -84,6 +92,7 @@
             <th width="7.33%">Mode</th>
             <th width="7.33%">Parcel <br>Status</th>
             <th width="11.33%">Date <br>Booked</th>
+            <th width="3.33%">Invoiced</th>
           </tr>
           @foreach($txns as $txn)
           <tr class='clickable-row' data-href="{{ route('portal.shipments.edit', ['awb' => $txn->id ]) }}">
@@ -103,6 +112,11 @@
             @endif
             <td>{{$txn['parcel_status']['name']}}</td>
             <td>{{$txn['created_at']}}</td>
+            @if ($txn['invoiced'] == 0)
+            <td>No</td>
+            @else ($txn['invoiced'] == 1)
+            <td>Yes</td>
+            @endif
 	      </tr>
           @endforeach
       </table>
