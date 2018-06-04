@@ -262,7 +262,6 @@ class CusportalController extends Controller
     //shipment transactions
     public function getShipments(Request $request)
     {
-
         $company_id = Auth::user()->company_id;
         $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
         $company_details = Company::where('id', '=', $company_id)->get();
