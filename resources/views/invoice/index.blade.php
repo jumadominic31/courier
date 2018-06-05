@@ -54,14 +54,14 @@
       </div>
       <div class="col-md-4 col-sm-12 col-xs-12">
         <div class="well dash-box">
-            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
+            <h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> 
             {{$tot_paid}} </h2>
             <h4>Total Paid</h4>
         </div>
       </div>
       <div class="col-md-4 col-sm-12 col-xs-12">
         <div class="well dash-box">
-            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
+            <h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> 
             {{$tot_bal}} </h2>
             <h4>Total Balance</h4>
         </div>
@@ -78,21 +78,30 @@
 
   <table class="table table-striped" >
       <tr>
-        <th width="16.66%">Date</th>
-        <th width="16.66%">Sender Company</th>
-        <th width="16.66%">Invoice#</th>
-        <th width="16.66%">Amount</th>
-        <th width="16.66%">Paid</th>
-        <th width="16.66%">Balance</th>
+        <th width="14.66%">Date</th>
+        <th width="14.66%">Sender Company</th>
+        <th width="14.66%">Invoice#</th>
+        <th width="14.66%">Amount</th>
+        <th width="14.66%">Paid</th>
+        <th width="14.66%">Balance</th>
+        <th></th>
+        <th></th>
       </tr>
       @foreach($invoices as $invoice)
-      <tr class='clickable-row' data-href="{{ route('invoice.edit', ['invoice' => $invoice->id ]) }}">
+      <tr>
         <td>{{$invoice['created_at']}}</td>
-        <td>{{$invoice['sender_company_id']}}</td>
+        <td>{{$invoice['sender_company']['name']}}</td>
         <td>{{$invoice['invoice_num']}}</td>
         <td>{{$invoice['amount']}}</td>
         <td>{{$invoice['paid']}}</td>
         <td>{{$invoice['bal']}}</td>
+        <td>View</td>
+        <td>
+          {!!Form::open(['action' => ['InvoicesController@voidInvoice', $invoice->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure?")'])!!}
+            {{Form::hidden('_method', 'PATCH')}}
+            {{Form::submit('Void Invoice', ['class' => 'btn btn-danger btn-xs'])}}
+          {!! Form::close() !!}
+        </td>
     </tr>
       @endforeach
   </table>
@@ -102,11 +111,5 @@
 
 {{ $invoices->links() }}
 
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        window.location = $(this).data("href");
-    });
-});
-</script>
+
 @endsection

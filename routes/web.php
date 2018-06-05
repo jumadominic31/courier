@@ -136,14 +136,9 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'invoice.store'
         ]);
 
-        Route::get('/invoice/{txn}/edit', [
-            'uses' => 'InvoicesController@editInvoice' , 
-            'as' => 'invoice.edit'
-        ]);
-
-        Route::match(array('PUT', 'PATCH'), '/invoice/{invoice}', [
-            'uses' => 'InvoicesController@updateInvoice' , 
-            'as' => 'invoice.update'
+        Route::post('/invoice/voidinv/{id}', [
+            'uses' => 'InvoicesController@voidInvoice' , 
+            'as' => 'invoice.voidinv'
         ]);
 
         //users

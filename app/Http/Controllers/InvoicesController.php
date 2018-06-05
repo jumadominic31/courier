@@ -144,7 +144,7 @@ class InvoicesController extends Controller
         $company_details = Company::where('id', '=', $company_id)->get();
         // $txns = Txn::where('company_id','=',$parent_company_id)->where('invoiced','=','0')->where('price','!=',NULL)->orderBy('id','desc')->get();
         $txns = Txn::where('company_id','=','0')->get();
-    	return view('invoice.add', ['txns' => $txns, 'cuscompanies' => $cuscompanies]);
+    	return view('invoice.add', [ 'cuscompanies' => $cuscompanies]);
     }
 
     public function storeInvoice(Request $request)
@@ -203,14 +203,31 @@ class InvoicesController extends Controller
     	return redirect('/invoice')->with('success', 'Invoice Added. Count: '. $count .' Total: '.$tot_amount );
     }
 
-    public function editInvoice($id)
+    public function voidInvoice($id)
     {
-    	return view('invoice.edit');
-    }
+        $user = Auth::user();
+        $company_id = Auth::user()->company_id;
 
-    public function updateInvoice(Request $request, $id)
-    {
-    	return redirect('/invoice')->with('success', 'Invoice Edited');
-    }
+        //void invoice
+        $invoice = Txn::find($id);
+        $invoice->amount = 0;
+        $invoice->bal = 0 - $invoice->paid;
+        $invoice->save();
 
+        $invoice_num = $invoice->invoice_num;
+
+        $sel_txns = Txn::select('id')->where('invoice_id', '=', $id)->pluck('id')->toArray();
+        if (count($sel_txns) > 0){
+            foreach ($sel_txns as $sel){
+                //update invoice details
+                $txn = Txn::find($sel);
+                $txn->invoiced = 0;
+                $txn->updated_by = $user->id;
+                $txn->invoice_id = NULL;
+                $txn->save();
+            }
+
+        }
+        return redirect('/invoice')->with('success', 'Invoice '. $invoice_num .' voided. ');
+    }
 }
