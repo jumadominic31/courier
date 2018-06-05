@@ -121,6 +121,11 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'invoice.index'
         ]);
 
+        Route::get('/invoice/show/{id}', [
+            'uses' => 'InvoicesController@showInvoice',
+            'as' => 'invoice.show'
+        ]);
+
         Route::get('/invoice/seltxns/{id}', [
             'uses' => 'InvoicesController@selTxns',
             'as' => 'invoice.seltxns'

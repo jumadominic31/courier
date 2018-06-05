@@ -95,12 +95,12 @@
         <td>{{$invoice['amount']}}</td>
         <td>{{$invoice['paid']}}</td>
         <td>{{$invoice['bal']}}</td>
-        <td>View</td>
+        <td><a class="pull-right btn btn-default btn-xs" href="{{ route('invoice.show', ['id' => $invoice->id ]) }}">View Details</a></td>
         <td>
-          {!!Form::open(['action' => ['InvoicesController@voidInvoice', $invoice->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure?")'])!!}
+          <!-- {!!Form::open(['action' => ['InvoicesController@voidInvoice', $invoice->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure?")'])!!}
             {{Form::hidden('_method', 'PATCH')}}
             {{Form::submit('Void Invoice', ['class' => 'btn btn-danger btn-xs'])}}
-          {!! Form::close() !!}
+          {!! Form::close() !!} -->
         </td>
     </tr>
       @endforeach

@@ -230,4 +230,15 @@ class InvoicesController extends Controller
         }
         return redirect('/invoice')->with('success', 'Invoice '. $invoice_num .' voided. ');
     }
+
+    public function showInvoice($id)
+    {
+    	$user = Auth::user();
+    	$company_id = Auth::user()->company_id;
+
+    	$txns = Txn::where('invoice_id', '=', $id)->get();
+    	$invoice = Invoice::where('id', '=', $id)->first();
+
+    	return view('invoice.show', ['txns' => $txns, 'invoice' => $invoice]);
+    }
 }

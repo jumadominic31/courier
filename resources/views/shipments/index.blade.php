@@ -125,7 +125,6 @@
   <p>No Transactions To Display</p>
 @endif
 
-{{ $txns->links() }}
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {
