@@ -79,28 +79,29 @@
     No of transactions:<strong> {{$tot_count}} </strong><br>
   </div>
 
-  <h3>Transaction Details</h3>
+  <h3>Invoice Details</h3>
   Up to 50 records <br>
-  
   <?php $i = 1 ?>
   
   <table class="table table-striped" width=100% style="font-size:11px" >
       <tr>
         <th width="6%"></th>
-        <th width="20%">Sender Company</th>
-        <th width="20%">Invoice#</th>
-        <th width="18%">Amount</th>
-        <th width="18%">Paid</th>
-        <th width="18%">Balance</th>
+        <th width="14.66%">Date</th>
+        <th width="14.66%">Sender Company</th>
+        <th width="14.66%">Invoice#</th>
+        <th width="14.66%">Amount</th>
+        <th width="14.66%">Paid</th>
+        <th width="14.66%">Balance</th>
       </tr>
       @foreach($invoices as $invoice)
       <tr>
         <td>{{$i}}</td>
-        <td>{{$invoice['sender_company_name']}}</td>
-        <td>{{$invoice['awb_num']}}</td>
-        <td>{{$invoice['origin_addr']}}</td>
-        <td>{{$invoice['dest_addr']}}</td>
-        <td>{{$invoice['parcel_type']['name']}}</td>
+        <td>{{$invoice['created_at']}}</td>
+        <td>{{$invoice['sender_company']['name']}}</td>
+        <td>{{$invoice['invoice_num']}}</td>
+        <td>{{$invoice['amount']}}</td>
+        <td>{{$invoice['paid']}}</td>
+        <td>{{$invoice['bal']}}</td>
     </tr>
     <?php $i++ ?>
       @endforeach

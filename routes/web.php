@@ -141,7 +141,7 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'invoice.store'
         ]);
 
-        Route::post('/invoice/voidinv/{id}', [
+        Route::match(array('PUT', 'PATCH'), '/invoice/voidinv/{id}', [
             'uses' => 'InvoicesController@voidInvoice' , 
             'as' => 'invoice.voidinv'
         ]);

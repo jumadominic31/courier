@@ -36,6 +36,7 @@
     </table>
     {{Form::submit('Submit', ['class'=>'btn btn-primary', 'name' => 'submitBtn'])}}
     {{Form::submit('CreatePDF', ['class'=>'btn btn-primary', 'name' => 'submitBtn', 'formtarget' => '_blank'])}}
+    {{Form::close()}}
 </div>
 <hr>
 @if(count($invoices) > 0)
@@ -97,10 +98,11 @@
         <td>{{$invoice['bal']}}</td>
         <td><a class="pull-right btn btn-default btn-xs" href="{{ route('invoice.show', ['id' => $invoice->id ]) }}">View Details</a></td>
         <td>
-          <!-- {!!Form::open(['action' => ['InvoicesController@voidInvoice', $invoice->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure?")'])!!}
-            {{Form::hidden('_method', 'PATCH')}}
+          {!!Form::open(['action' => ['InvoicesController@voidInvoice', $invoice->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure?")'])!!}
+            {{Form::hidden('_method', 'PUT')}}
             {{Form::submit('Void Invoice', ['class' => 'btn btn-danger btn-xs'])}}
-          {!! Form::close() !!} -->
+          {!! Form::close() !!}
+
         </td>
     </tr>
       @endforeach

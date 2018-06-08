@@ -28,6 +28,20 @@
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {
+    $('.seltxns').on( 'click', function() {
+        var checked_txns = $( '.seltxns:checked' ).length;
+
+        console.log(checked_txns);
+        if($( '.seltxns:checked' ).length > 0) {
+            $('#submit-btn').prop('disabled', false);
+            alert('enabled');
+        }
+        else {
+            $('#submit-btn').prop('disabled', true);
+            alert('disabled');
+        }  
+    });
+
     $('select[name="sender_company_id"]').on('change', function() {
         var sender_company_id = this.value;
         $.get("/invoice/seltxns/"+sender_company_id, function(response){
@@ -48,15 +62,15 @@ jQuery(document).ready(function($) {
                 ).appendTo('#seltxns');
             $.each(response, function(i, item) {
                 var $tr = $('<tr>').append(
-                    $('<td width="10.33%">').text(item.sender_company_id),
+                    $('<td width="10.33%">').text(item.sender_company_name),
                     $('<td width="9.33%">').text(item.awb_num),
                     $('<td width="13.33%">').text(item.origin_addr),
                     $('<td width="13.33%">').text(item.dest_addr),
-                    $('<td width="8.33%">').text(item.parcel_type_id),
+                    $('<td width="8.33%">').text(item.parcel_type),
                     $('<td width="4.33%">').text(item.price),
                     $('<td width="4.33%">').text(item.vat),
                     $('<td width="8.33%">').text(item.mode),
-                    $('<td width="8.33%">').text(item.parcel_status_id),
+                    $('<td width="8.33%">').text(item.parcel_status),
                     $('<td width="11.33%">').text(item.created_at),
                     $('<td width="3.33%">').text(item.invoiced),
                     $('<td>').append(
@@ -68,16 +82,6 @@ jQuery(document).ready(function($) {
         
     });
 
-    $('.seltxns').on( "click", function() {
-        if($( ".seltxns:checked" ).length > 0) {
-            $('#submit-btn').prop('disabled', false);
-            alert('enabled');
-        }
-        else {
-            $('#submit-btn').prop('disabled', true);
-            alert('disabled');
-        }  
-    });
 });
 </script>
 

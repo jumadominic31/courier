@@ -25,7 +25,7 @@
                     <h3 class="panel-title">Sender Company</h3>
                 </div>
                 <div class="panel-body">
-                    {{$invoice->sender_company_id}}
+                    {{$invoice['sender_company']['name']}}
                 </div>
             </div>
         </div>
