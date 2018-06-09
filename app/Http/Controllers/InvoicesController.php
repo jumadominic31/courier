@@ -250,4 +250,15 @@ class InvoicesController extends Controller
 
     	return view('invoice.show', ['txns' => $txns, 'invoice' => $invoice]);
     }
+
+    public function printInvoice($id)
+    {
+    	$user = Auth::user();
+    	$company_id = Auth::user()->company_id;
+
+    	$txns = Txn::where('invoice_id', '=', $id)->get();
+    	$invoice = Invoice::where('id', '=', $id)->first();
+
+    	return view('invoice.print', ['txns' => $txns, 'invoice' => $invoice]);
+    }
 }

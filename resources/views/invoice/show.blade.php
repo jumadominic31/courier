@@ -5,6 +5,7 @@
 <div class="container">
 	<h1>Show Invoice</h1>
 	<a href="{{ route('invoice.index') }}" class="btn btn-success">Go back</a><br><br>
+    <a href="{{ route('invoice.print', ['id' => $invoice->id]) }}" class="btn btn-success">Print Invoice</a><br><br>
 </div>
 
 <div class="container"> 

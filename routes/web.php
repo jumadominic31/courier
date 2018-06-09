@@ -146,6 +146,11 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'invoice.voidinv'
         ]);
 
+        Route::get('/invoice/print/{id}', [
+            'uses' => 'InvoicesController@printInvoice',
+            'as' => 'invoice.print'
+        ]);
+
         //users
 
         Route::get('/users/profile', [
