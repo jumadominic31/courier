@@ -135,7 +135,7 @@ class InvoicesController extends Controller
     	$txns = Txn::join('companies as c', 'txns.sender_company_id', '=', 'c.id')
     		->join('parcel_types as partype', 'txns.parcel_type_id', '=', 'partype.id')
     		->join('parcel_statuses as parstat', 'txns.parcel_status_id', '=', 'parstat.id')
-    		->select('c.name as sender_company_name', 'txns.awb_num as awb_num', 'txns.origin_addr as origin_addr', 'txns.dest_addr as dest_addr', 'partype.name as parcel_type', 'txns.price as price', 'txns.vat as vat', DB::raw('(CASE WHEN txns.mode = 1 THEN "Express" ELSE "Normal" END) AS mode'), 'parstat.name as parcel_status', 'txns.created_at as created_at', DB::raw('(CASE WHEN txns.invoiced = 1 THEN "Yes" ELSE "No" END) AS invoiced'))
+    		->select('txns.id as id', 'c.name as sender_company_name', 'txns.awb_num as awb_num', 'txns.origin_addr as origin_addr', 'txns.dest_addr as dest_addr', 'partype.name as parcel_type', 'txns.price as price', 'txns.vat as vat', DB::raw('(CASE WHEN txns.mode = 1 THEN "Express" ELSE "Normal" END) AS mode'), 'parstat.name as parcel_status', 'txns.created_at as created_at', DB::raw('(CASE WHEN txns.invoiced = 1 THEN "Yes" ELSE "No" END) AS invoiced'))
     		->where('txns.company_id','=',$company_id)
     		->where('txns.sender_company_id','=',$id)
     		->where('txns.invoiced','=','0')
@@ -165,7 +165,7 @@ class InvoicesController extends Controller
         ]);
 
     	$sel_txns = $request->input('txn_id');
-    	// $txns = implode(" ", $sel_txns);
+    	$txns = implode(" ", $sel_txns);
     	$count = 0;
     	$tot_amount = 0;
 

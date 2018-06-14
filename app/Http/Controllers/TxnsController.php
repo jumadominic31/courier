@@ -1021,7 +1021,9 @@ class TxnsController extends Controller
         $origin_id = Auth::user()->station_id;
         $parcel_types = ParcelType::where('company_id', '=', $company_id)->pluck('name','id')->all();
         $stations = Station::where('company_id', '=', $company_id)->pluck('name','id')->all();
-        return view('shipments.add', ['company_id' => $company_id,'origin_id' => $origin_id, 'parcel_types' => $parcel_types, 'stations' => $stations]);
+        $companies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name','id')->all();
+        $riders = User::where('company_id', '=', $company_id)->where('usertype', '=', 'driver')->pluck('fullname','id')->all();
+        return view('shipments.add', ['company_id' => $company_id,'origin_id' => $origin_id, 'parcel_types' => $parcel_types, 'stations' => $stations, 'companies' => $companies, 'riders' => $riders]);
     }
 
     public function storeShipment(Request $request)
@@ -1029,15 +1031,17 @@ class TxnsController extends Controller
         $this->validate($request, [
             'sender_name' => 'required',
             'sender_company' => 'required',
-            'sender_phone' => 'required',
+            'sender_phone' => array('required', 'regex:/^[0-9]{12}$/'),
             'receiver_name' => 'required',
             'receiver_company' => 'required',
-            'receiver_phone' => 'required',
-            'dest_id' => 'required',
+            'receiver_phone' => array('required', 'regex:/^[0-9]{12}$/'),
+            'origin_addr' => 'required',
             'dest_addr' => 'required',
             'parcel_type_id' => 'required',
             'mode' =>'required',
-            'price' => 'required'            
+            'round' => 'required',
+            'units' => 'required|numeric',
+            'rider_id' => 'required'           
         ]);
 
         $user = Auth::user();
@@ -1057,21 +1061,31 @@ class TxnsController extends Controller
         }
         $newawbnum = randomDigits(5);
         $newawbnum = $prefix.date('ymd').$newawbnum;
-        $price = $request->input('price');
-        $vat = 0.16 * $price;
+        
+        if ($request->input('price')){
+            $price = $request->input('price');
+            $vat = 0.16 * $price;
+        }
+        else {
+            $price = 0;
+            $vat = 0;
+        }
         $receiver_code = randomDigits(6);
         $receiver_code_hash = Hash::make($receiver_code);
 
         $parcel_desc = $request->input('parcel_desc');
+        $sender_company_id = $request->input('sender_company');
 
         $txn = new Txn;
         $txn->awb_num = $newawbnum;
         $txn->clerk_id = $user_id;
-        $txn->origin_id = $user->station_id;
-        $txn->dest_id = $request->input('dest_id');
+        $txn->origin_addr = $request->input('origin_addr');
+        $txn->dest_addr = $request->input('dest_addr');
         $txn->mode = $request->input('mode');
+        $txn->round = $request->input('round');
+        $txn->units = $request->input('units');
         $txn->company_id = $company_id;
-        $txn->parcel_status_id = '7';
+        $txn->parcel_status_id = '8';
         $txn->parcel_type_id = $request->input('parcel_type_id');
         if ($parcel_desc != NULL){
             $txn->parcel_desc = $parcel_desc;
@@ -1079,12 +1093,18 @@ class TxnsController extends Controller
         $txn->price = $price;
         $txn->vat = $vat;
         $txn->sender_name = $request->input('sender_name');
-        $txn->sender_company = $request->input('sender_company');
+        $txn->sender_company_id = $sender_company_id;
+        if ($sender_company_id != '0'){
+            $txn->sender_company_name = Company::select('name')->where('id', '=', $sender_company_id)->pluck('name')->first();  
+        }
+        else {
+            $txn->sender_company_name = $request->input('other_company');
+        }
         $txn->sender_phone = $request->input('sender_phone');
         $txn->receiver_name = $request->input('receiver_name');
-        $txn->receiver_company = $request->input('receiver_company');
+        $txn->receiver_company_name = $request->input('receiver_company');
         $txn->receiver_phone = $request->input('receiver_phone');
-        $txn->dest_addr = $request->input('dest_addr');
+        $txn->driver_id = $request->input('rider_id');
         $txn->receiver_code = $receiver_code_hash;
         $txn->updated_by = $user->id;
         $txn->save();
@@ -1092,10 +1112,11 @@ class TxnsController extends Controller
         $txnlog = new TxnLog;
         $txnlog->awb_id = $txn->id;
         $txnlog->status_id = $txn->parcel_status_id;
-        $txnlog->origin_id = $txn->origin_id;
-        $txnlog->dest_id = $txn->dest_id;
+        // $txnlog->origin_id = $txn->origin_id;
+        // $txnlog->dest_id = $txn->dest_id;
         $txnlog->updated_by = $user->id;
         $txnlog->company_id = $company_id;
+        $txnlog->sender_company_id = $sender_company_id;
         $txnlog->save();
 
         // $sender_phone = '254'.$request->input('sender_phone');
