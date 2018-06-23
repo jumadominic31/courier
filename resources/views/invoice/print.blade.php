@@ -111,29 +111,29 @@
                             </td>
                             
                             <td>
-                                Invoice #: 123<br>
-                                Created: January 1, 2015<br>
-                                Due: February 1, 2015
+                                Invoice #: {{$invoice['invoice_num']}}<br>
+                                Created: {{$invoice['created_at']}}<br>
+                                Due: {{$invoice['created_at']}}
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
-            
+
             <tr class="information">
                 <td colspan="2">
                     <table>
                         <tr>
                             <td>
-                                Sparksuite, Inc.<br>
-                                12345 Sunny Road<br>
-                                Sunnyville, CA 12345
+                                {{$company_details['name']}}<br>
+                                {{$company_details['address']}}<br>
+                                {{$company_details['city']}}
                             </td>
                             
                             <td>
-                                Acme Corp.<br>
-                                John Doe<br>
-                                john@example.com
+                                {{$sender_company_details['name']}}<br>
+                                {{$sender_company_details['address']}}<br>
+                                {{$sender_company_details['city']}}
                             </td>
                         </tr>
                     </table>

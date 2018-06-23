@@ -255,10 +255,15 @@ class InvoicesController extends Controller
     {
     	$user = Auth::user();
     	$company_id = Auth::user()->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $company_details = Company::where('id', '=', $parent_company_id)->first();
 
     	$txns = Txn::where('invoice_id', '=', $id)->get();
     	$invoice = Invoice::where('id', '=', $id)->first();
+        $sender_company_id = $invoice->sender_company_id;
 
-    	return view('invoice.print', ['txns' => $txns, 'invoice' => $invoice]);
+        $sender_company_details = Company::where('id', '=', $sender_company_id)->first();
+
+    	return view('invoice.print', ['txns' => $txns, 'invoice' => $invoice, 'company_details' => $company_details, 'sender_company_details' => $sender_company_details]);
     }
 }

@@ -100,12 +100,13 @@ class UsersController extends Controller
             $userlogin->save();
 
             //Userdetails
-            $userdetails = User::join('companies', 'users.company_id', '=', 'companies.id')->select('users.id', 'users.username','users.company_id', 'companies.name', 'companies.address', 'companies.city', 'companies.phone', 'companies.email', 'companies.logo' )->where('users.username', '=', $username)->get();
-            $companyname = $userdetails[0]->name;
-            $companylogo = $userdetails[0]->logo;
+            // $userdetails = User::join('companies', 'users.company_id', '=', 'companies.id')->select('users.id', 'users.username','users.company_id', 'companies.name', 'companies.address', 'companies.city', 'companies.phone', 'companies.email', 'companies.logo' )->where('users.username', '=', $username)->first();
+            $userdetails = User::select('users.id', 'users.username','users.company_id')->where('users.username', '=', $username)->first();
+            // $companyname = $userdetails->name;
+            // $companylogo = $userdetails->logo;
 
-            session(['courier.companyname' => $companyname]);
-            session(['courier.companylogo' => $companylogo]);
+            // session(['courier.companyname' => $companyname]);
+            // session(['courier.companylogo' => $companylogo]);
 
             return redirect()->route('dashboard.index');
         }
