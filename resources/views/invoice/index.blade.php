@@ -49,28 +49,28 @@
       <div class="col-md-4 col-sm-12 col-xs-12">
         <div class="well dash-box">
             <h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> 
-            {{$tot_amount}} </h2>
+            {{number_format($tot_amount, 2, '.', ',')}}</h2>
             <h4>Total Amount</h4>
         </div>
       </div>
       <div class="col-md-4 col-sm-12 col-xs-12">
         <div class="well dash-box">
             <h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> 
-            {{$tot_paid}} </h2>
+            {{number_format($tot_paid, 2, '.', ',')}} </h2>
             <h4>Total Paid</h4>
         </div>
       </div>
       <div class="col-md-4 col-sm-12 col-xs-12">
         <div class="well dash-box">
             <h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> 
-            {{$tot_bal}} </h2>
+            {{number_format($tot_bal, 2, '.', ',')}} </h2>
             <h4>Total Balance</h4>
         </div>
       </div>
       <div class="col-md-4 col-sm-12 col-xs-12">
         <div class="well dash-box">
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
-            {{$tot_count}} </h2>
+            {{number_format($tot_count, 2, '.', ',')}}</h2>
             <h4>Total Num Invoices</h4>
         </div>
       </div>
@@ -79,12 +79,13 @@
 
   <table class="table table-striped" >
       <tr>
-        <th width="14.66%">Date</th>
-        <th width="14.66%">Sender Company</th>
-        <th width="14.66%">Invoice#</th>
-        <th width="14.66%">Amount</th>
-        <th width="14.66%">Paid</th>
-        <th width="14.66%">Balance</th>
+        <th width="14.2%">Date</th>
+        <th width="14.2%">Sender Company</th>
+        <th width="14.2%">Invoice#</th>
+        <th width="14.2%">Amount</th>
+        <th width="14.2%">VAT</th>
+        <th width="14.2%">Paid</th>
+        <th width="14.2%">Balance</th>
         <th></th>
         <th></th>
       </tr>
@@ -93,9 +94,10 @@
         <td>{{$invoice['created_at']}}</td>
         <td>{{$invoice['sender_company']['name']}}</td>
         <td>{{$invoice['invoice_num']}}</td>
-        <td>{{$invoice['amount']}}</td>
-        <td>{{$invoice['paid']}}</td>
-        <td>{{$invoice['bal']}}</td>
+        <td>{{number_format($invoice['amount'], 2, '.', ',')}}</td>
+        <td>{{number_format($invoice['vat'], 2, '.', ',')}}</td>
+        <td>{{number_format($invoice['paid'], 2, '.', ',')}}</td>
+        <td>{{number_format($invoice['bal'], 2, '.', ',')}}</td>
         <td><a class="pull-right btn btn-default btn-xs" href="{{ route('invoice.show', ['id' => $invoice->id ]) }}">View Details</a></td>
         <td>
           {!!Form::open(['action' => ['InvoicesController@voidInvoice', $invoice->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure?")'])!!}

@@ -22,6 +22,7 @@ use Validator;
 use Auth;
 use Session;
 use PDF;
+use Carbon\Carbon;
 
 class InvoicesController extends Controller
 {
@@ -165,7 +166,9 @@ class InvoicesController extends Controller
         ]);
 
     	$sel_txns = $request->input('txn_id');
-    	$txns = implode(" ", $sel_txns);
+        if ($sel_txns != NULL) {
+    	   $txns = implode(" ", $sel_txns);
+        }
     	$count = 0;
     	$tot_amount = 0;
 
@@ -196,6 +199,7 @@ class InvoicesController extends Controller
 	    	$invoice->company_id = $company_id;
 	    	$invoice->sender_company_id = $sender_company_id;
 	    	$invoice->amount = $tot_amount;
+            $invoice->vat = $tot_amount * 0.16;
 	    	$invoice->paid = 0;
 	    	$invoice->bal = $tot_amount;
 	    	$invoice->save();
@@ -220,6 +224,7 @@ class InvoicesController extends Controller
         //void invoice
         $invoice = Invoice::find($id);
         $invoice->amount = 0;
+        $invoice->vat = 0;
         $invoice->bal = 0 - $invoice->paid;
         $invoice->save();
 
@@ -238,7 +243,7 @@ class InvoicesController extends Controller
 
         }
         return redirect('/invoice')->with('success', 'Invoice '. $invoice_num .' voided. ');
-	   }
+	}
 
     public function showInvoice($id)
     {
@@ -255,10 +260,19 @@ class InvoicesController extends Controller
     {
     	$user = Auth::user();
     	$company_id = Auth::user()->company_id;
+        $company_details = Company::where('id', '=', $company_id)->first();
 
     	$txns = Txn::where('invoice_id', '=', $id)->get();
     	$invoice = Invoice::where('id', '=', $id)->first();
+        $curr_date = new Carbon($invoice->created_at);
+        $due_date = $curr_date->addMonth(1);
 
-    	return view('invoice.print', ['txns' => $txns, 'invoice' => $invoice]);
+        $sender_company_id = $invoice->sender_company_id;
+
+        $sender_company_name = Company::select('name')->where('id', '=', $sender_company_id)->pluck('name')->first();
+        $sender_cusadmin_fullname = User::select('fullname')->where('company_id', '=', $sender_company_id)->pluck('fullname')->first();
+        $sender_cusadmin_phone = User::select('phone')->where('company_id', '=', $sender_company_id)->pluck('phone')->first();
+
+    	return view('invoice.print', ['txns' => $txns, 'invoice' => $invoice, 'company_details' => $company_details, 'sender_company_name' => $sender_company_name, 'sender_cusadmin_fullname' => $sender_cusadmin_fullname, 'sender_cusadmin_phone' => $sender_cusadmin_phone, 'due_date' => $due_date]);
     }
 }
