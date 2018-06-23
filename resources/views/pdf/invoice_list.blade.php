@@ -16,6 +16,7 @@
     p:last-child { page-break-after: never; }
     table { border-collapse: collapse; }
     table, th, td { border: 1px solid black; }
+    table td.curr { text-align: right; }
     </style>
 </head>
 <body>
@@ -73,9 +74,9 @@
   <!-- End options -->
   <div class="container">
     <br>
-    Total Amount:<strong> KShs. {{$tot_amount}} </strong><br>
-    Total Paid:<strong> KShs. {{$tot_paid}} </strong><br>
-    Total Balance:<strong> KShs. {{$tot_bal}} </strong><br>
+    Total Amount:<strong> KShs. {{number_format($tot_amount, 2, '.', ',')}} </strong><br>
+    Total Paid:<strong> KShs. {{number_format($tot_paid, 2, '.', ',')}} </strong><br>
+    Total Balance:<strong> KShs. {{number_format($tot_bal, 2, '.', ',')}} </strong><br>
     No of transactions:<strong> {{$tot_count}} </strong><br>
   </div>
 
@@ -86,12 +87,13 @@
   <table class="table table-striped" width=100% style="font-size:11px" >
       <tr>
         <th width="6%"></th>
-        <th width="14.66%">Date</th>
-        <th width="14.66%">Sender Company</th>
-        <th width="14.66%">Invoice#</th>
-        <th width="14.66%">Amount</th>
-        <th width="14.66%">Paid</th>
-        <th width="14.66%">Balance</th>
+        <th width="13.4%">Date</th>
+        <th width="13.4%">Sender Company</th>
+        <th width="13.4%">Invoice#</th>
+        <th width="13.4%">Amount</th>
+        <th width="13.4%">VAT</th>
+        <th width="13.4%">Paid</th>
+        <th width="13.4%">Balance</th>
       </tr>
       @foreach($invoices as $invoice)
       <tr>
@@ -99,9 +101,10 @@
         <td>{{$invoice['created_at']}}</td>
         <td>{{$invoice['sender_company']['name']}}</td>
         <td>{{$invoice['invoice_num']}}</td>
-        <td>{{$invoice['amount']}}</td>
-        <td>{{$invoice['paid']}}</td>
-        <td>{{$invoice['bal']}}</td>
+        <td class="curr">{{number_format($invoice['amount'], 2, '.', ',')}}</td>
+        <td class="curr">{{number_format($invoice['vat'], 2, '.', ',')}}</td>
+        <td class="curr">{{number_format($invoice['paid'], 2, '.', ',')}}</td>
+        <td class="curr">{{number_format($invoice['bal'], 2, '.', ',')}}</td>
     </tr>
     <?php $i++ ?>
       @endforeach

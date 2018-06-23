@@ -11,7 +11,7 @@
         padding: 30px;
         border: 1px solid #eee;
         box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-        font-size: 16px;
+        font-size: 14px;
         line-height: 24px;
         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
         color: #555;
@@ -37,8 +37,8 @@
     }
     
     .invoice-box table tr.top table td.title {
-        font-size: 45px;
-        line-height: 45px;
+        font-size: 30px;
+        line-height: 30px;
         color: #333;
     }
     
@@ -54,6 +54,11 @@
     
     .invoice-box table tr.details td {
         padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.txns td {
+        font-size: 11px;
+        text-align: left;
     }
     
     .invoice-box table tr.item td{
@@ -107,13 +112,13 @@
                     <table>
                         <tr>
                             <td class="title">
-                                <img src="https://www.sparksuite.com/images/logo.png" style="width:100%; max-width:300px;">
+                                {{$company_details['name']}}
                             </td>
                             
                             <td>
                                 Invoice #: {{$invoice['invoice_num']}}<br>
-                                Created: {{$invoice['created_at']}}<br>
-                                Due: {{$invoice['created_at']}}
+                                Created: {{date('d-m-Y', strtotime($invoice['created_at']))}}<br>
+                                Due: {{date('d-m-Y', strtotime($due_date))}}
                             </td>
                         </tr>
                     </table>
@@ -131,81 +136,88 @@
                             </td>
                             
                             <td>
-                                {{$sender_company_details['name']}}<br>
-                                {{$sender_company_details['address']}}<br>
-                                {{$sender_company_details['city']}}
+                                {{$sender_company_name}}<br>
+                                {{$sender_cusadmin_fullname}}<br>
+                                {{$sender_cusadmin_phone}}
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
-            
-            <tr class="heading">
-                <td>
-                    Payment Method
-                </td>
-                
-                <td>
-                    Check #
-                </td>
-            </tr>
-            
-            <tr class="details">
-                <td>
-                    Check
-                </td>
-                
-                <td>
-                    1000
-                </td>
-            </tr>
-            
+      
             <tr class="heading">
                 <td>
                     Item
                 </td>
                 
                 <td>
-                    Price
-                </td>
-            </tr>
-            
-            <tr class="item">
-                <td>
-                    Website design
-                </td>
-                
-                <td>
-                    $300.00
-                </td>
-            </tr>
-            
-            <tr class="item">
-                <td>
-                    Hosting (3 months)
-                </td>
-                
-                <td>
-                    $75.00
+                    Price (KShs.)
                 </td>
             </tr>
             
             <tr class="item last">
                 <td>
-                    Domain name (1 year)
+                    Courier services
                 </td>
                 
                 <td>
-                    $10.00
+                    {{number_format($invoice['amount'], 2, '.', ',')}}
                 </td>
             </tr>
+
             
             <tr class="total">
                 <td></td>
                 
                 <td>
-                   Total: $385.00
+                   Total: {{number_format($invoice['amount'], 2, '.', ',')}}
                 </td>
+            </tr>
+            <tr class="total">
+                <td></td>
+                
+                <td>
+                   VAT: {{number_format($invoice['vat'], 2, '.', ',')}}
+                </td>
+            </tr>
+            <tr>
+                <table>
+                    <tr class="heading">
+                        <td>Transactions</td>
+                </table>
+            </tr>
+            <tr>
+                
+                    <table>
+                        <tr class="heading txns">
+                            <td width="12.5%">AWB#</td>
+                            <td width="12.5%">Origin</td>
+                            <td width="12.5%">Destination</td>
+                            <td width="12.5%">Parcel Type</td>
+                            <td width="12.5%">Price</td>
+                            <td width="12.5%">VAT</td>
+                            <td width="12.5%">Mode</td>       
+                            <td width="12.5%">Date</td>
+                        </tr>
+
+                        @foreach($txns as $txn)
+                        <tr class="txns">
+                            <td>{{$txn['awb_num']}}</td>
+                            <td>{{$txn['origin_addr']}}</td>
+                            <td>{{$txn['dest_addr']}}</td>
+                            <td>{{$txn['parcel_type']['name']}}</td>
+                            <td>{{number_format($txn['price'], 2, '.', ',')}}</td>
+                            <td>{{number_format($txn['vat'], 2, '.', ',')}}</td>
+                            @if ($txn['mode'] == 0)
+                            <td>Normal</td>
+                            @else ($txn['mode'] == 1)
+                            <td>Express</td>
+                            @endif
+                            <td>{{date('d-m-Y', strtotime($txn['created_at']))}}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                
             </tr>
         </table>
     </div>

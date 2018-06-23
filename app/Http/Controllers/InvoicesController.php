@@ -22,6 +22,7 @@ use Validator;
 use Auth;
 use Session;
 use PDF;
+use Carbon\Carbon;
 
 class InvoicesController extends Controller
 {
@@ -135,7 +136,7 @@ class InvoicesController extends Controller
     	$txns = Txn::join('companies as c', 'txns.sender_company_id', '=', 'c.id')
     		->join('parcel_types as partype', 'txns.parcel_type_id', '=', 'partype.id')
     		->join('parcel_statuses as parstat', 'txns.parcel_status_id', '=', 'parstat.id')
-    		->select('c.name as sender_company_name', 'txns.awb_num as awb_num', 'txns.origin_addr as origin_addr', 'txns.dest_addr as dest_addr', 'partype.name as parcel_type', 'txns.price as price', 'txns.vat as vat', DB::raw('(CASE WHEN txns.mode = 1 THEN "Express" ELSE "Normal" END) AS mode'), 'parstat.name as parcel_status', 'txns.created_at as created_at', DB::raw('(CASE WHEN txns.invoiced = 1 THEN "Yes" ELSE "No" END) AS invoiced'))
+    		->select('txns.id as id', 'c.name as sender_company_name', 'txns.awb_num as awb_num', 'txns.origin_addr as origin_addr', 'txns.dest_addr as dest_addr', 'partype.name as parcel_type', 'txns.price as price', 'txns.vat as vat', DB::raw('(CASE WHEN txns.mode = 1 THEN "Express" ELSE "Normal" END) AS mode'), 'parstat.name as parcel_status', 'txns.created_at as created_at', DB::raw('(CASE WHEN txns.invoiced = 1 THEN "Yes" ELSE "No" END) AS invoiced'))
     		->where('txns.company_id','=',$company_id)
     		->where('txns.sender_company_id','=',$id)
     		->where('txns.invoiced','=','0')
@@ -165,7 +166,9 @@ class InvoicesController extends Controller
         ]);
 
     	$sel_txns = $request->input('txn_id');
-    	// $txns = implode(" ", $sel_txns);
+        if ($sel_txns != NULL) {
+    	   $txns = implode(" ", $sel_txns);
+        }
     	$count = 0;
     	$tot_amount = 0;
 
@@ -196,6 +199,7 @@ class InvoicesController extends Controller
 	    	$invoice->company_id = $company_id;
 	    	$invoice->sender_company_id = $sender_company_id;
 	    	$invoice->amount = $tot_amount;
+            $invoice->vat = $tot_amount * 0.16;
 	    	$invoice->paid = 0;
 	    	$invoice->bal = $tot_amount;
 	    	$invoice->save();
@@ -220,6 +224,7 @@ class InvoicesController extends Controller
         //void invoice
         $invoice = Invoice::find($id);
         $invoice->amount = 0;
+        $invoice->vat = 0;
         $invoice->bal = 0 - $invoice->paid;
         $invoice->save();
 
@@ -238,7 +243,7 @@ class InvoicesController extends Controller
 
         }
         return redirect('/invoice')->with('success', 'Invoice '. $invoice_num .' voided. ');
-	   }
+	}
 
     public function showInvoice($id)
     {
@@ -255,15 +260,19 @@ class InvoicesController extends Controller
     {
     	$user = Auth::user();
     	$company_id = Auth::user()->company_id;
-        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
-        $company_details = Company::where('id', '=', $parent_company_id)->first();
+        $company_details = Company::where('id', '=', $company_id)->first();
 
     	$txns = Txn::where('invoice_id', '=', $id)->get();
     	$invoice = Invoice::where('id', '=', $id)->first();
+        $curr_date = new Carbon($invoice->created_at);
+        $due_date = $curr_date->addMonth(1);
+
         $sender_company_id = $invoice->sender_company_id;
 
-        $sender_company_details = Company::where('id', '=', $sender_company_id)->first();
+        $sender_company_name = Company::select('name')->where('id', '=', $sender_company_id)->pluck('name')->first();
+        $sender_cusadmin_fullname = User::select('fullname')->where('company_id', '=', $sender_company_id)->pluck('fullname')->first();
+        $sender_cusadmin_phone = User::select('phone')->where('company_id', '=', $sender_company_id)->pluck('phone')->first();
 
-    	return view('invoice.print', ['txns' => $txns, 'invoice' => $invoice, 'company_details' => $company_details, 'sender_company_details' => $sender_company_details]);
+    	return view('invoice.print', ['txns' => $txns, 'invoice' => $invoice, 'company_details' => $company_details, 'sender_company_name' => $sender_company_name, 'sender_cusadmin_fullname' => $sender_cusadmin_fullname, 'sender_cusadmin_phone' => $sender_cusadmin_phone, 'due_date' => $due_date]);
     }
 }

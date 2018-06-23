@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="panel-heading"><h1>Manage Shipments </h1> </div>
+<a href="{{ route('shipments.add') }}" class="btn btn-success">Add Shipment</a><br>
 <div><a class="pull-right btn btn-default" href="{{ route('shipments.index') }}">Reset</a> </div>
 <hr>
 <strong>Filter Options: </strong>

@@ -5,12 +5,12 @@
 <div class="container">
 	<h1>Show Invoice</h1>
 	<a href="{{ route('invoice.index') }}" class="btn btn-success">Go back</a><br><br>
-    <a href="{{ route('invoice.print', ['id' => $invoice->id]) }}" class="btn btn-success" , formtarget="_blank">Print Invoice</a><br><br>
+    <a href="{{ route('invoice.print', ['id' => $invoice->id]) }}" class="btn btn-success" target="_blank">Print Invoice</a><br><br>
 </div>
 
 <div class="container"> 
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Invoice Num</h3>
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Sender Company</h3>
@@ -32,33 +32,43 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Amount</h3>
                 </div>
                 <div class="panel-body">
-                    {{$invoice->amount}}
+                    {{number_format($invoice->amount, 2, '.', ',')}}
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">VAT</h3>
+                </div>
+                <div class="panel-body">
+                    {{number_format($invoice->vat, 2, '.', ',')}}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Paid</h3>
                 </div>
                 <div class="panel-body">
-                    {{$invoice->paid}}
+                    {{number_format($invoice->paid, 2, '.', ',')}}
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Balance</h3>
                 </div>
                 <div class="panel-body">
-                    {{$invoice->bal}}
+                    {{number_format($invoice->bal, 2, '.', ',')}}
                 </div>
             </div>
         </div>
@@ -93,8 +103,8 @@
             <td>{{$txn['origin_addr']}}</td>
             <td>{{$txn['dest_addr']}}</td>
             <td>{{$txn['parcel_type']['name']}}</td>
-            <td>{{$txn['price']}}</td>
-            <td>{{$txn['vat']}}</td>
+            <td>{{number_format($txn['price'], 2, '.', ',')}}</td>
+            <td>{{number_format($txn['vat'], 2, '.', ',')}}</td>
             <td>{{$txn['driver']['fullname']}}</td>
             @if ($txn['mode'] == 0)
             <td>Normal</td>
