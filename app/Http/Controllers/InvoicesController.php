@@ -249,9 +249,13 @@ class InvoicesController extends Controller
     {
     	$user = Auth::user();
     	$company_id = Auth::user()->company_id;
+        $invoice = Invoice::where('company_id', '=', $company_id)->where('id', '=', $id)->first();
+
+        if ($invoice == null){
+            return redirect('/invoice')->with('error', 'Invoice not found');
+        }
 
     	$txns = Txn::where('invoice_id', '=', $id)->get();
-    	$invoice = Invoice::where('id', '=', $id)->first();
 
     	return view('invoice.show', ['txns' => $txns, 'invoice' => $invoice]);
     }
@@ -261,9 +265,12 @@ class InvoicesController extends Controller
     	$user = Auth::user();
     	$company_id = Auth::user()->company_id;
         $company_details = Company::where('id', '=', $company_id)->first();
-
+        $invoice = Invoice::where('company_id', '=', $company_id)->where('id', '=', $id)->first();
+        if ($invoice == null){
+            return redirect('/invoice')->with('error', 'Invoice not found');
+        }
+        
     	$txns = Txn::where('invoice_id', '=', $id)->get();
-    	$invoice = Invoice::where('id', '=', $id)->first();
         $curr_date = new Carbon($invoice->created_at);
         $due_date = $curr_date->addMonth(1);
 

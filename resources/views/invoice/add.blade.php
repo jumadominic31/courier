@@ -28,19 +28,19 @@
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {
-    $('.seltxns').on( 'click', function() {
-        var checked_txns = $( '.seltxns:checked' ).length;
+    // $('.txns').on( 'click', function() {
+    //     var checked_txns = $( '.txns:checked' ).length;
 
-        console.log(checked_txns);
-        if($( '.seltxns:checked' ).length > 0) {
-            $('#submit-btn').prop('disabled', false);
-            alert('enabled');
-        }
-        else {
-            $('#submit-btn').prop('disabled', true);
-            alert('disabled');
-        }  
-    });
+    //     console.log(checked_txns);
+    //     if($( '.txns:checked' ).length > 0) {
+    //         $('#submit-btn').prop('disabled', false);
+    //         alert('enabled');
+    //     }
+    //     else {
+    //         $('#submit-btn').prop('disabled', true);
+    //         alert('disabled');
+    //     }  
+    // });
 
     $('select[name="sender_company_id"]').on('change', function() {
         var sender_company_id = this.value;
@@ -81,7 +81,7 @@ jQuery(document).ready(function($) {
                         $('<td width="11.33%">').text(item.created_at),
                         $('<td width="3.33%">').text(item.invoiced),
                         $('<td>').append(
-                            $('<input />', { type: 'checkbox', name: 'txn_id[]', class: 'seltxns', value: item.id }))
+                            $('<input />', { type: 'checkbox', name: 'txn_id[]', class: 'txns', value: item.id }))
                     ).appendTo('#seltxns');
                     // console.log($tr.wrap('<p>').html());
                 });
@@ -89,6 +89,15 @@ jQuery(document).ready(function($) {
         });
         
     });
+
+    if ($("#seltxns input:checkbox:checked").length > 0)
+    {
+        console.log('yes');
+    }
+    else
+    {
+       console.log('no');
+    }
 
 });
 </script>

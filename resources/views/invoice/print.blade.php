@@ -112,7 +112,7 @@
                     <table>
                         <tr>
                             <td class="title">
-                                {{$company_details['name']}}
+                                INVOICE
                             </td>
                             
                             <td>
