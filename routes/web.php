@@ -156,6 +156,23 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'shipments.receivedShipments'
         ]);
 
+        //tokens
+        //token statement
+        Route::get('/token', [
+            'uses' => 'TokensController@index' , 
+            'as' => 'token.index'
+        ]);
+
+        Route::get('/token/addToken', [
+            'uses' => 'TokensController@addToken' , 
+            'as' => 'token.addToken'
+        ]);
+
+        Route::post('/token/storeToken', [
+            'uses' => 'TokensController@storeToken' , 
+            'as' => 'token.storeToken'
+        ]);
+
         //invoices
         Route::get('/invoice', [
             'uses' => 'InvoicesController@getInvoices',

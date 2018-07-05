@@ -32,6 +32,7 @@
                                 <li><a href="{{ route('company.index') }}">Companies</a></li>
                             @endif
                             <li><a href="{{ route('customer.index') }}">Customers</a></li>
+                            <li><a href="{{ route('token.index') }}">Tokens</a></li>
                             <li><a href="{{ route('users.index') }}">Users</a></li>
                             <li><a href="{{ route('zone.index') }}">Zones</a></li>
                             <li><a href="{{ route('station.index') }}">Stations</a></li>
