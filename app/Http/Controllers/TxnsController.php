@@ -738,7 +738,7 @@ class TxnsController extends Controller
         }
         else {
             $tot_count = Txn::where('company_id','=',$company_id)->count();
-            $txns = Txn::where('company_id','=',$company_id)->orderBy('id','desc')->paginate(10);
+            $txns = Txn::where('company_id','=',$company_id)->orderBy('id','desc')->get();
             $tot_coll = Txn::select('company_id', DB::raw('sum(price) as tot_coll'))->where('company_id', '=', $company_id)->groupBy('company_id')->pluck('tot_coll')->first();
             if ($tot_coll == NULL) {
                 $tot_coll = 0;
@@ -746,6 +746,174 @@ class TxnsController extends Controller
         }
 
         return view('shipments.index', ['txns' => $txns, 'zones' => $zones,  'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll, 'tot_count' => $tot_count, 'cuscompanies' => $cuscompanies, 'riders' => $riders]);
+    }
+
+    public function getbookedShipments()
+    {
+        $company_id = Auth::user()->company_id;
+        $riders = User::where('company_id', '=', $company_id)->where('usertype', '=', 'driver')->pluck('fullname','id')->all();
+        $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '7')->orderBy('id','desc')->get();
+        return view('shipments.booked', ['txns' => $txns, 'riders' => $riders]);
+    }
+
+    public function assignpickupShipments(Request $request)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $company_id = Auth::user()->company_id;
+
+        $this->validate($request, [
+            'txn_id' => 'required',
+            'rider_id' => 'required'
+        ]);
+
+        $count = 0;
+
+        $sel_txns = $request->input('txn_id');
+        if ($sel_txns != NULL) {
+           $txns = implode(" ", $sel_txns);
+        }
+
+        if (count($sel_txns) > 0){
+            
+            foreach ($sel_txns as $sel){
+                //change parcel_status
+                $txn = Txn::find($sel);
+                $count += 1;
+                $txn->parcel_status_id = '9';
+                $txn->driver_id = $request->input('rider_id');
+                $txn->updated_by = $user->id;
+                $txn->save();
+
+                $txnlog = new TxnLog;
+                $txnlog->awb_id = $txn->id;
+                $txnlog->status_id = '9';
+                $txnlog->updated_by = $user->id;
+                $txnlog->company_id = $company_id;
+                $txnlog->sender_company_id = $txn->sender_company_id;
+                $txnlog->save();
+            }
+
+        }
+
+        return redirect('/shipments/booked')->with('success', $count. ' Shipments assigned to rider for pick-up from shipper.' );
+    }
+
+    public function getpickedShipments()
+    {
+        $company_id = Auth::user()->company_id;
+        // $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        // $company_details = Company::where('id', '=', $company_id)->get();
+        $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '9')->orderBy('id','desc')->get();
+        return view('shipments.pickedtosortfacility', ['txns' => $txns]);
+    }
+
+    public function receiveatsortShipments(Request $request)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $company_id = Auth::user()->company_id;
+
+        $this->validate($request, [
+            'txn_id' => 'required'
+        ]);
+
+        $count = 0;
+
+        $sel_txns = $request->input('txn_id');
+        if ($sel_txns != NULL) {
+           $txns = implode(" ", $sel_txns);
+        }
+
+        if (count($sel_txns) > 0){
+            
+            foreach ($sel_txns as $sel){
+                //change parcel_status
+                $txn = Txn::find($sel);
+                $count += 1;
+                $txn->parcel_status_id = '10';
+                $txn->updated_by = $user->id;
+                $txn->save();
+
+                $txnlog = new TxnLog;
+                $txnlog->awb_id = $txn->id;
+                $txnlog->status_id = '10';
+                $txnlog->updated_by = $user->id;
+                $txnlog->company_id = $company_id;
+                $txnlog->sender_company_id = $txn->sender_company_id;
+                $txnlog->save();
+            }
+
+        }
+
+        return redirect('/shipments/pickedfromcus')->with('success', $count. ' Shipments received at sort facility.' );
+    }
+
+    public function getreceivedShipments()
+    {
+        $company_id = Auth::user()->company_id;
+        // $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        // $company_details = Company::where('id', '=', $company_id)->get();
+        $riders = User::where('company_id', '=', $company_id)->where('usertype', '=', 'driver')->pluck('fullname','id')->all();
+        $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '10')->orderBy('id','desc')->get();
+        return view('shipments.receivedatsortfacility', ['txns' => $txns, 'riders' => $riders]);
+    }
+
+    public function dispatchShipments(Request $request)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $company_id = Auth::user()->company_id;
+
+        $this->validate($request, [
+            'txn_id' => 'required',
+            'rider_id' => 'required'
+        ]);
+
+        $count = 0;
+
+        $sel_txns = $request->input('txn_id');
+        if ($sel_txns != NULL) {
+           $txns = implode(" ", $sel_txns);
+        }
+
+        if (count($sel_txns) > 0){
+            
+            foreach ($sel_txns as $sel){
+                //change parcel_status
+                $txn = Txn::find($sel);
+                $count += 1;
+                $txn->parcel_status_id = '2';
+                $txn->driver_id = $request->input('rider_id');
+                $txn->updated_by = $user->id;
+                $txn->save();
+
+                $txnlog = new TxnLog;
+                $txnlog->awb_id = $txn->id;
+                $txnlog->status_id = '2';
+                $txnlog->updated_by = $user->id;
+                $txnlog->company_id = $company_id;
+                $txnlog->sender_company_id = $txn->sender_company_id;
+                $txnlog->save();
+            }
+
+        }
+
+        return redirect('/shipments/receivedatsortfacility')->with('success', $count. ' Shipments assign to rider for delivery.' );
+    }
+
+    public function dispatchedtocusShipments()
+    {
+        $company_id = Auth::user()->company_id;
+        $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '2')->orderBy('id','desc')->get();
+        return view('shipments.dispatched', ['txns' => $txns]);
+    }
+
+        public function receivedatcusShipments()
+    {
+        $company_id = Auth::user()->company_id;
+        $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '4')->orderBy('id','desc')->get();
+        return view('shipments.received', ['txns' => $txns]);
     }
 
     public function getAwbsearch(Request $request)
@@ -912,6 +1080,26 @@ class TxnsController extends Controller
         $userlog->save();
         
         return redirect('/shipments')->with('success', 'Shipment details updated for '. $txn->awb_num);
+    }
+
+    public function print_awb($id)
+    {
+        $company_id = Auth::user()->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $parent_company = Company::where('id', '=', $parent_company_id)->first();
+
+        // $txn = Txn::where('sender_company_id', '=', $company_id)->find($id);
+        $txn = Txn::join('parcel_types', 'txns.parcel_type_id', '=', 'parcel_types.id')
+                ->select('txns.id as id', 'txns.awb_num as awb_num', 'txns.origin_addr as origin_addr', 'txns.dest_addr as dest_addr', 'txns.parcel_type_id as parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_desc as parcel_desc', 'txns.sender_name', 'txns.sender_company_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_company_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.receiver_sign', 'txns.units as units', 'txns.mode as mode', 'txns.round as round', 'txns.created_at')
+                ->where('txns.id', '=', $id)
+                ->first();
+        if ($txn == null){
+            return redirect('/shipments')->with('error', 'Txn not found');
+        }
+        
+        // return view('portal.shipments.print',['txn'=> $txn, 'companies' => $companies, 'parcel_statuses' => $parcel_statuses, 'parcel_types' => $parcel_types, 'zones' => $zones, 'origin_addr' => $origin_addr, 'dest_addr' => $dest_addr, 'drivers' => $drivers, 'vehicles' => $vehicles, 'statusDet' => $statusDet]);
+        $pdf = PDF::loadView('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
+        return $pdf->stream('shipments.pdf');
     }
 
     public function resetDrivercode($id)

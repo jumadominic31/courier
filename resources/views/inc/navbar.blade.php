@@ -49,6 +49,17 @@
                         <li><a href="{{ route('shipments.index') }}">Payments</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shipments <span class="caret"></span></a>
+                    <ul class="dropdown-menu"> 
+                        <li><a href="{{ route('shipments.index') }}">Shipments - Home</a></li>
+                        <li><a href="{{ route('shipments.booked') }}">Shipments - Booked</a></li>
+                        <li><a href="{{ route('shipments.pickedtosortfacility') }}">Shipments - Picked from Customer</a></li>
+                        <li><a href="{{ route('shipments.receivedatsortfacility') }}">Shipments - At Sort Facility</a></li>
+                        <li><a href="{{ route('shipments.dispatchedShipments') }}">Shipments - Out of Dispatch</a></li>
+                        <li><a href="{{ route('shipments.receivedShipments') }}">Shipments - Received</a></li>
+                    </ul>
+                </li>
                 <li><a href="{{ route('shipments.awb') }}">AWB Search</a></li>
                 
             </ul>

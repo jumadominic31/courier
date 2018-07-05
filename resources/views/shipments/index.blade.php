@@ -3,6 +3,7 @@
 @section('content')
 <div class="panel-heading"><h1>Manage Shipments </h1> </div>
 <a href="{{ route('shipments.add') }}" class="btn btn-success">Add Shipment</a><br>
+
 <div><a class="pull-right btn btn-default" href="{{ route('shipments.index') }}">Reset</a> </div>
 <hr>
 <strong>Filter Options: </strong>
@@ -32,7 +33,7 @@
       <tr>
         <td><div class="form-group">
               {{Form::label('parcel_status_id', 'Parcel Status')}}
-              {{Form::select('parcel_status_id', ['' => '', '7' => 'Booked', '8' => 'Picked', '4' => 'Received', '6' => 'Cancelled', '5' => 'Lost' ], '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
+              {{Form::select('parcel_status_id', ['' => ''] + $parcel_status, '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
           </div></td>
           <td ><div class="form-group">
             {{Form::label('first_date', 'First Booked Date')}}
@@ -96,9 +97,11 @@
             <th width="8.33%">Parcel Status</th>         
             <th width="11.33%">Date/Time Created</th>
             <th width="3.33%">Invoiced</th>
+            <th></th>
+            <th></th>
           </tr>
           @foreach($txns as $txn)
-          <tr class='clickable-row' data-href="{{ route('shipments.edit', ['awb' => $txn->id ]) }}">
+          <tr>
             <td>{{$txn['sender_company_name']}}</td>
             <td>{{$txn['awb_num']}}</td>
             <td>{{$txn['origin_addr']}}</td>
@@ -119,6 +122,8 @@
             @else ($txn['invoiced'] == 1)
             <td>Yes</td>
             @endif
+            <td><a class="pull-right btn btn-default btn-xs" target="_blank" href="{{ route('shipments.print', ['awb' => $txn->id ]) }}">Print</td>
+            <td><a class="pull-right btn btn-default btn-xs" href="{{ route('shipments.edit', ['awb' => $txn->id ]) }}">Edit/Details</a></td>
         </tr>
           @endforeach
       </table>

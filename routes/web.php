@@ -85,6 +85,11 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'shipments.edit'
         ]);
 
+        Route::get('/shipment/print/{awb}', [
+            'uses' => 'TxnsController@print_awb' , 
+            'as' => 'shipments.print'
+        ]);
+
         Route::post('/shipments/resetdriver/{id}', [
             'uses' => 'TxnsController@resetDrivercode' , 
             'as' => 'shipments.resetdriver'
@@ -108,6 +113,47 @@ Route::group(['middleware' => 'auth'] , function () {
         Route::post('/awb', [
             'uses' => 'TxnsController@getAwb',
             'as' => 'shipments.awb'
+        ]);
+
+        //shipments status
+        Route::get('/shipments/booked', [
+            'uses' => 'TxnsController@getbookedShipments',
+            'as' => 'shipments.booked'
+        ]);
+
+        Route::post('/shipments/pickedtosort', [
+            'uses' => 'TxnsController@assignpickupShipments',
+            'as' => 'shipments.pickedtosort'
+        ]);
+
+        Route::get('/shipments/pickedfromcus', [
+            'uses' => 'TxnsController@getpickedShipments',
+            'as' => 'shipments.pickedtosortfacility'
+        ]);
+
+        Route::post('/shipments/receiveatsort', [
+            'uses' => 'TxnsController@receiveatsortShipments',
+            'as' => 'shipments.receiveatsort'
+        ]);
+
+        Route::get('/shipments/receivedatsortfacility', [
+            'uses' => 'TxnsController@getreceivedShipments',
+            'as' => 'shipments.receivedatsortfacility'
+        ]);
+
+        Route::post('/shipments/dispatch', [
+            'uses' => 'TxnsController@dispatchShipments',
+            'as' => 'shipments.dispatch'
+        ]);
+
+        Route::get('/shipments/dispatchedShipments', [
+            'uses' => 'TxnsController@dispatchedtocusShipments',
+            'as' => 'shipments.dispatchedShipments'
+        ]);
+
+        Route::get('/shipments/receivedShipments', [
+            'uses' => 'TxnsController@receivedatcusShipments',
+            'as' => 'shipments.receivedShipments'
         ]);
 
         //invoices
