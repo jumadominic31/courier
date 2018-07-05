@@ -290,6 +290,11 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'portal.shipments.edit'
         ]);
 
+        Route::get('/portal/shipment/print/{awb}', [
+            'uses' => 'CusportalController@print_awb' , 
+            'as' => 'portal.shipments.print'
+        ]);
+
         Route::match(array('PUT', 'PATCH'), '/portal/shipment/{awb}', [
             'uses' => 'CusportalController@update' , 
             'as' => 'portal.shipments.update'

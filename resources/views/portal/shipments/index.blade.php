@@ -93,9 +93,11 @@
             <th width="7.33%">Parcel <br>Status</th>
             <th width="11.33%">Date <br>Booked</th>
             <th width="3.33%">Invoiced</th>
+            <th></th>
+            <th></th>
           </tr>
           @foreach($txns as $txn)
-          <tr class='clickable-row' data-href="{{ route('portal.shipments.edit', ['awb' => $txn->id ]) }}">
+          <tr>
             <td>{{$txn['awb_num']}}</td>
             <td>{{$txn['origin_addr']}}</td>
             <td>{{$txn['dest_addr']}}</td>
@@ -117,7 +119,9 @@
             @else ($txn['invoiced'] == 1)
             <td>Yes</td>
             @endif
-	      </tr>
+            <td><a class="pull-right btn btn-default btn-xs" target="_blank" href="{{ route('portal.shipments.print', ['awb' => $txn->id ]) }}">Print</td>
+            <td><a class="pull-right btn btn-default btn-xs" href="{{ route('portal.shipments.edit', ['awb' => $txn->id ]) }}">Edit/Details</a></td>
+          </tr>
           @endforeach
       </table>
 
