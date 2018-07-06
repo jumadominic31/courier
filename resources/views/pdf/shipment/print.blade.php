@@ -267,12 +267,7 @@ padding:0in'><span style='font-size:9.5pt;line-height:107%;font-family:"Arial","
 
 </div>
 
-<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-text-align:center'><span style='font-size:9.5pt;line-height:107%;font-family:
-"Arial","sans-serif"'>&nbsp;</span></p>
 
-<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><span
-style='font-size:9.5pt;line-height:107%'>&nbsp;</span></p>
 
 @if ($txn['parcel_type_id'] == 7)
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
@@ -496,12 +491,6 @@ padding:0in'><span style='font-size:9.5pt;line-height:107%;font-family:"Arial","
 
 </div>
 
-<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-text-align:center'><span style='font-size:9.5pt;line-height:107%;font-family:
-"Arial","sans-serif"'>&nbsp;</span></p>
-
-<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><span
-style='font-size:9.5pt;line-height:107%'>&nbsp;</span></p>
 
 @if ($txn['parcel_type_id'] == 7)
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0

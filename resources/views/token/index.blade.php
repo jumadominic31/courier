@@ -17,13 +17,11 @@
             <tr>
                 <th>Company Name</th>
                 <th>Balance</th>
-                <th>Current Waybill</th>
             </tr>
             @foreach($tokens as $token)
             <tr>
-                <td>{{$token['sender_company_id']}}</td>
+                <td>{{$token['sender_company_name']}}</td>
                 <td>{{$token['balance']}}</td>
-                <td>{{$token['curr_awb']}}</td>
             </tr>
             @endforeach
         </table>
