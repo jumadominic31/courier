@@ -539,40 +539,13 @@ class CusportalController extends Controller
             $txnlog->save();
         }
 
-        // $atgusername   = SmsApi::select('atgusername')->where('company_id', '=', $parent_company_id)->pluck('atgusername')->first();
-        // $atgapikey     = SmsApi::select('atgapikey')->where('company_id', '=', $parent_company_id)->pluck('atgapikey')->first();
-        // $atgsender_id  = SmsApi::select('atgsender_id')->where('company_id', '=', $parent_company_id)->pluck('atgsender_id')->first();
-        
-        // if (($atgusername == NULL) || ($atgapikey == NULL))
-        // {
-        //     $atgusername   = env('ATGUSERNAME');
-        //     $atgapikey     = env('ATGAPIKEY');
-        // }
-            
-        // // Send password via SMS
-        // if ($atgusername != NULL){
-        //     if ($parent_company_phone != NULL)
-        //     {
-        //         $recipients = '+'.$parent_company_phone;
-        //         $message    = "A parcel has been booked by " .$company_name. " under AWB ".$txn->awb_num." to ".$txn->receiver_addr;
-        //         $gateway    = new AfricasTalkingGateway($atgusername, $atgapikey);
-        //         try 
-        //         { 
-        //             if ($atgsender_id != NULL){
-        //                     $send_results = $gateway->sendMessage($recipients, $message, $atgsender_id);
-        //                 } 
-        //                 else {
-        //                     $send_results = $gateway->sendMessage($recipients, $message);
-        //                 }
-        //         }
-        //         catch ( AfricasTalkingGatewayException $e )
-        //         {
-        //           echo 'Encountered an error while sending: '.$e->getMessage();
-        //         }
-        //     }
-        // }
+        $txn_id = $txn->id;
 
-        return redirect('/portal/shipments')->with('success', "Shipment added");
+        $data = [
+            'id'   => $txn_id
+        ];
+
+        return redirect('/portal/shipment/print/'.$txn_id)->with($data);
     }
 
     public function edit($id)
@@ -621,9 +594,9 @@ class CusportalController extends Controller
             return redirect('/portal/shipments')->with('error', 'Txn not found');
         }
         
-        // return view('portal.shipments.print',['txn'=> $txn, 'companies' => $companies, 'parcel_statuses' => $parcel_statuses, 'parcel_types' => $parcel_types, 'zones' => $zones, 'origin_addr' => $origin_addr, 'dest_addr' => $dest_addr, 'drivers' => $drivers, 'vehicles' => $vehicles, 'statusDet' => $statusDet]);
-        $pdf = PDF::loadView('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
-        return $pdf->stream('shipments.pdf');
+        return view('portal.shipments.print',['txn'=> $txn, 'parent_company' => $parent_company]);
+        // $pdf = PDF::loadView('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
+        // return $pdf->stream('shipments.pdf');
     }
 
     public function cancel(Request $request, $id)
