@@ -9,7 +9,7 @@
 			<tr>
 				<th>Name</th>
 				<th>Unit</th>
-				<th>Rate (KShs.)</th>
+				<!-- <th>Rate (KShs.)</th> -->
 				@if(Auth::user()->usertype == 'superadmin')
               	<th>Company</th>
               	@endif
@@ -19,7 +19,7 @@
 		<tr>
 			<td>{{$parceltyp['name']}}</td>
 			<td>{{$parceltyp['unit']}}</td>
-			<td>{{$parceltyp['rate']}}</td>
+			<!-- <td>{{$parceltyp['rate']}}</td> -->
 			@if(Auth::user()->usertype == 'superadmin')
           	<td>{{$parceltyp['company']['name']}}</td>
           	@endif
@@ -37,13 +37,11 @@
 				<th>Description</th>
 			</tr>
 		</thead>
-		@foreach($parcelstatus as $parcelst)
-		<tr>
-			<td>{{$parcelst['id']}}</td>
-			<td>{{$parcelst['name']}}</td>
-			<td>{{$parcelst['description']}}</td>
-		</tr>
-		@endforeach
+		<tr><td>1</td><td>Booked</td><td>Parcel booked by customer</td></tr>
+		<tr><td>2</td><td>Picked to sort facility</td><td>Parcel picked by rider from origin to sorting facility</td></tr>
+		<tr><td>3</td><td>Received at sort facility</td><td>Parcel received at sort facility</td></tr>
+		<tr><td>4</td><td>Dispatched</td><td>Parcel dispatched from sort facility. On transit</td></tr>
+		<tr><td>5</td><td>Received at destination</td><td>Parcel taken by receiver at destination</td></tr>
 	</table>
 </div>
 

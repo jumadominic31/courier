@@ -29,7 +29,7 @@
       <tr>
         <td><div class="form-group">
               {{Form::label('parcel_status_id', 'Parcel Status')}}
-              {{Form::select('parcel_status_id', ['' => '', '7' => 'Booked', '8' => 'Picked', '4' => 'Received', '6' => 'Cancelled', '5' => 'Lost' ], '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
+              {{Form::select('parcel_status_id', ['' => '', '7' => 'Booked', '9' => 'Picked by rider to sort facility', '10' => 'Received at sort facility', '2' => 'Dispatched to receiver', '4' => 'Received', '6' => 'Cancelled', '5' => 'Lost' ], '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
           </div></td>
         <td><div class="form-group">
             {{Form::label('first_date', 'First Booked Date')}}
@@ -40,14 +40,14 @@
             {{Form::text('last_date', '', ['class' => 'last_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
       </tr>
-      <tr>
+      <!-- <tr>
         <td><div class="form-group">
               {{Form::label('invoiced', 'Invoiced')}}
               {{Form::select('invoiced', ['' => '', '0' => 'No', '1' => 'Yes'], '', ['class' => 'form-control', 'id' => 'invoiced'])}}
           </div></td>
         <td></td>
         <td></td>
-      </tr>
+      </tr> -->
       </tbody>
     </table>
     {{Form::submit('Submit', ['class'=>'btn btn-primary', 'name' => 'submitBtn'])}}
@@ -63,13 +63,6 @@
     <div class="panel-body">
       <div class="col-md-4 col-sm-12 col-xs-12">
         <div class="well dash-box">
-            <h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> 
-            {{$tot_coll}} </h2>
-            <h4>Total Sales</h4>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-12 col-xs-12">
-        <div class="well dash-box">
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
             {{$tot_count}} </h2>
             <h4>No of Transactions</h4>
@@ -77,22 +70,18 @@
       </div>
     </div>
   </div>
-    Up to 50 records
       <table class="table table-striped" >
           <tr>
             <th width="7.33%">AWB#</th>
             <th width="11.33%">Origin</th>
             <th width="11.33%">Destination</th>
             <th width="8.33%">Parcel Type</th>
-            <th width="4.33%">Price</th>
-            <th width="4.33%">VAT</th>
             <th width="9.33%">Sender <br>Name</th>
             <th width="9.33%">Receiver <br>Name</th>
             <th width="8.33%">Receiver <br>Company</th>
             <th width="7.33%">Mode</th>
             <th width="7.33%">Parcel <br>Status</th>
             <th width="11.33%">Date <br>Booked</th>
-            <th width="3.33%">Invoiced</th>
             <th></th>
             <th></th>
           </tr>
@@ -102,8 +91,6 @@
             <td>{{$txn['origin_addr']}}</td>
             <td>{{$txn['dest_addr']}}</td>
             <td>{{$txn['parcel_type']['name']}}</td>
-            <td>{{$txn['price']}}</td>
-            <td>{{$txn['vat']}}</td>
             <td>{{$txn['sender_name']}}</td>
             <td>{{$txn['receiver_name']}}</td>
             <td>{{$txn['receiver_company_name']}}</td>
@@ -114,11 +101,6 @@
             @endif
             <td>{{$txn['parcel_status']['name']}}</td>
             <td>{{$txn['created_at']}}</td>
-            @if ($txn['invoiced'] == 0)
-            <td>No</td>
-            @else ($txn['invoiced'] == 1)
-            <td>Yes</td>
-            @endif
             <td><a class="pull-right btn btn-default btn-xs" target="_blank" href="{{ route('portal.shipments.print', ['awb' => $txn->id ]) }}">Print</td>
             <td><a class="pull-right btn btn-default btn-xs" href="{{ route('portal.shipments.edit', ['awb' => $txn->id ]) }}">Edit/Details</a></td>
           </tr>

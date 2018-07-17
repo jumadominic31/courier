@@ -37,7 +37,9 @@ class CusportalController extends Controller
     public function cuscreate()
     {
         $company_id = Auth::user()->company_id;
-        return view('portal.users.create');
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $stations = Station::where('company_id', '=', $parent_company_id)->pluck('name','id')->all();
+        return view('portal.users.create',['stations'=> $stations]);
     }
 
     public function cusstore(Request $request)
@@ -185,7 +187,7 @@ class CusportalController extends Controller
         $user->updated_by = $user_id;
         $user->save();
         
-        return redirect('/portal/users/profile')->with('success', 'User details updated');
+        return redirect('/portal/users')->with('success', 'User details updated');
     }
 
     public function resetpass()
@@ -364,7 +366,7 @@ class CusportalController extends Controller
         }
         else {
             $tot_count = Txn::where('sender_company_id','=',$company_id)->count();
-            $txns = Txn::where('sender_company_id','=',$company_id)->orderBy('id','desc')->limit(50)->get();
+            $txns = Txn::where('sender_company_id','=',$company_id)->orderBy('id','desc')->get();
             $tot_coll = Txn::select('sender_company_id', DB::raw('sum(price) as tot_coll'))->where('sender_company_id', '=', $company_id)->groupBy('sender_company_id')->pluck('tot_coll')->first();
             if ($tot_coll == NULL) {
                 $tot_coll = 0;
@@ -594,9 +596,9 @@ class CusportalController extends Controller
             return redirect('/portal/shipments')->with('error', 'Txn not found');
         }
         
-        return view('portal.shipments.print',['txn'=> $txn, 'parent_company' => $parent_company]);
-        // $pdf = PDF::loadView('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
-        // return $pdf->stream('shipments.pdf');
+        // return view('portal.shipments.print',['txn'=> $txn, 'parent_company' => $parent_company]);
+        $pdf = PDF::loadView('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
+        return $pdf->stream('shipments.pdf');
     }
 
     public function cancel(Request $request, $id)

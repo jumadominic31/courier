@@ -30,7 +30,7 @@
                         @if(Auth::user()->usertype != 'cusclerk')
                         <li><a href="{{ route('portal.users.index') }}">Users</a></li>
                         @endif
-                        <li><a href="{{ route('portal.rates.index') }}">Rates</a></li>
+                        <!-- <li><a href="{{ route('portal.rates.index') }}">Rates</a></li> -->
                         <li><a href="{{ route('portal.parcel.index') }}">Parcels</a></li>
                      </ul>
                 </li>
@@ -39,10 +39,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporting <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('portal.shipments.index') }}">Shipments</a></li>
-                        <li><a href="{{ route('portal.shipments.index') }}">Invoices</a></li>
-                        <li><a href="{{ route('portal.shipments.index') }}">Payments</a></li>
                     </ul>
                 </li>
+                <li><a href="{{ route('portal.shipments.add') }}">Book Shipment</a></li>
                 <li><a href="{{ route('portal.shipments.awb') }}">AWB Search</a></li>
                 
             </ul>

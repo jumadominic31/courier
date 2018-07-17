@@ -43,7 +43,7 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <a href="{{ route('portal.shipments.index') }}" style='text-decoration: none; color: black'>
                         <div class="well dash-box">
                             <h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> {{$booked}} </h2>
@@ -51,15 +51,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-4">
-                    <a href="{{ route('portal.shipments.index') }}" style='text-decoration: none; color: black'>
-                        <div class="well dash-box">
-                            <h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> {{$dispatched}} </h2>
-                            <h4>Today Picked</h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <a href="{{ route('portal.shipments.index') }}" style='text-decoration: none; color: black'>
                         <div class="well dash-box">
                             <h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> {{$received}} </h2>
@@ -80,14 +72,12 @@
                 <tr>
 	                <th class="col-sm-2">Sender Name</th>
 	                <th class="col-sm-2">Booked</th>
-                    <th class="col-sm-2">Picked</th>
                     <th class="col-sm-2">Received</th>
                 </tr>
                 @foreach($parcels as $parcel)
                 <tr>
                     <td class="col-sm-2">{{$parcel['sender_name']}}</td>
                     <td class="col-sm-2">{{$parcel['booked']}}</td>
-                    <td class="col-sm-2">{{$parcel['picked']}}</td>
                     <td class="col-sm-2">{{$parcel['received']}}</td>
                 </tr>
                 @endforeach

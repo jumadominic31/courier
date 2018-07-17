@@ -5,7 +5,7 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
             <div class="panel-heading">Edit User Details <a 
-                href="{{ route('portal.users.profile') }}"
+                href="{{ route('portal.users.index') }}"
                 class="pull-right btn btn-default btn-xs">Go Back</a></div>
 
             <div class="panel-body">
@@ -39,7 +39,7 @@
                     </div>
                 @endif
                 <div class="form-group">
-                    {{Form::label('station_id', 'Station Name')}}
+                    {{Form::label('station_id', 'Branch Name')}}
                     {{Form::select('station_id', ['' => ''] + $stations, $user->station_id, ['class' => 'form-control'])}}
                 </div>
                 <div class="form-group">

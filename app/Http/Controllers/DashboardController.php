@@ -83,7 +83,15 @@ class DashboardController extends Controller
         $dispatched = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(updated_at, "%Y-%m-%d")'), '=', $curr_date)->where('parcel_status_id','=','8')->count();
         $received = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(updated_at, "%Y-%m-%d")'), '=', $curr_date)->where('parcel_status_id','=','4')->count();
 
-        $parcels = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(updated_at, "%Y-%m-%d")'), '=', $curr_date)->select('sender_name', DB::raw("COUNT( CASE WHEN parcel_status_id = '1' THEN 1 ELSE NULL END ) AS 'created'"), DB::raw("COUNT( CASE WHEN parcel_status_id = '2' THEN parcel_status_id ELSE NULL END ) AS 'dispatched'"), DB::raw("COUNT( CASE WHEN parcel_status_id = '3' THEN parcel_status_id ELSE NULL END ) AS 'delivered'"), DB::raw("COUNT( CASE WHEN parcel_status_id = '4' THEN parcel_status_id ELSE NULL END ) AS 'received'"), DB::raw("COUNT( CASE WHEN parcel_status_id = '5' THEN parcel_status_id ELSE NULL END ) AS 'lost'"), DB::raw("COUNT( CASE WHEN parcel_status_id = '7' THEN parcel_status_id ELSE NULL END ) AS 'booked'"), DB::raw("COUNT( CASE WHEN parcel_status_id = '8' THEN parcel_status_id ELSE NULL END ) AS 'picked'"))->groupBy('sender_name')->get();
+        $parcels = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(updated_at, "%Y-%m-%d")'), '=', $curr_date)
+            ->select('sender_name', DB::raw("COUNT( CASE WHEN parcel_status_id = '1' THEN 1 ELSE NULL END ) AS 'created'"), 
+                DB::raw("COUNT( CASE WHEN parcel_status_id = '2' THEN parcel_status_id ELSE NULL END ) AS 'dispatched'"), 
+                DB::raw("COUNT( CASE WHEN parcel_status_id = '3' THEN parcel_status_id ELSE NULL END ) AS 'delivered'"), 
+                DB::raw("COUNT( CASE WHEN parcel_status_id = '4' THEN parcel_status_id ELSE NULL END ) AS 'received'"), 
+                DB::raw("COUNT( CASE WHEN parcel_status_id = '5' THEN parcel_status_id ELSE NULL END ) AS 'lost'"), 
+                DB::raw("COUNT( CASE WHEN parcel_status_id = '7' THEN parcel_status_id ELSE NULL END ) AS 'booked'"), 
+                DB::raw("COUNT( CASE WHEN parcel_status_id = '8' THEN parcel_status_id ELSE NULL END ) AS 'picked'"))
+            ->groupBy('sender_name')->get();
 
         return view('dashboard.customer', ['costs' => $costs, 'booked' => $booked, 'dispatched' => $dispatched, 'received' => $received, 'parcels' => $parcels]);
     }

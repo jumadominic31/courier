@@ -60,6 +60,7 @@ div.WordSection1
 @endif
 <div></div>
 
+<div>
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none'>
  <tr>
@@ -68,6 +69,7 @@ div.WordSection1
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:center;line-height:normal'><b><span style='font-size:14.0pt;
   font-family:"Arial","sans-serif"'>{{$parent_company['name']}}</span></b></p>
+  <p><img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="75px"></p>
   </td>
  </tr>
  <tr>
@@ -274,6 +276,7 @@ text-align:center'><span style='font-size:9.5pt;line-height:107%;font-family:
 
 <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><span
 style='font-size:9.5pt;line-height:107%'>&nbsp;</span></p>
+</div>
 </div>
 
 </body>

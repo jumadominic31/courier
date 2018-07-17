@@ -18,7 +18,7 @@
                 <th>Full Name</th>
                 <th>Phone</th>
                 <th>Email</th>
-                <th>Home Station</th>
+                <th>Branch</th>
                 <th>User Type</th>
                 <th>Company</th>
                 <th>Status</th>
