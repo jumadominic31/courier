@@ -541,13 +541,16 @@ class CusportalController extends Controller
             $txnlog->save();
         }
 
+        $awb_num = $txn->awb_num;
         $txn_id = $txn->id;
 
         $data = [
-            'id'   => $txn_id
+            'id'   => $txn_id,
+            'success' => 'Shipment ID '. $awb_num .' added '
         ];
 
-        return redirect('/portal/shipment/print/'.$txn_id)->with($data);
+        return redirect('/portal/shipment/'.$txn_id.'/edit')->with($data);
+        // return redirect('/portal/shipments')->with('success', 'Shipment ID '. $awb_num .' added ');
     }
 
     public function edit($id)
@@ -597,8 +600,9 @@ class CusportalController extends Controller
         }
         
         // return view('portal.shipments.print',['txn'=> $txn, 'parent_company' => $parent_company]);
-        $pdf = PDF::loadView('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
-        return $pdf->stream('shipments.pdf');
+        // $pdf = PDF::loadView('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
+        // return $pdf->stream('shipments.pdf');
+        return view('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
     }
 
     public function cancel(Request $request, $id)

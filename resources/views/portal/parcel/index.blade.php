@@ -42,6 +42,8 @@
 		<tr><td>3</td><td>Received at sort facility</td><td>Parcel received at sort facility</td></tr>
 		<tr><td>4</td><td>Dispatched</td><td>Parcel dispatched from sort facility. On transit</td></tr>
 		<tr><td>5</td><td>Received at destination</td><td>Parcel taken by receiver at destination</td></tr>
+		<tr><td>6</td><td>Cancelled</td><td>Parcel shipment cancelled</td></tr>
+		<tr><td>7</td><td>Lost</td><td>Parcel cannot be traced</td></tr>
 	</table>
 </div>
 
