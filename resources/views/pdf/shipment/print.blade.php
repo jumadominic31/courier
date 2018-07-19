@@ -13,6 +13,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <link rel=themeData href="Waybill%20sample2_files/themedata.thmx">
 <link rel=colorSchemeMapping
 href="Waybill%20sample2_files/colorschememapping.xml">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 <!--
  /* Font Definitions */
@@ -128,7 +129,7 @@ div.WordSection1
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Copy 1</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Receiver Copy</span></p>
   </td>
   <td width=312 colspan=4 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
@@ -159,9 +160,7 @@ div.WordSection1
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:center;line-height:normal'><span style='font-size:10.0pt;
-  mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect
-  <span class=SpellE>Cheque</span></span><span style='color:blue'><o:p></o:p></span></p>
+  text-align:center;line-height:normal'></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:2'>
@@ -311,7 +310,10 @@ div.WordSection1
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:10.0pt;
+  mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect
+  <span class=SpellE>Cheque</span></p>
+  <i class="fa fa-check-circle"></i>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
@@ -369,7 +371,7 @@ div.WordSection1
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Copy 2</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Acknowledgment Copy 1</span></p>
   </td>
   <td width=312 colspan=4 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
@@ -401,9 +403,7 @@ div.WordSection1
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:center;line-height:normal'><span style='font-size:10.0pt;
-  mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect
-  <span class=SpellE>Cheque</span></span></p>
+  text-align:center;line-height:normal'></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:2'>
@@ -553,7 +553,9 @@ div.WordSection1
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:10.0pt;
+  mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect
+  <span class=SpellE>Cheque</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
@@ -612,7 +614,7 @@ div.WordSection1
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Copy 3</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Acknowledgment Copy 2</span></p>
   </td>
   <td width=312 colspan=4 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
@@ -644,9 +646,7 @@ div.WordSection1
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:center;line-height:normal'><span style='font-size:10.0pt;
-  mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect
-  <span class=SpellE>Cheque</span></span></p>
+  text-align:center;line-height:normal'></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:2'>
@@ -796,7 +796,9 @@ div.WordSection1
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:10.0pt;
+  mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect
+  <span class=SpellE>Cheque</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
@@ -855,7 +857,7 @@ div.WordSection1
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Copy 4</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Client Copy</span></p>
   </td>
   <td width=312 colspan=4 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
@@ -887,9 +889,7 @@ div.WordSection1
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:center;line-height:normal'><span style='font-size:10.0pt;
-  mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect
-  Cheque</span></p>
+  text-align:center;line-height:normal'></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:2'>
@@ -1039,7 +1039,9 @@ div.WordSection1
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:10.0pt;
+  mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect
+  <span class=SpellE>Cheque</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
