@@ -79,7 +79,7 @@ class DashboardController extends Controller
             $costs = 0;
         }
 
-        $booked = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(updated_at, "%Y-%m-%d")'), '=', $curr_date)->where('parcel_status_id','=','7')->count();
+        $booked = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), '=', $curr_date)->count();
         $dispatched = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(updated_at, "%Y-%m-%d")'), '=', $curr_date)->where('parcel_status_id','=','8')->count();
         $received = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(updated_at, "%Y-%m-%d")'), '=', $curr_date)->where('parcel_status_id','=','4')->count();
 

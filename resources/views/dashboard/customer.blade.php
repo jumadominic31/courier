@@ -43,7 +43,7 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <a href="{{ route('portal.shipments.index') }}" style='text-decoration: none; color: black'>
                         <div class="well dash-box">
                             <h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> {{$booked}} </h2>
@@ -51,7 +51,15 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
+                    <a href="{{ route('portal.shipments.index') }}" style='text-decoration: none; color: black'>
+                        <div class="well dash-box">
+                            <h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> {{$booked}} </h2>
+                            <h4>On Transit</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-4">
                     <a href="{{ route('portal.shipments.index') }}" style='text-decoration: none; color: black'>
                         <div class="well dash-box">
                             <h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> {{$received}} </h2>

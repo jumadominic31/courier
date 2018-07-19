@@ -288,8 +288,8 @@ class CusportalController extends Controller
         $clerk_id = $request->input('clerk_id');
 
         if ($request->isMethod('POST')){
-            $txns = Txn::where('sender_company_id', '=', $company_id);
-            $tot_coll = Txn::select('sender_company_id', DB::raw('sum(price) as tot_coll'))->where('sender_company_id', '=', $company_id);
+            $txns = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('date(created_at)'),'>=',$curr_date);
+            $tot_coll = Txn::where(DB::raw('date(created_at)'),'>=',$curr_date)->select('sender_company_id', DB::raw('sum(price) as tot_coll'))->where('sender_company_id', '=', $company_id);
 
             if ($awb_num != NULL){
                 $txns = $txns->where('awb_num','like','%'.$awb_num.'%');
@@ -365,9 +365,9 @@ class CusportalController extends Controller
             }
         }
         else {
-            $tot_count = Txn::where('sender_company_id','=',$company_id)->count();
-            $txns = Txn::where('sender_company_id','=',$company_id)->orderBy('id','desc')->get();
-            $tot_coll = Txn::select('sender_company_id', DB::raw('sum(price) as tot_coll'))->where('sender_company_id', '=', $company_id)->groupBy('sender_company_id')->pluck('tot_coll')->first();
+            $tot_count = Txn::where('sender_company_id','=',$company_id)->where(DB::raw('date(created_at)'),'>=',$curr_date)->count();
+            $txns = Txn::where('sender_company_id','=',$company_id)->where(DB::raw('date(created_at)'),'>=',$curr_date)->orderBy('id','desc')->get();
+            $tot_coll = Txn::where(DB::raw('date(created_at)'),'>=',$curr_date)->select('sender_company_id', DB::raw('sum(price) as tot_coll'))->where('sender_company_id', '=', $company_id)->groupBy('sender_company_id')->pluck('tot_coll')->first();
             if ($tot_coll == NULL) {
                 $tot_coll = 0;
             }

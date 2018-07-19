@@ -15,6 +15,29 @@ xmlns="http://www.w3.org/TR/REC-html40">
 href="Waybill%20sample2_files/colorschememapping.xml">
 <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+  hr {
+  border:none;
+  border-top:2px dotted #000;
+  color:#fff;
+  background-color:#fff;
+  height:0px;
+  width:100%;
+}
+#scissors {
+    height: 45px; /* image height */
+    width: 90%;
+    margin: auto auto;
+    background-image: url('http://i.stack.imgur.com/cXciH.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    position: relative;
+}
+#scissors div {
+    position: relative;
+    top: 50%;
+    border-top: 3px dashed black;
+    margin-top: -3px;
+}
 <!--
  /* Font Definitions */
  @font-face
@@ -135,8 +158,7 @@ div.WordSection1
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:right;line-height:normal'><span style='font-size:9.0pt;font-family:
-  "Arial","sans-serif"'>Waybill
-  No: {{$txn['awb_num']}}</span></p>
+  "Arial","sans-serif"'>Waybill No: <b>{{$txn['awb_num']}}</b></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1'>
@@ -145,7 +167,7 @@ div.WordSection1
   border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
-    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px"></span></p>
+    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;"></span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
@@ -313,7 +335,6 @@ div.WordSection1
   normal'><span style='font-size:10.0pt;
   mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect
   <span class=SpellE>Cheque</span></p>
-  <i class="fa fa-check-circle"></i>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
@@ -335,7 +356,7 @@ div.WordSection1
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Rider
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Receiver
   Name and Signature</span></b></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:117.0pt;border-top:none;
@@ -360,9 +381,11 @@ div.WordSection1
  </tr>
 </table>
 
-<p class=MsoNormal><o:p>&nbsp;</o:p></p>
 </div>
-
+<!-- <div id="scissors">
+    <div></div>
+</div> -->
+<hr>
 <div id=copy2>
 
 <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
@@ -377,8 +400,7 @@ div.WordSection1
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:right;line-height:normal'><span style='font-size:9.0pt;font-family:
-  "Arial","sans-serif"'>Waybill
-  No: {{$txn['awb_num']}}</span></p>
+  "Arial","sans-serif"'>Waybill No: <b>{{$txn['awb_num']}}</b></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1'>
@@ -387,7 +409,7 @@ div.WordSection1
   border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
-    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px">
+    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;">
   </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
@@ -577,7 +599,7 @@ div.WordSection1
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Rider
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Receiver
   Name and Signature</span></b></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:117.0pt;border-top:none;
@@ -601,10 +623,8 @@ div.WordSection1
   <td width=114 style='width:85.5pt;padding:0in 0in 0in 0in'></td>
  </tr>
 </table>
-
-<p class=MsoNormal><o:p>&nbsp;</o:p></p>
-
 </div>
+<hr>
 
 <div id=copy3>
 
@@ -620,8 +640,7 @@ div.WordSection1
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:right;line-height:normal'><span style='font-size:9.0pt;font-family:
-  "Arial","sans-serif"'>Waybill
-  No: {{$txn['awb_num']}}</span></p>
+  "Arial","sans-serif"'>Waybill No: <b>{{$txn['awb_num']}}</b></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1'>
@@ -630,7 +649,7 @@ div.WordSection1
   border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
-    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px">
+    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;">
   </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
@@ -820,7 +839,7 @@ div.WordSection1
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Rider
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Receiver
   Name and Signature</span></b></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:117.0pt;border-top:none;
@@ -845,10 +864,8 @@ div.WordSection1
  </tr>
 </table>
 
-<p class=MsoNormal><o:p>&nbsp;</o:p></p>
-
 </div>
-
+<hr>
 <div id=copy4>
 
 <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
@@ -863,8 +880,7 @@ div.WordSection1
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:right;line-height:normal'><span style='font-size:9.0pt;font-family:
-  "Arial","sans-serif"'>Waybill
-  No: {{$txn['awb_num']}}</span></p>
+  "Arial","sans-serif"'>Waybill No: <b>{{$txn['awb_num']}}</b></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1'>
@@ -873,7 +889,7 @@ div.WordSection1
   border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
-    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px">
+    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;">
   </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
