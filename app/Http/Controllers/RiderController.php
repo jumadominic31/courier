@@ -328,6 +328,40 @@ class RiderController extends Controller
     	return response()->json(['txn' => $txn], 201);
     }
 
+    public function getRiderpickupTxn()
+    {
+        $user = JWTAuth::parseToken()->toUser();
+        $user_id = $user->id;
+        $company_id = $user->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+
+        $txn = DB::table('txns')
+                ->select('txns.id', 'txns.awb_num', 'txns.origin_addr', 'txns.dest_addr', 'txns.sender_company_name', 'txns.sender_name')
+                ->where('txns.company_id', '=', $parent_company_id)
+                ->where('txns.parcel_status_id', '=', '9')
+                ->where('driver_id', '=', $user_id)
+                ->orderby('txns.id', 'desc')->get();
+
+        return response()->json(['txn' => $txn], 201);
+    }
+
+    public function getRiderdropTxn()
+    {
+        $user = JWTAuth::parseToken()->toUser();
+        $user_id = $user->id;
+        $company_id = $user->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+
+        $txn = DB::table('txns')
+                ->select('txns.id', 'txns.awb_num', 'txns.origin_addr', 'txns.dest_addr', 'txns.receiver_name')
+                ->where('txns.company_id', '=', $parent_company_id)
+                ->where('txns.parcel_status_id', '=', '2')
+                ->where('driver_id', '=', $user_id)
+                ->orderby('txns.id', 'desc')->get();
+
+        return response()->json(['txn' => $txn], 201);
+    }
+
     public function getRidercustbookedTxn($sender_company_id)
     {
         $user = JWTAuth::parseToken()->toUser();
