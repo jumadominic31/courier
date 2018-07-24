@@ -165,7 +165,6 @@ Route::group(['middleware' => 'auth.jwt'], function () {
          'as' => 'rider.listdrops'
     ]);
 
-<<<<<<< HEAD
     Route::get('/rider/txn/numberpickups', [
          'uses' => 'RiderController@getnumRiderpickupTxn',
          'as' => 'rider.lnumberpickups'
@@ -174,7 +173,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('/rider/txn/numberdrops', [
          'uses' => 'RiderController@getnumRiderdropTxn',
          'as' => 'rider.numberdrops'
-=======
+
     Route::get('/rider/txn/completedpickups', [
          'uses' => 'RiderController@getcompletedRiderpickups',
          'as' => 'rider.completedpickups'
@@ -183,7 +182,6 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('/rider/txn/completeddrops', [
          'uses' => 'RiderController@getcompletedRiderdrops',
          'as' => 'rider.completeddrops'
->>>>>>> b957a17d6eb14873af9aef1292b01163962bd31d
     ]);
 
     Route::get('/rider/txn/booked/cust/{id}', [
