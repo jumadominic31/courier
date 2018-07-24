@@ -363,7 +363,7 @@ class RiderController extends Controller
     }
 
     public function getnumRiderpickupTxn()
-    {}
+    {
         $user = JWTAuth::parseToken()->toUser();
         $user_id = $user->id;
         $company_id = $user->company_id;

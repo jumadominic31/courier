@@ -173,7 +173,8 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('/rider/txn/numberdrops', [
          'uses' => 'RiderController@getnumRiderdropTxn',
          'as' => 'rider.numberdrops'
-
+    ]);
+    
     Route::get('/rider/txn/completedpickups', [
          'uses' => 'RiderController@getcompletedRiderpickups',
          'as' => 'rider.completedpickups'
