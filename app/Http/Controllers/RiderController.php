@@ -362,6 +362,38 @@ class RiderController extends Controller
         return response()->json(['txn' => $txn], 201);
     }
 
+    public function getcompletedRiderpickups()
+    {
+        $user = JWTAuth::parseToken()->toUser();
+        $user_id = $user->id;
+        $company_id = $user->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $curr_date = date('Y-m-d');
+
+        $txn = TxnLog::where('company_id', '=', $parent_company_id)
+            ->where('updated_by', '=', $user_id)
+            ->where('status_id', '=', '4')
+            ->where(DB::raw('date(updated_at)'), '=', $curr_date)->count();
+
+        return response()->json(['txn' => $txn], 201);
+    }
+
+    public function getcompletedRiderdrops()
+    {
+        $user = JWTAuth::parseToken()->toUser();
+        $user_id = $user->id;
+        $company_id = $user->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $curr_date = date('Y-m-d');
+
+        $txn = TxnLog::where('company_id', '=', $parent_company_id)
+            ->where('updated_by', '=', $user_id)
+            ->where('status_id', '=', '4')
+            ->where(DB::raw('date(updated_at)'), '=', $curr_date)->count();
+
+        return response()->json(['txn' => $txn], 201);
+    }
+
     public function getRidercustbookedTxn($sender_company_id)
     {
         $user = JWTAuth::parseToken()->toUser();
