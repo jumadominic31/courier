@@ -160,6 +160,7 @@ class InvoicesController extends Controller
     {
     	$user = Auth::user();
         $company_id = Auth::user()->company_id;
+
         $this->validate($request, [
             'txn_id' => 'required'
         ]);
