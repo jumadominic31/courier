@@ -362,6 +362,21 @@ class RiderController extends Controller
         return response()->json(['txn' => $txn], 201);
     }
 
+    public function getnumRiderpickupTxn()
+    {
+        $user = JWTAuth::parseToken()->toUser();
+        $user_id = $user->id;
+        $company_id = $user->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+
+        $txn = DB::table('txns')
+                ->where('txns.company_id', '=', $parent_company_id)
+                ->where('txns.parcel_status_id', '=', '9')
+                ->where('driver_id', '=', $user_id)
+                ->orderby('txns.id', 'desc')->count();
+        return response()->json(['txn' => $txn], 201);
+    }
+
     public function getcompletedRiderpickups()
     {
         $user = JWTAuth::parseToken()->toUser();
@@ -374,7 +389,21 @@ class RiderController extends Controller
             ->where('updated_by', '=', $user_id)
             ->where('status_id', '=', '4')
             ->where(DB::raw('date(updated_at)'), '=', $curr_date)->count();
+        return response()->json(['txn' => $txn], 201);
+    }
 
+    public function getnumRiderdropTxn()
+    {
+        $user = JWTAuth::parseToken()->toUser();
+        $user_id = $user->id;
+        $company_id = $user->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+
+        $txn = DB::table('txns')
+                ->where('txns.company_id', '=', $parent_company_id)
+                ->where('txns.parcel_status_id', '=', '2')
+                ->where('driver_id', '=', $user_id)
+                ->orderby('txns.id', 'desc')->count();
         return response()->json(['txn' => $txn], 201);
     }
 
@@ -390,7 +419,6 @@ class RiderController extends Controller
             ->where('updated_by', '=', $user_id)
             ->where('status_id', '=', '4')
             ->where(DB::raw('date(updated_at)'), '=', $curr_date)->count();
-
         return response()->json(['txn' => $txn], 201);
     }
 

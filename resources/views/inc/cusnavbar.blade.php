@@ -12,8 +12,9 @@
             <!-- Branding Image -->
             <a class="navbar-brand" 
                 href="{{ route('dashboard.customer') }}">
-                {{session('courier.companyname') }}
+                Elite Riders Limited
             </a>
+            
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -24,16 +25,16 @@
 
             <ul class="nav navbar-nav">
                 <li><a href="{{ route('dashboard.customer') }}">Dashboard</a></li>
-                <li>
+                <!-- <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         @if(Auth::user()->usertype != 'cusclerk')
                         <li><a href="{{ route('portal.users.index') }}">Users</a></li>
                         @endif
-                        <!-- <li><a href="{{ route('portal.rates.index') }}">Rates</a></li> -->
+                        <li><a href="{{ route('portal.rates.index') }}">Rates</a></li>
                         <li><a href="{{ route('portal.parcel.index') }}">Parcels</a></li>
                      </ul>
-                </li>
+                </li> -->
                 
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporting <span class="caret"></span></a>
@@ -48,6 +49,10 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
+                <a class="navbar-brand" 
+                    href="{{ route('dashboard.customer') }}">
+                    {{session('courier.companyname') }}
+                </a>
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ route('users.signin') }}">Login</a></li>
