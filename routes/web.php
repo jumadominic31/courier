@@ -184,6 +184,16 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'invoice.index'
         ]);
 
+        Route::get('/invoice2', [
+            'uses' => 'InvoicesController@getInvoices2',
+            'as' => 'invoice.index2'
+        ]);
+
+        Route::post('/invoice2', [
+            'uses' => 'InvoicesController@getInvoices2',
+            'as' => 'invoice.index2'
+        ]);
+
         Route::get('/invoice/show/{id}', [
             'uses' => 'InvoicesController@showInvoice',
             'as' => 'invoice.show'

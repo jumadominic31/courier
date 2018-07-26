@@ -131,6 +131,47 @@ class InvoicesController extends Controller
 
         return view('invoice.index', ['invoices' => $invoices, 'tot_amount' => $tot_amount, 'tot_paid' => $tot_paid, 'tot_bal' => $tot_bal, 'tot_count' => $tot_count, 'cuscompanies' => $cuscompanies]);
     }
+    public function getInvoices2(Request $request)
+    {
+        $company_id = Auth::user()->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $company_details = Company::where('id', '=', $company_id)->get();
+        $curr_date = date('Y-m-d');
+        
+        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name', 'id')->all();
+
+        $invoice_num = $request->input('invoice_num');
+        $company_id = $request->input('company_id');
+        $month = $request->input('month');
+        
+        if ($request->isMethod('POST')){
+            $invoices = Nuinvoice::where('parent_company_id', '=', $parent_company_id);
+
+            if ($invoice_num != NULL){
+                $invoices = $invoices->where('invoice_num','like','%'.$invoice_num.'%');
+            }
+            if ($company_id != NULL){
+                $invoices = $invoices->where('company_id','=', $company_id);
+            }
+            if ($month != NULL){
+                $invoices = $invoices->where(DB::raw('DATE_FORMAT(month, "%Y-%m")'), '=', $month);
+            }
+                        
+            if ($request->submitBtn == 'CreatePDF') {
+                $invoices = $invoices->orderBy('id','desc')->limit(50)->get();
+                $pdf = PDF::loadView('pdf.invoice_list', ['invoices' => $invoices, 'company_details' => $company_details]);
+                $pdf->setPaper('A4', 'landscape');
+                return $pdf->stream('invoice_list.pdf');
+            }
+
+            $invoices = $invoices->orderBy('month','desc')->get();
+        }
+        else {
+            $invoices = Nuinvoice::where('parent_company_id','=',$parent_company_id)->orderBy('month','desc')->get();
+        }
+
+        return view('invoice.index2', ['invoices' => $invoices, 'cuscompanies' => $cuscompanies]);
+    }
 
     public function selTxns($id)
     {
@@ -222,7 +263,8 @@ class InvoicesController extends Controller
         $user_id = $user->id;
         $company_id = $user->company_id;
 
-        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name', 'id')->all();
+        // $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name', 'id')->all();
+        $cuscompanies = DB::table('companies as comp')->join('contracts as contr', 'comp.id', '=', 'contr.company_id')->where('comp.parent_company_id', '=', $company_id)->where('comp.id', '!=', $company_id)->where('contr.status', '=', '1')->pluck('comp.name', 'comp.id')->all();
 
         return view('invoice.add2', [ 'cuscompanies' => $cuscompanies]);
     }
@@ -238,13 +280,12 @@ class InvoicesController extends Controller
             'month' => 'required|date'
         ]);
 
+        $curr_date = date('Y-m');
         $company_id = $request->input('company_id');
         $month = $request->input('month');
         $formatted_month = $month."-01 00:00:01";
-        // $month = DATE_FORMAT($month, "%Y-%m");
-        // $month = date_format($month, 'Y-m-d H:i:s');
 
-        $last_invoice = Nuinvoice::where('company_id','=',$parent_company_id)->orderBy('id','desc')->pluck('invoice_num')->first();
+        $last_invoice = Nuinvoice::where('parent_company_id','=',$parent_company_id)->orderBy('id','desc')->pluck('invoice_num')->first();
         $last_invoice = substr($last_invoice, 3, 5);
         if ($last_invoice == NULL){
             $last_invoice = 20000;
@@ -255,9 +296,17 @@ class InvoicesController extends Controller
         $prefix = substr($prefix, 0, 3);
         $curr_invoice = $prefix.$curr_invoice;
 
-        //check if invoice exists
+        //check if month is ended or invoice exists
+        if ($month >= $curr_date) {
+            return redirect('/invoice')->with('error', 'Cannot create invoice. Choose upto the previous month ');   
+        }
 
-        $contract = Contract::where('company_id', '=', $company_id)->where('status', '=', '1')->get();
+        $invoice_exist = Nuinvoice::where('company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(month, "%Y-%m")'), '=', $month)->count();
+        if ($invoice_exist > 0) {
+            return redirect('/invoice')->with('error', 'Invoice Existing. ');
+        }
+
+        // Extracting invoice details
         $contract_id = Contract::where('company_id', '=', $company_id)->where('status', '=', '1')->pluck('id')->first();
         $min_charge = Contract::where('id', '=', $contract_id)->pluck('min_charge')->first();
         $min_txns = Contract::where('id', '=', $contract_id)->pluck('txns_limit')->first();
@@ -294,7 +343,7 @@ class InvoicesController extends Controller
         $nuinvoice->save();
 
 
-        return redirect('/invoice')->with('success', 'Invoice Added. ');
+        return redirect('/invoice2')->with('success', 'Invoice Added. ');
     }    
 
     public function voidInvoice($id)

@@ -31,23 +31,19 @@
     <!-- Scripts -->
     <script type="text/javascript">
         $('.date').datepicker({  
-        format: 'yyyy-mm-dd'
+            format: 'yyyy-mm-dd'
         });
         $('.first_date').datepicker({  
-        format: 'yyyy-mm-dd'
+            format: 'yyyy-mm-dd'
         }); 
         $('.last_date').datepicker({  
-        format: 'yyyy-mm-dd'
-        }); 
-    </script> 
-    <script type="text/javascript">
+            format: 'yyyy-mm-dd'
+        });
         $('.month').datepicker({  
-        format: 'yyyy-mm',
-        viewMode: "months", 
-        minViewMode: "months"
-        });  
-    </script>
-    <script>
+            format: 'yyyy-mm',
+            viewMode: "months", 
+            minViewMode: "months"
+        });
       function checkfilter(str) {
         if(str==true) {
           jQuery('div#filteroptions').show();
