@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Invoice;
+use App\Nuinvoice;
 use App\Txn;
 use App\TxnLog;
 use App\Company;
+use App\Contract;
 use App\User;
 use App\UserLog;
 use App\Station;
@@ -150,10 +152,7 @@ class InvoicesController extends Controller
     {
     	$company_id = Auth::user()->company_id;
         $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
-        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name', 'id')->all();
-        $company_details = Company::where('id', '=', $company_id)->get();
-        // $txns = Txn::where('company_id','=',$parent_company_id)->where('invoiced','=','0')->where('price','!=',NULL)->orderBy('id','desc')->get();
-        $txns = Txn::where('company_id','=','0')->get();
+        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name', 'id')->all();;
     	return view('invoice.add', [ 'cuscompanies' => $cuscompanies]);
     }
 
@@ -216,6 +215,87 @@ class InvoicesController extends Controller
 	    }
     	return redirect('/invoice')->with('success', 'Invoice Added. Count: '. $count .' Total: '.$tot_amount );
     }
+
+    public function addInvoice2()
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $company_id = $user->company_id;
+
+        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name', 'id')->all();
+
+        return view('invoice.add2', [ 'cuscompanies' => $cuscompanies]);
+    }
+
+    public function storeInvoice2(Request $request)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $parent_company_id = $user->company_id;
+
+        $this->validate($request, [
+            'company_id' => 'required',
+            'month' => 'required|date'
+        ]);
+
+        $company_id = $request->input('company_id');
+        $month = $request->input('month');
+        $formatted_month = $month."-01 00:00:01";
+        // $month = DATE_FORMAT($month, "%Y-%m");
+        // $month = date_format($month, 'Y-m-d H:i:s');
+
+        $last_invoice = Nuinvoice::where('company_id','=',$parent_company_id)->orderBy('id','desc')->pluck('invoice_num')->first();
+        $last_invoice = substr($last_invoice, 3, 5);
+        if ($last_invoice == NULL){
+            $last_invoice = 20000;
+        }
+        $curr_invoice = $last_invoice + 1;
+        $prefix = Company::where('id', '=', $parent_company_id)->pluck('name')->first();
+        $prefix = strtoupper($prefix);
+        $prefix = substr($prefix, 0, 3);
+        $curr_invoice = $prefix.$curr_invoice;
+
+        //check if invoice exists
+
+        $contract = Contract::where('company_id', '=', $company_id)->where('status', '=', '1')->get();
+        $contract_id = Contract::where('company_id', '=', $company_id)->where('status', '=', '1')->pluck('id')->first();
+        $min_charge = Contract::where('id', '=', $contract_id)->pluck('min_charge')->first();
+        $min_txns = Contract::where('id', '=', $contract_id)->pluck('txns_limit')->first();
+        $txn_cost_overlimit = Contract::where('id', '=', $contract_id)->pluck('txn_cost_overlimit')->first();
+
+        $total_txns = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), '=', $month)->count();
+        if ($total_txns <= $min_txns){
+            $extra_charge = 0;
+        }
+        else {
+            $extra_charge = ($total_txns - $min_txns) * $txn_cost_overlimit;
+        }
+        $subtotal_charge = $min_charge + $extra_charge;
+        $vat = 0.16 * $subtotal_charge;
+
+
+        //post invoice
+        $nuinvoice = new Nuinvoice;
+        $nuinvoice->invoice_num = $curr_invoice;
+        $nuinvoice->company_id = $company_id;
+        $nuinvoice->parent_company_id = $parent_company_id;
+        $nuinvoice->month = $formatted_month;
+        $nuinvoice->contract_id = $contract_id;
+        $nuinvoice->min_txns = $min_txns;
+        $nuinvoice->total_txns = $total_txns;
+        $nuinvoice->min_charge = $min_charge;
+        $nuinvoice->extra_charge = $extra_charge;
+        $nuinvoice->subtotal_charge = $subtotal_charge;
+        $nuinvoice->discount = 0;
+        $nuinvoice->total_charge = $subtotal_charge;
+        $nuinvoice->vat = $vat;
+        $nuinvoice->paid = 0;
+        $nuinvoice->bal = $subtotal_charge;
+        $nuinvoice->save();
+
+
+        return redirect('/invoice')->with('success', 'Invoice Added. ');
+    }    
 
     public function voidInvoice($id)
     {
