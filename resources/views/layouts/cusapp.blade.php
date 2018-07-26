@@ -30,6 +30,9 @@
 
     <!-- Scripts -->
     <script type="text/javascript">
+        $('.date').datepicker({  
+        format: 'yyyy-mm-dd'
+        });
         $('.first_date').datepicker({  
         format: 'yyyy-mm-dd'
         }); 

@@ -3,6 +3,8 @@
 @section('content')
 <div class="panel-heading"><h1>Manage Invoices </h1> </div>
 <a href="{{ route('invoice.add') }}" class="btn btn-success">Create Invoice</a><br>
+<br><br>
+<a href="{{ route('invoice.add2') }}" class="btn btn-success">Create Invoice - NEW</a><br>
 <div><a class="pull-right btn btn-default" href="{{ route('invoice.index') }}">Reset</a> </div>
 <hr>
 <strong>Filter Options: </strong>

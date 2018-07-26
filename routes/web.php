@@ -141,6 +141,16 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'invoice.store'
         ]);
 
+        Route::get('/invoice/add2', [
+            'uses' => 'InvoicesController@addInvoice2',
+            'as' => 'invoice.add2'
+        ]);
+
+        Route::post('/invoice/store2', [
+            'uses' => 'InvoicesController@storeInvoice2' , 
+            'as' => 'invoice.store2'
+        ]);
+
         Route::match(array('PUT', 'PATCH'), '/invoice/voidinv/{id}', [
             'uses' => 'InvoicesController@voidInvoice' , 
             'as' => 'invoice.voidinv'
@@ -172,6 +182,33 @@ Route::group(['middleware' => 'auth'] , function () {
             'uses' => 'UsersController@resetOtherpass',
             'as' => 'users.resetOtherpass'
         ]);
+
+        //Contracts
+        Route::get('/contracts', [
+            'uses' => 'ContractsController@index' , 
+            'as' => 'contracts.index'
+        ]);
+
+        Route::get('/contracts/create', [
+            'uses' => 'ContractsController@create' , 
+            'as' => 'contracts.create'
+        ]);
+
+        Route::post('/contracts/store', [
+            'uses' => 'ContractsController@store' , 
+            'as' => 'contracts.store'
+        ]);
+
+        Route::get('/contracts/edit/{id}', [
+            'uses' => 'ContractsController@edit' , 
+            'as' => 'contracts.edit'
+        ]);
+
+        Route::match(array('PUT', 'PATCH'), '/contracts/update/{id}', [
+            'uses' => 'ContractsController@update' , 
+            'as' => 'contracts.update'
+        ]);
+
 
         //company edit
         Route::get('/company/{company}/edit', [
