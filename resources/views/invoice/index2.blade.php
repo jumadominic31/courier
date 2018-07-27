@@ -60,7 +60,7 @@
         <td>{{$invoice['month']}}</td>
         <td>{{number_format($invoice['total_charge'], 2, '.', ',')}}</td>
         <td>{{number_format($invoice['vat'], 2, '.', ',')}}</td>
-        <td></td>
+        <td><a class="pull-right btn btn-default btn-xs" href="{{ route('invoice.print2', ['id' => $invoice->id ]) }}" target="_blank">View Details</a></td>
         <td>
         </td>
     </tr>

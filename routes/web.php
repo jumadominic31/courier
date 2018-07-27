@@ -199,6 +199,11 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'invoice.show'
         ]);
 
+        Route::get('/invoice/show2/{id}', [
+            'uses' => 'InvoicesController@showInvoice2',
+            'as' => 'invoice.show2'
+        ]);
+
         Route::get('/invoice/seltxns/{id}', [
             'uses' => 'InvoicesController@selTxns',
             'as' => 'invoice.seltxns'
@@ -232,6 +237,11 @@ Route::group(['middleware' => 'auth'] , function () {
         Route::get('/invoice/print/{id}', [
             'uses' => 'InvoicesController@printInvoice',
             'as' => 'invoice.print'
+        ]);
+
+        Route::get('/invoice/print2/{id}', [
+            'uses' => 'InvoicesController@printInvoice2',
+            'as' => 'invoice.print2'
         ]);
 
         //users

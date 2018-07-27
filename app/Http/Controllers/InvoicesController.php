@@ -298,12 +298,12 @@ class InvoicesController extends Controller
 
         //check if month is ended or invoice exists
         if ($month >= $curr_date) {
-            return redirect('/invoice')->with('error', 'Cannot create invoice. Choose upto the previous month ');   
+            return redirect('/invoice/add2')->with('error', 'Cannot create invoice. Choose upto the previous month ');   
         }
 
         $invoice_exist = Nuinvoice::where('company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(month, "%Y-%m")'), '=', $month)->count();
         if ($invoice_exist > 0) {
-            return redirect('/invoice')->with('error', 'Invoice Existing. ');
+            return redirect('/invoice/add2')->with('error', 'Invoice Existing. ');
         }
 
         // Extracting invoice details
@@ -314,10 +314,12 @@ class InvoicesController extends Controller
 
         $total_txns = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), '=', $month)->count();
         if ($total_txns <= $min_txns){
+            $extra_txns = 0;
             $extra_charge = 0;
         }
         else {
-            $extra_charge = ($total_txns - $min_txns) * $txn_cost_overlimit;
+            $extra_txns = $total_txns - $min_txns;
+            $extra_charge = $extra_txns * $txn_cost_overlimit;
         }
         $subtotal_charge = $min_charge + $extra_charge;
         $vat = 0.16 * $subtotal_charge;
@@ -331,6 +333,7 @@ class InvoicesController extends Controller
         $nuinvoice->month = $formatted_month;
         $nuinvoice->contract_id = $contract_id;
         $nuinvoice->min_txns = $min_txns;
+        $nuinvoice->extra_txns = $extra_txns;
         $nuinvoice->total_txns = $total_txns;
         $nuinvoice->min_charge = $min_charge;
         $nuinvoice->extra_charge = $extra_charge;
@@ -411,5 +414,49 @@ class InvoicesController extends Controller
         $sender_cusadmin_phone = User::select('phone')->where('company_id', '=', $sender_company_id)->pluck('phone')->first();
 
     	return view('invoice.print', ['txns' => $txns, 'invoice' => $invoice, 'company_details' => $company_details, 'sender_company_name' => $sender_company_name, 'sender_cusadmin_fullname' => $sender_cusadmin_fullname, 'sender_cusadmin_phone' => $sender_cusadmin_phone, 'due_date' => $due_date]);
+    }
+
+    public function showInvoice2($id)
+    {
+        $user = Auth::user();
+        $company_id = Auth::user()->company_id;
+        $invoice = Nuinvoice::where('parent_company_id', '=', $company_id)->where('id', '=', $id)->first();
+
+        if ($invoice == null){
+            return redirect('/invoice2')->with('error', 'Invoice not found');
+        }
+
+        return view('invoice.show2', ['invoice' => $invoice]);
+    }
+
+    public function printInvoice2($id)
+    {
+        $user = Auth::user();
+        $company_id = Auth::user()->company_id;
+
+        $company_details = Company::where('id', '=', $company_id)->first();
+
+        $invoice = Nuinvoice::where('parent_company_id', '=', $company_id)->where('id', '=', $id)->first();
+        if ($invoice == null){
+            return redirect('/invoice2')->with('error', 'Invoice not found');
+        }
+        $contract_id = Nuinvoice::where('parent_company_id', '=', $company_id)->where('id', '=', $id)->pluck('contract_id')->first();
+        $contract = Contract::where('parent_company_id', '=', $company_id)->where('id', '=', $contract_id)->first();
+
+        $curr_date = new Carbon($invoice->created_at);
+        $due_date = $curr_date->addMonth(1);
+
+        $invoice_month = new Carbon($invoice->month);
+        $invoice_mon = $invoice_month->englishMonth; 
+        $invoice_yr = $invoice_month->year;
+        $formatted_month = $invoice_mon. '-' .$invoice_yr;
+
+        $sender_company_id = $invoice->company_id;
+
+        $sender_company_name = Company::select('name')->where('id', '=', $sender_company_id)->pluck('name')->first();
+        $sender_cusadmin_fullname = User::select('fullname')->where('company_id', '=', $sender_company_id)->pluck('fullname')->first();
+        $sender_cusadmin_phone = User::select('phone')->where('company_id', '=', $sender_company_id)->pluck('phone')->first();
+
+        return view('invoice.print2', ['invoice' => $invoice, 'company_details' => $company_details, 'sender_company_name' => $sender_company_name, 'sender_cusadmin_fullname' => $sender_cusadmin_fullname, 'sender_cusadmin_phone' => $sender_cusadmin_phone, 'due_date' => $due_date, 'formatted_month' => $formatted_month, 'contract' => $contract]);
     }
 }

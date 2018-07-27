@@ -4,7 +4,7 @@
 
 <div class="container"> 
     <h1>Create Invoice</h1>
-    <a href="{{ route('invoice.index') }}" class="btn btn-success">Go back</a><br><br>
+    <a href="{{ route('invoice.index2') }}" class="btn btn-success">Go back</a><br><br>
 </div>
 
 {!! Form::open(['action' => 'InvoicesController@storeInvoice2', 'method' => 'POST']) !!}
