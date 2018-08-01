@@ -47,28 +47,26 @@
     Powered by Avanet Technologies
   </footer>
   <h1 style="text-align:center;">Shipments Report </h1>
+  <h2>Customer: {{$cus_company_details[0]['name']}}</h2>
 	Date: {{$curr_date}}<br>
 
   <!-- Options chosen -->
   <h3>Options</h3>
   <div class="container">
-    <table class="table" width="100%" style="font-size:12px" >
+    <table class="table" width="50%" style="font-size:12px" >
       <tbody>
         <tr>
           <td width="14.6%"><strong>AWB #</strong></td>
           <td width="16.6%">{{$awb_num}}</td>
-          <td width="16.6%"><strong>Sender Name</strong></td>
-          <td width="18.6%">{{$sender_name}}</td>
-          <td width="16.6%"><strong>Receiver Name</strong></td>
-          <td width="16.6%">{{$receiver_name}}</td>
-        </tr>
-        <tr>
           <td width="14.6%"><strong>Parcel Status</strong></td>
           <td width="16.6%">{{$parcel_status_name}}</td>
-          <td width="16.6%"><strong>First Booked Date</strong></td>
-          <td width="18.6%">{{$first_date}}</td>
-          <td width="16.6%"><strong>End Booked Date</strong></td>
-          <td width="16.7%">{{$last_date}}</td>
+        </tr>
+        <tr>
+          
+          <td ><strong>Sender Name</strong></td>
+          <td >{{$sender_name}}</td>
+          <td ><strong>Receiver Name</strong></td>
+          <td >{{$receiver_name}}</td>
         </tr>
       </tbody>
     </table>
@@ -77,24 +75,20 @@
   <!-- End options -->
   <div class="container">
     <br>
-    Total <strong> KShs. {{$tot_coll}} </strong><br>
-    No of transactions<strong>{{$tot_count}} </strong><br>
+    No of transactions: <strong>{{$tot_count}} </strong><br>
   </div>
 
   <h3>Transaction Details</h3>
-  Up to 50 records <br>
   
   <?php $i = 1 ?>
 
   <table class="table table-striped" width=100% style="font-size:11px" >
       <tr>
-        <th></th>
+        <th width="2%"></th>
         <th width="7.33%">AWB#</th>
         <th width="11.33%">Origin</th>
         <th width="11.33%">Destination</th>
         <th width="8.33%">Parcel Type</th>
-        <th width="4.33%">Price</th>
-        <th width="4.33%">VAT</th>
         <th width="9.33%">Sender <br>Name</th>
         <th width="9.33%">Receiver <br>Name</th>
         <th width="8.33%">Receiver <br>Company</th>
@@ -109,8 +103,6 @@
         <td>{{$txn['origin_addr']}}</td>
         <td>{{$txn['dest_addr']}}</td>
         <td>{{$txn['parcel_type']['name']}}</td>
-        <td>{{$txn['price']}}</td>
-        <td>{{$txn['vat']}}</td>
         <td>{{$txn['sender_name']}}</td>
         <td>{{$txn['receiver_name']}}</td>
         <td>{{$txn['receiver_company_name']}}</td>

@@ -31,23 +31,9 @@
               {{Form::label('parcel_status_id', 'Parcel Status')}}
               {{Form::select('parcel_status_id', ['' => '', '7' => 'Booked', '9' => 'Picked by rider to sort facility', '10' => 'Received at sort facility', '2' => 'Dispatched to receiver', '4' => 'Received', '6' => 'Cancelled', '5' => 'Lost' ], '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
           </div></td>
-        <td><div class="form-group">
-            {{Form::label('first_date', 'First Booked Date')}}
-            {{Form::text('first_date', '', ['class' => ' first_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
-          </div></td>
-        <td><div class="form-group">
-            {{Form::label('last_date', 'End Booked Date')}}
-            {{Form::text('last_date', '', ['class' => 'last_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
-          </div></td>
+        <td></td>
+        <td></td>
       </tr>
-      <!-- <tr>
-        <td><div class="form-group">
-              {{Form::label('invoiced', 'Invoiced')}}
-              {{Form::select('invoiced', ['' => '', '0' => 'No', '1' => 'Yes'], '', ['class' => 'form-control', 'id' => 'invoiced'])}}
-          </div></td>
-        <td></td>
-        <td></td>
-      </tr> -->
       </tbody>
     </table>
     {{Form::submit('Submit', ['class'=>'btn btn-primary', 'name' => 'submitBtn'])}}

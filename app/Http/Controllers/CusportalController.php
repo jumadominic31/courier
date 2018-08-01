@@ -144,7 +144,7 @@ class CusportalController extends Controller
         $stations = Station::where('company_id', '=', $parent_company_id)->pluck('name','id')->all();
         $user = User::where('company_id','=',$company_id)->find($id);
         if ($user == null){
-            return redirect('/portal/users')->with('error', 'User not found');
+            return redirect('/portal/users/profile')->with('error', 'User not found');
         }
 
         return view('portal.users.edit',['user'=> $user, 'companies' => $companies, 'stations' => $stations]);
@@ -159,8 +159,7 @@ class CusportalController extends Controller
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
-            'phone' => ['required', 'regex:/^[0-9]{12}$/'],
-            'status' => 'required'
+            'phone' => ['required', 'regex:/^[0-9]{12}$/']
         ]);
         
         
@@ -177,7 +176,6 @@ class CusportalController extends Controller
         if ($station_id != NULL) {
             $user->station_id = $station_id;
         }
-        $user->status = $request->input('status');
         if (Auth::user()->usertype == 'superadmin') {
             $user->company_id = $request->input('company_id');;
         } 
@@ -187,7 +185,7 @@ class CusportalController extends Controller
         $user->updated_by = $user_id;
         $user->save();
         
-        return redirect('/portal/users')->with('success', 'User details updated');
+        return redirect('/portal/users/profile')->with('success', 'User details updated');
     }
 
     public function resetpass()
@@ -266,7 +264,8 @@ class CusportalController extends Controller
     {
         $company_id = Auth::user()->company_id;
         $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
-        $company_details = Company::where('id', '=', $company_id)->get();
+        $company_details = Company::where('id', '=', $parent_company_id)->get();
+        $cus_company_details = Company::where('id', '=', $company_id)->get();
         $curr_date = date('Y-m-d');
         
         $parcel_status = ParcelStatus::pluck('name', 'id')->all();
@@ -282,8 +281,6 @@ class CusportalController extends Controller
         $sender_name = $request->input('sender_name');
         $receiver_name = $request->input('receiver_name');
         $parcel_status_id = $request->input('parcel_status_id');
-        $first_date = $request->input('first_date');
-        $last_date = $request->input('last_date');
         $invoiced = $request->input('invoiced');
         $clerk_id = $request->input('clerk_id');
 
@@ -295,14 +292,6 @@ class CusportalController extends Controller
                 $txns = $txns->where('awb_num','like','%'.$awb_num.'%');
                 $tot_coll = $tot_coll->where('awb_num','like','%'.$awb_num.'%');
             }
-            // if ($origin_id != NULL){
-            //     $txns = $txns->where('origin_id','=', $origin_id);
-            //     $tot_coll = $tot_coll->where('origin_id','=', $origin_id);
-            // }
-            // if ($dest_id != NULL){
-            //     $txns = $txns->where('dest_id','=', $dest_id);
-            //     $tot_coll = $tot_coll->where('dest_id','=', $dest_id);
-            // }
             if ($sender_name != NULL){
                 $txns = $txns->where('sender_name','like','%'.$sender_name.'%');
                 $tot_coll = $tot_coll->where('sender_name','like','%'.$sender_name.'%');
@@ -319,20 +308,6 @@ class CusportalController extends Controller
                 $txns = $txns->where('invoiced','=', $invoiced);
                 $tot_coll = $tot_coll->where('invoiced','=', $invoiced);      
             }
-            if ($first_date != NULL){
-                if ($last_date != NULL){
-                    $txns = $txns->where(DB::raw('date(created_at)'), '<=', $last_date)->where(DB::raw('date(created_at)'),'>=',$first_date);
-                    $tot_coll = $tot_coll->where(DB::raw('date(created_at)'), '<=', $last_date)->where(DB::raw('date(created_at)'),'>=',$first_date);
-                } 
-                else{
-                    $txns = $txns->where(DB::raw('date(created_at)'), '=', $first_date);
-                    $tot_coll = $tot_coll->where(DB::raw('date(created_at)'), '=', $first_date);
-                }
-            }
-            // if ($clerk_id != NULL){
-            //     $txns = $txns->where('clerk_id','=', $clerk_id);
-            //     $tot_coll = $tot_coll->where('clerk_id','=', $clerk_id);
-            // }
 
             $tot_count = $txns->count();
             $txns = $txns->orderBy('id','desc')->limit(50)->get();
@@ -359,7 +334,7 @@ class CusportalController extends Controller
             }
 
             if ($request->submitBtn == 'CreatePDF') {
-                $pdf = PDF::loadView('portal.pdf.shipments', ['txns' => $txns, 'company_details' => $company_details, 'curr_date' => $curr_date, 'tot_coll' => $tot_coll, 'tot_count' => $tot_count, 'awb_num' => $awb_num, 'sender_name' => $sender_name, 'receiver_name' => $receiver_name, 'parcel_status_name' => $parcel_status_name, 'first_date' => $first_date, 'last_date' => $last_date]);
+                $pdf = PDF::loadView('portal.pdf.shipments', ['txns' => $txns, 'company_details' => $company_details, 'cus_company_details' => $cus_company_details, 'curr_date' => $curr_date, 'tot_coll' => $tot_coll, 'tot_count' => $tot_count, 'awb_num' => $awb_num, 'sender_name' => $sender_name, 'receiver_name' => $receiver_name, 'parcel_status_name' => $parcel_status_name]);
                 $pdf->setPaper('A4', 'landscape');
                 return $pdf->stream('shipments.pdf');
             }
@@ -400,6 +375,7 @@ class CusportalController extends Controller
             'parcel_type_id' => 'required',
             'mode' =>'required',
             'round' => 'required',
+            'acknowledge' => 'required',
             'units' => 'required|numeric' //,
             // 'price' => 'required'            
         ]);
@@ -444,6 +420,7 @@ class CusportalController extends Controller
         $txn->company_id = $parent_company_id;
         $txn->parcel_status_id = '7';
         $txn->parcel_type_id = $request->input('parcel_type_id');
+        $txn->acknowledge = $request->input('acknowledge');
         if ($parcel_desc != NULL){
             $txn->parcel_desc = $parcel_desc;
         }
@@ -512,6 +489,7 @@ class CusportalController extends Controller
             $txn->company_id = $parent_company_id;
             $txn->parcel_status_id = '7';
             $txn->parcel_type_id = $request->input('parcel_type_id');
+            $txn->acknowledge = $request->input('acknowledge');
             if ($parcel_desc != NULL){
                 $txn->parcel_desc = $parcel_desc;
             }
@@ -557,13 +535,14 @@ class CusportalController extends Controller
     {
         $company_id = Auth::user()->company_id;
         $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
-        $txn = Txn::where('sender_company_id', '=', $company_id)->find($id);
+        $curr_date = date('Y-m-d');
+        $txn = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('date(created_at)'),'>=',$curr_date)->find($id);
         if ($txn == null){
             return redirect('/portal/shipments')->with('error', 'Txn not found');
         }
         $origin_id = $txn->origin_id;
         $parcel_statuses = ParcelStatus::pluck('name','id')->all();
-        $parcel_types = ParcelType::pluck('name','id')->all();
+        $parcel_types = ParcelType::where('company_id', '=', $parent_company_id)->pluck('name','id')->all();
         // $stations = Station::where('id', '!=', $origin_id)->pluck('name','id')->all();
         $zones = Zone::where('company_id', '=', $parent_company_id)->pluck('name','id')->all();
         $origin_addr = $txn->origin_addr;
@@ -591,7 +570,7 @@ class CusportalController extends Controller
 
         // $txn = Txn::where('sender_company_id', '=', $company_id)->find($id);
         $txn = Txn::join('parcel_types', 'txns.parcel_type_id', '=', 'parcel_types.id')
-                ->select('txns.id as id', 'txns.awb_num as awb_num', 'txns.origin_addr as origin_addr', 'txns.dest_addr as dest_addr', 'txns.parcel_type_id as parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_desc as parcel_desc', 'txns.sender_name', 'txns.sender_company_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_company_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.receiver_sign', 'txns.units as units', 'txns.mode as mode', 'txns.round as round', 'txns.created_at')
+                ->select('txns.id as id', 'txns.awb_num as awb_num', 'txns.origin_addr as origin_addr', 'txns.dest_addr as dest_addr', 'txns.parcel_type_id as parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_desc as parcel_desc', 'txns.sender_name', 'txns.sender_company_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_company_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.receiver_sign', 'txns.units as units', 'txns.mode as mode', 'txns.round as round', 'txns.created_at', 'txns.acknowledge as acknowledge')
                 ->where('txns.id', '=', $id)
                 ->where('txns.sender_company_id', '=', $company_id)
                 ->first();
@@ -639,13 +618,13 @@ class CusportalController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            // 'parcel_status_id' => 'required',
             'origin_addr' => 'required',
             'dest_addr' => 'required',
             // 'sender_name' => 'required',
             // 'sender_phone' => 'required',
             'receiver_name' => 'required',
-            'receiver_phone' => 'required'
+            'receiver_phone' => 'required',
+            'acknowledge' => 'required'
         ]);
 
         $user = Auth::user();
@@ -660,6 +639,7 @@ class CusportalController extends Controller
         $txn->mode = $request->input('mode');
         $txn->round = $request->input('round');
         $txn->units = $request->input('units');
+        $txn->acknowledge = $request->input('acknowledge');
         // $txn->sender_name = $request->input('sender_name');
         // $txn->sender_phone = $request->input('sender_phone');
         $txn->sender_id_num = $request->input('sender_id_num');
@@ -725,12 +705,7 @@ class CusportalController extends Controller
             ]);
             $txn = Txn::join('parcel_types', 'txns.parcel_type_id', '=', 'parcel_types.id')
                 ->join('parcel_statuses', 'txns.parcel_status_id', '=', 'parcel_statuses.id')
-                // ->join('stations as s1', 'txns.origin_id', '=', 's1.id')
-                // ->join('stations as s2', 'txns.dest_id', '=', 's2.id')
-                
-                // ->join('users as u', 'txns.driver_id', '=', 'u.id')
-                // ->join('vehicles as v', 'txns.vehicle_id', '=', 'v.id')
-                ->select('txns.id', 'txns.awb_num', 'txns.clerk_id', 'txns.origin_id', 'txns.origin_addr', 'txns.dest_id',  'txns.dest_addr', 'txns.parcel_status_id', 'txns.parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_status_id', 'parcel_statuses.description', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.receiver_sign', 'txns.driver_id', 'txns.pick_driver_sign', 'txns.vehicle_id', 'txns.updated_by')
+                ->select('txns.id', 'txns.awb_num', 'txns.clerk_id', 'txns.origin_id', 'txns.origin_addr', 'txns.dest_id',  'txns.dest_addr', 'txns.parcel_status_id', 'txns.parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_status_id', 'parcel_statuses.description', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_company_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_company_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.receiver_sign', 'txns.driver_id', 'txns.pick_driver_sign', 'txns.vehicle_id', 'txns.updated_by', 'txns.acknowledge', 'txns.mode', 'txns.round')
                 ->where('txns.awb_num', '=', $awb_num)
                 ->where('txns.sender_company_id', '=', $company_id)
                 ->get();

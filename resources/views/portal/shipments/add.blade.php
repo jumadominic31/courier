@@ -105,11 +105,11 @@
                 <div class="panel-body">
                     <div class="input-group">
                         <span class="input-group-addon" >Mode *</span>
-                        {{Form::select('mode', ['' => '', 1 => 'Express', 0 => 'Normal'],  old('mode') , ['class' => 'form-control'])}}
+                        {{Form::select('mode', ['' => '', 0 => 'Normal', 1 => 'Express'],  old('mode') , ['class' => 'form-control'])}}
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon" >Round trip *</span>
-                        {{Form::select('round', ['' => '', 1 => 'Yes', 0 => 'No'], old('round'), ['class' => 'form-control'])}}
+                        {{Form::select('round', ['' => '', 0 => 'No', 1 => 'Yes'], old('round'), ['class' => 'form-control'])}}
                     </div>
                 </div>
             </div>
@@ -129,19 +129,19 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-sm-6">-->
-        <!--    <div class="panel panel-default">-->
-        <!--        <div class="panel-heading">-->
-        <!--            <h3 class="panel-title">Price</h3>-->
-        <!--        </div>-->
-        <!--        <div class="panel-body">-->
-        <!--            <div class="input-group">-->
-        <!--                <span class="input-group-addon" >Amount *</span>-->
-        <!--                <input type="text" id="price" name="price" value="" class="form-control"  aria-describedby="basic-addon1">-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--    </div>-->
-        <!--</div>-->
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Acknowledgement Receipt</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <span class="input-group-addon" >Required *</span>
+                        {{Form::select('acknowledge', ['' => '', 0 => 'No', 1 => 'Yes'], '0', ['class' => 'form-control'])}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">

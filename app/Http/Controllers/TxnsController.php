@@ -927,11 +927,9 @@ class TxnsController extends Controller
                 'awb_num' => 'required'
             ]);
             $txn = DB::table('txns')
-                ->join('zones as s1', 'txns.origin_id', '=', 's1.id')
-                ->join('zones as s2', 'txns.dest_id', '=', 's2.id')
                 ->join('parcel_types', 'txns.parcel_type_id', '=', 'parcel_types.id')
                 ->join('parcel_statuses', 'txns.parcel_status_id', '=', 'parcel_statuses.id')
-                ->select('txns.id', 'txns.awb_num', 'txns.clerk_id', 'txns.origin_id', 's1.name as origin_name', 'txns.dest_id',  's2.name as dest_name', 'txns.parcel_status_id', 'txns.parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_status_id', 'parcel_statuses.name as parcel_status_name', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.driver_id', 'txns.vehicle_id', 'txns.updated_by')
+                ->select('txns.id', 'txns.awb_num', 'txns.clerk_id', 'txns.origin_addr', 'txns.dest_addr',   'txns.parcel_status_id', 'txns.parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_status_id', 'parcel_statuses.name as parcel_status_name', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.driver_id', 'txns.vehicle_id', 'txns.updated_by')
                 ->where('txns.awb_num', '=', $awb_num)
                 ->limit(1)->get();
 

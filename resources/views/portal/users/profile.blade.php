@@ -15,7 +15,7 @@
 			          <tr><td>Full Name</td><td>{{$user['fullname']}}</td></tr>
 			          <tr><td>Phone Number</td><td>{{$user['phone']}}</td></tr>
 			          <tr><td>Email Address</td><td>{{$user['email']}}</td></tr>
-			          <tr><td>Station</td><td>{{$user['station']['name']}}</td></tr>
+			          <tr><td>Branch</td><td>{{$user['station']['name']}}</td></tr>
 			          <tr><td>User Type</td><td>{{$user['usertype']}}</td></tr>
 			          <tr><td>Status</td><td> 
 			          	@if ($user['status'] == 1)
@@ -51,9 +51,6 @@
     	<div class="panel-footer">
         	<a href="{{ route('portal.users.edit', ['user' => $user->id ]) }}" class="btn btn-success">Edit User Details</a>
         	<a href="{{ route('portal.users.resetindividualpass') }}" class="btn btn-success">Reset Password</a>
-        	@if(Auth::user()->usertype != 'cusclerk')
-        		<a href="{{ route('portal.company.edit', ['company' => $company[0]['id'] ]) }}" class="btn btn-success">Edit Company Details</a>
-        	@endif
         </div>
       
         
