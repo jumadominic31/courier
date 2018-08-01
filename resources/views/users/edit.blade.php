@@ -5,7 +5,7 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
             <div class="panel-heading">Edit User Details <a 
-                href="{{ route('users.index') }}"
+                href="{{ route('users.profile') }}"
                 class="pull-right btn btn-default btn-xs">Go Back</a></div>
 
             <div class="panel-body">
@@ -38,14 +38,25 @@
                         {{Form::text('usertype', $user->usertype, ['class' => 'form-control', 'disabled' => 'true'])}}
                     </div>
                 @endif
-                <div class="form-group">
-                    {{Form::label('station_id', 'Station Name')}}
-                    {{Form::select('station_id', ['' => ''] + $stations, $user->station_id, ['class' => 'form-control'])}}
-                </div>
-                <div class="form-group">
-                    {{Form::label('status', 'Status')}}
-                    {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], $user->status, ['class' => 'form-control'])}}
-                </div>
+                @if (Auth::user()->usertype == 'clerk')
+                    <div class="form-group">
+                        {{Form::label('station_id', 'Station Name')}}
+                        {{Form::select('station_id', ['' => ''] + $stations, $user->station_id, ['class' => 'form-control', 'disabled' => 'true'])}}
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('status', 'Status')}}
+                        {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], $user->status, ['class' => 'form-control', 'disabled' => 'true'])}}
+                    </div>
+                @else
+                    <div class="form-group">
+                        {{Form::label('station_id', 'Station Name')}}
+                        {{Form::select('station_id', ['' => ''] + $stations, $user->station_id, ['class' => 'form-control'])}}
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('status', 'Status')}}
+                        {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], $user->status, ['class' => 'form-control'])}}
+                    </div>
+                @endif
                 @if(Auth::user()->usertype == 'superadmin')
                     <div class="form-group">
                         {{Form::label('company_id', 'Company Name')}}

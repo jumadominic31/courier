@@ -506,8 +506,7 @@ class UsersController extends Controller
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
-            'phone' => ['required', 'regex:/^[0-9]{12}$/'],
-            'status' => 'required'
+            'phone' => ['required', 'regex:/^[0-9]{12}$/']
         ]);
         
         
@@ -524,7 +523,6 @@ class UsersController extends Controller
         if ($station_id != NULL) {
             $user->station_id = $station_id;
         }
-        $user->status = $request->input('status');
         if (Auth::user()->usertype == 'superadmin') {
             $user->company_id = $request->input('company_id');;
         } 
@@ -534,7 +532,7 @@ class UsersController extends Controller
         $user->updated_by = $user_id;
         $user->save();
         
-        return redirect('/users')->with('success', 'User details updated');
+        return redirect('/users/profile')->with('success', 'User details updated');
     }
 
     public function destroy($id)

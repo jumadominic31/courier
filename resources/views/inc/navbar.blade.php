@@ -47,8 +47,10 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporting <span class="caret"></span></a>
                     <ul class="dropdown-menu"> 
                         <li><a href="{{ route('shipments.index') }}">Shipments</a></li>
+                        @if(Auth::user()->usertype != 'clerk')
                         <li><a href="{{ route('invoice.index') }}">Invoices</a></li>
                         <li><a href="{{ route('shipments.index') }}">Payments</a></li>
+                        @endif
                     </ul>
                 </li>
                 <li>

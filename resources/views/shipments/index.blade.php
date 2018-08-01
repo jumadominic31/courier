@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="panel-heading"><h1>Manage Shipments </h1> </div>
-<a href="{{ route('shipments.add') }}" class="btn btn-success">Add Shipment</a><br>
 
 <div><a class="pull-right btn btn-default" href="{{ route('shipments.index') }}">Reset</a> </div>
 <hr>
@@ -68,13 +67,6 @@
     <div class="panel-body">
       <div class="col-md-4 col-sm-12 col-xs-12">
         <div class="well dash-box">
-            <h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> 
-            {{$tot_coll}} </h2>
-            <h4>Total Sales</h4>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-12 col-xs-12">
-        <div class="well dash-box">
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
             {{$tot_count}} </h2>
             <h4>No of Transactions</h4>
@@ -82,7 +74,6 @@
       </div>
     </div>
   </div>
-      Up to 50 records
       <table class="table table-striped" >
           <tr>
             <th width="10.33%">Sender Company</th>

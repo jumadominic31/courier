@@ -126,6 +126,12 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'shipments.pickedtosort'
         ]);
 
+        //ajax assign pickup
+        Route::post('/shipments/assignpickup', [
+            'uses' => 'TxnsController@assignpickup',
+            'as' => 'shipments.assignpickup'
+        ]);
+
         Route::get('/shipments/pickedfromcus', [
             'uses' => 'TxnsController@getpickedShipments',
             'as' => 'shipments.pickedtosortfacility'

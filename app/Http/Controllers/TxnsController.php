@@ -756,6 +756,40 @@ class TxnsController extends Controller
         return view('shipments.booked', ['txns' => $txns, 'riders' => $riders]);
     }
 
+    //ajax assign pickup
+    public function assignpickup(Request $request)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $company_id = Auth::user()->company_id;
+
+        $this->validate($request, [
+            'awb_num' => 'required',
+            'rider_id' => 'required'
+        ]);
+
+        $awb_num = $request->input('awb_num');
+
+        $txn = Txn::where('awb_num', '=', $awb_num)->first();
+        $count += 1;
+        $txn->parcel_status_id = '9';
+        $txn->driver_id = $request->input('rider_id');
+        $txn->updated_by = $user->id;
+        $txn->save();
+
+        $txnlog = new TxnLog;
+        $txnlog->awb_id = $txn->id;
+        $txnlog->status_id = '9';
+        $txnlog->updated_by = $user->id;
+        $txnlog->company_id = $company_id;
+        $txnlog->sender_company_id = $txn->sender_company_id;
+        $txnlog->save();
+
+        return response()->json(['txn' => $txn], 201);
+
+    }
+
+    // old assign pickup
     public function assignpickupShipments(Request $request)
     {
         $user = Auth::user();
@@ -960,11 +994,7 @@ class TxnsController extends Controller
             ]);
             $txn = Txn::join('parcel_types', 'txns.parcel_type_id', '=', 'parcel_types.id')
                 ->join('parcel_statuses', 'txns.parcel_status_id', '=', 'parcel_statuses.id')
-                // ->join('stations as s1', 'txns.origin_id', '=', 's1.id')
-                // ->join('stations as s2', 'txns.dest_id', '=', 's2.id')
-                // ->join('users as u', 'txns.driver_id', '=', 'u.id')
-                // ->join('vehicles as v', 'txns.vehicle_id', '=', 'v.id')
-                ->select('txns.id', 'txns.awb_num', 'txns.clerk_id', 'txns.origin_id', 'txns.origin_addr', 'txns.dest_id',  'txns.dest_addr', 'txns.parcel_status_id', 'txns.parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_status_id', 'parcel_statuses.description', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.receiver_sign', 'txns.driver_id', 'txns.pick_driver_sign', 'txns.vehicle_id', 'txns.updated_by')
+                ->select('txns.id', 'txns.awb_num', 'txns.clerk_id', 'txns.origin_id', 'txns.origin_addr', 'txns.dest_id',  'txns.dest_addr', 'txns.parcel_status_id', 'txns.parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_status_id', 'parcel_statuses.description', 'txns.parcel_desc', 'txns.price', 'txns.vat', 'txns.sender_name', 'txns.sender_company_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_company_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.receiver_sign', 'txns.driver_id', 'txns.pick_driver_sign', 'txns.vehicle_id', 'txns.updated_by', 'txns.acknowledge', 'txns.mode', 'txns.round')
                 ->where('txns.awb_num', '=', $awb_num)
                 ->where('txns.company_id', '=', $company_id)
                 ->get();
@@ -1019,25 +1049,23 @@ class TxnsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            // 'parcel_status_id' => 'required',
-            // 'dest_id' => 'required',
-            // 'sender_name' => 'required',
-            // 'sender_phone' => 'required',
-            // 'receiver_name' => 'required',
-            // 'receiver_phone' => 'required',
-            'price' => 'required'
-        ]);
+        // $this->validate($request, [
+        //     'parcel_status_id' => 'required',
+        //     'dest_id' => 'required',
+        //     'sender_name' => 'required',
+        //     'sender_phone' => 'required',
+        //     'receiver_name' => 'required',
+        //     'receiver_phone' => 'required',
+        //     'price' => 'required'
+        // ]);
 
         $user = Auth::user();
         $company_id = Auth::user()->company_id;
-        $price = $request->input('price');
-        $vat = 0.16 * $price;
 
         $txn = Txn::find($id);
         // $txn->parcel_type_id = $request->input('parcel_type_id');
-        $txn->price = $price;
-        $txn->vat = $vat;
+        // $txn->price = $price;
+        // $txn->vat = $vat;
         // $txn->mode = $request->input('mode');
         // $txn->round = $request->input('round');
         // $txn->units = $request->input('units');
@@ -1047,6 +1075,7 @@ class TxnsController extends Controller
         // $txn->receiver_name = $request->input('receiver_name');
         // $txn->receiver_phone = $request->input('receiver_phone');
         // $txn->receiver_id_num = $request->input('receiver_id_num');
+        $txn->driver_id = $request->input('driver_id');
         $txn->updated_by = $user->id;
 
         // if ($txn->parcel_status_id != $request->input('parcel_status_id')) {
