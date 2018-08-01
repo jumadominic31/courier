@@ -74,14 +74,11 @@ class DashboardController extends Controller
         $company_id = Auth::user()->company_id;
         $curr_date = date('Y-m-d');
 
-        $costs = Txn::where('sender_company_id', '=', $company_id)->select('sender_company_id', DB::raw('sum(price) as total_sales'))->where(DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), '=', $curr_date)->groupBy('sender_company_id')->pluck('total_sales')->first();
-        if ($costs == NULL){
-            $costs = 0;
-        }
 
         $booked = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), '=', $curr_date)->count();
-        $dispatched = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(updated_at, "%Y-%m-%d")'), '=', $curr_date)->where('parcel_status_id','=','8')->count();
+        $cancelled = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), '=', $curr_date)->where('parcel_status_id','=','6')->count();
         $received = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(updated_at, "%Y-%m-%d")'), '=', $curr_date)->where('parcel_status_id','=','4')->count();
+        $dispatched = $booked - ($received + $cancelled);
 
         $parcels = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(updated_at, "%Y-%m-%d")'), '=', $curr_date)
             ->select('sender_name', DB::raw("COUNT( CASE WHEN parcel_status_id = '1' THEN 1 ELSE NULL END ) AS 'created'"), 
@@ -93,6 +90,6 @@ class DashboardController extends Controller
                 DB::raw("COUNT( CASE WHEN parcel_status_id = '8' THEN parcel_status_id ELSE NULL END ) AS 'picked'"))
             ->groupBy('sender_name')->get();
 
-        return view('dashboard.customer', ['costs' => $costs, 'booked' => $booked, 'dispatched' => $dispatched, 'received' => $received, 'parcels' => $parcels]);
+        return view('dashboard.customer', [ 'booked' => $booked, 'cancelled' => $cancelled, 'dispatched' => $dispatched, 'received' => $received, 'parcels' => $parcels]);
     }
 }

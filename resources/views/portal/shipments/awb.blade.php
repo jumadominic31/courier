@@ -43,7 +43,7 @@
                             <h3 class="panel-title">AWB Status</h3>
                         </div>
                         <div class="panel-body">
-                            {{$txn[0]->description}}
+                            {{$txn[0]->description}} 
                         </div>
                     </div>
                 </div>
@@ -77,9 +77,9 @@
                             <h3 class="panel-title">Sender Details</h3>
                         </div>
                         <div class="panel-body">
-                            {{$txn[0]->sender_name}} <br>
+                            Name: {{$txn[0]->sender_name}} <br>
+                            Company: {{$txn[0]->sender_company_name}} <br>
                             Phone: 	{{$txn[0]->sender_phone}} <br>
-                            ID Num: {{$txn[0]->sender_id_num}} <br>
                             <!-- <img src="{{$txn[0]->sender_sign}}" alt="Sender Sign" style="width:80px; height:80px"> -->
                         </div>
                     </div>
@@ -90,7 +90,8 @@
                             <h3 class="panel-title">Receiver Details</h3>
                         </div>
                         <div class="panel-body">
-                            {{$txn[0]->receiver_name}} <br>
+                            Name: {{$txn[0]->receiver_name}} <br>
+                            Company: {{$txn[0]->receiver_company_name}} <br>
                             Phone: 	{{$txn[0]->receiver_phone}} <br>
                             ID Num: {{$txn[0]->receiver_id_num}} <br>
                             <!-- <img src="{{$txn[0]->receiver_sign}}" alt="Receiver Sign" style="width:80px; height:80px"> -->
@@ -99,6 +100,32 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Booking Details</h3>
+                        </div>
+                        <div class="panel-body">
+                            @if ($txn[0]->mode == '0')
+                                Mode: Normal
+                            @elseif ($txn[0]->mode == '1')
+                                Mode: Express
+                            @endif
+                            <br>
+                            @if ($txn[0]->round == '0')
+                                Round Trip: No
+                            @elseif ($txn[0]->round == '1')
+                                Round Trip: Yes
+                            @endif
+                            <br>
+                            @if ($txn[0]->acknowledge == '0')
+                                Acknowledgement Reqd: No
+                            @elseif ($txn[0]->acknowledge == '1')
+                                Acknowledgement Reqd: Yes
+                            @endif
+                        </div>
+                    </div>
+                </div>
             	<div class="col-sm-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -111,17 +138,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Price</h3>
-                        </div>
-                        <div class="panel-body">
-                            Price: KShs. {{$txn[0]->price}} <br>
-                            VAT:   KShs. {{$txn[0]->vat}}
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Shipment Details</div>

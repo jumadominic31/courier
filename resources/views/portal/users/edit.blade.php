@@ -5,7 +5,7 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
             <div class="panel-heading">Edit User Details <a 
-                href="{{ route('portal.users.index') }}"
+                href="{{ route('portal.users.profile') }}"
                 class="pull-right btn btn-default btn-xs">Go Back</a></div>
 
             <div class="panel-body">
@@ -40,11 +40,11 @@
                 @endif
                 <div class="form-group">
                     {{Form::label('station_id', 'Branch Name')}}
-                    {{Form::select('station_id', ['' => ''] + $stations, $user->station_id, ['class' => 'form-control'])}}
+                    {{Form::select('station_id', ['' => ''] + $stations, $user->station_id, ['class' => 'form-control', 'disabled' => 'true'])}}
                 </div>
                 <div class="form-group">
                     {{Form::label('status', 'Status')}}
-                    {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], $user->status, ['class' => 'form-control'])}}
+                    {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], $user->status, ['class' => 'form-control', 'disabled' => 'true'])}}
                 </div>
                 @if(Auth::user()->usertype == 'superadmin')
                     <div class="form-group">

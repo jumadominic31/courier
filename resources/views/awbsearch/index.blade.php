@@ -71,7 +71,7 @@
                             <h3 class="panel-title">Origin</h3>
                         </div>
                         <div class="panel-body">
-                            {{$txn[0]->origin_name}}
+                            {{$txn[0]->origin_addr}}
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                             <h3 class="panel-title">Destination</h3>
                         </div>
                         <div class="panel-body">
-                            {{$txn[0]->dest_name}}
+                            {{$txn[0]->dest_addr}}
                         </div>
                     </div>
                 </div>

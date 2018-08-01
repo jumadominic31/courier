@@ -118,7 +118,7 @@ style='font-size:9.5pt;line-height:107%;font-family:"Arial","sans-serif"'>&nbsp;
   border-left:none;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>To
-  (Receiver’s Information)</span></b></p>
+  (Receiverâ€™s Information)</span></b></p>
   </td>
  </tr>
  <tr>
@@ -245,7 +245,7 @@ style='font-size:9.5pt;line-height:107%;font-family:"Arial","sans-serif"'>&nbsp;
   <td width=312 valign=top style='width:233.75pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Sender’s
+  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Senderâ€™s
   signature</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
@@ -254,7 +254,7 @@ style='font-size:9.5pt;line-height:107%;font-family:"Arial","sans-serif"'>&nbsp;
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Rider’s
+  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Riderâ€™s
   signature</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
