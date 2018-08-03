@@ -162,6 +162,19 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Shipment Date</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <span class="input-group-addon" >Date</span>
+                        <input type="text" id="txn_date" name="txn_date" value="{{ old('txn_date')}}" class="form-control first_date"  aria-describedby="basic-addon1">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">

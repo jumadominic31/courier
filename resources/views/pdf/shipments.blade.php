@@ -88,37 +88,30 @@
   
   <table class="table table-striped" width=100% style="font-size:11px" >
       <tr>
-        <th></th>
+        <th width="3%"></th>
+        <th width="11.33%">Ship Date</th>
         <th width="10.33%">Sender Company</th>
         <th width="9.33%">AWB#</th>
         <th width="13.33%">Origin</th>
         <th width="13.33%">Destination</th>
         <th width="8.33%">Parcel Type</th>
-        <th width="4.33%">Price</th>
-        <th width="4.33%">VAT</th>
-        <th width="8.33%">Rider</th>
-        <th width="8.33%">Mode</th>
-        <th width="8.33%">Parcel Status</th>         
-        <th width="11.33%">Date/Time Created</th>
+        <th width="8.33%">Mode</th>      
+        
       </tr>
       @foreach($txns as $txn)
       <tr>
         <td>{{$i}}</td>
+        <td>{{$txn['txn_date']}}</td>
         <td>{{$txn['sender_company_name']}}</td>
         <td>{{$txn['awb_num']}}</td>
         <td>{{$txn['origin_addr']}}</td>
         <td>{{$txn['dest_addr']}}</td>
         <td>{{$txn['parcel_type']['name']}}</td>
-        <td>{{$txn['price']}}</td>
-        <td>{{$txn['vat']}}</td>
-        <td>{{$txn['driver']['fullname']}}</td>
         @if ($txn['mode'] == 0)
         <td>Normal</td>
         @else ($txn['mode'] == 1)
         <td>Express</td>
         @endif
-        <td>{{$txn['parcel_status']['name']}}</td>
-        <td>{{$txn['created_at']}}</td>
     </tr>
     <?php $i++ ?>
       @endforeach

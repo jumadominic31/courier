@@ -312,7 +312,7 @@ class InvoicesController extends Controller
         $min_txns = Contract::where('id', '=', $contract_id)->pluck('txns_limit')->first();
         $txn_cost_overlimit = Contract::where('id', '=', $contract_id)->pluck('txn_cost_overlimit')->first();
 
-        $total_txns = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), '=', $month)->count();
+        $total_txns = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $month)->count();
         if ($total_txns <= $min_txns){
             $extra_txns = 0;
             $extra_charge = 0;

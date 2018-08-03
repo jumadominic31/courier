@@ -85,30 +85,26 @@
       Up to 50 records
       <table class="table table-striped" >
           <tr>
+            <th width="11.33%">Ship Date</th>
             <th width="10.33%">Sender Company</th>
             <th width="9.33%">AWB#</th>
             <th width="13.33%">Origin</th>
             <th width="13.33%">Destination</th>
             <th width="8.33%">Parcel Type</th>
-            <th width="4.33%">Price</th>
-            <th width="4.33%">VAT</th>
             <th width="8.33%">Rider</th>
             <th width="8.33%">Mode</th>
-            <th width="8.33%">Parcel Status</th>         
-            <th width="11.33%">Date/Time Created</th>
-            <th width="3.33%">Invoiced</th>
+            <th width="8.33%">Parcel Status</th>
             <th></th>
             <th></th>
           </tr>
           @foreach($txns as $txn)
           <tr>
+            <td>{{$txn['txn_date']}}</td>
             <td>{{$txn['sender_company_name']}}</td>
             <td>{{$txn['awb_num']}}</td>
             <td>{{$txn['origin_addr']}}</td>
             <td>{{$txn['dest_addr']}}</td>
             <td>{{$txn['parcel_type']['name']}}</td>
-            <td>{{$txn['price']}}</td>
-            <td>{{$txn['vat']}}</td>
             <td>{{$txn['driver']['fullname']}}</td>
             @if ($txn['mode'] == 0)
             <td>Normal</td>
@@ -116,12 +112,6 @@
             <td>Express</td>
             @endif
             <td>{{$txn['parcel_status']['name']}}</td>
-            <td>{{$txn['created_at']}}</td>
-            @if ($txn['invoiced'] == 0)
-            <td>No</td>
-            @else ($txn['invoiced'] == 1)
-            <td>Yes</td>
-            @endif
             <td><a class="pull-right btn btn-default btn-xs" target="_blank" href="{{ route('shipments.print', ['awb' => $txn->id ]) }}">Print</td>
             <td><a class="pull-right btn btn-default btn-xs" href="{{ route('shipments.edit', ['awb' => $txn->id ]) }}">Edit/Details</a></td>
         </tr>

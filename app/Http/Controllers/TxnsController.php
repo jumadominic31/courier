@@ -646,14 +646,6 @@ class TxnsController extends Controller
                 $txns = $txns->where('awb_num','like','%'.$awb_num.'%');
                 $tot_coll = $tot_coll->where('awb_num','like','%'.$awb_num.'%');
             }
-            // if ($origin_id != NULL){
-            //     $txns = $txns->where('origin_id','=', $origin_id);
-            //     $tot_coll = $tot_coll->where('origin_id','=', $origin_id);
-            // }
-            // if ($dest_id != NULL){
-            //     $txns = $txns->where('dest_id','=', $dest_id);
-            //     $tot_coll = $tot_coll->where('dest_id','=', $dest_id);
-            // }
             if ($sender_name != NULL){
                 $txns = $txns->where('sender_name','like','%'.$sender_name.'%');
                 $tot_coll = $tot_coll->where('sender_name','like','%'.$sender_name.'%');
@@ -668,12 +660,12 @@ class TxnsController extends Controller
             }
             if ($first_date != NULL){
                 if ($last_date != NULL){
-                    $txns = $txns->where(DB::raw('date(created_at)'), '<=', $last_date)->where(DB::raw('date(created_at)'),'>=',$first_date);
-                    $tot_coll = $tot_coll->where(DB::raw('date(created_at)'), '<=', $last_date)->where(DB::raw('date(created_at)'),'>=',$first_date);
+                    $txns = $txns->where(DB::raw('date(txn_date)'), '<=', $last_date)->where(DB::raw('date(txn_date)'),'>=',$first_date);
+                    $tot_coll = $tot_coll->where(DB::raw('date(txn_date)'), '<=', $last_date)->where(DB::raw('date(txn_date)'),'>=',$first_date);
                 } 
                 else{
-                    $txns = $txns->where(DB::raw('date(created_at)'), '=', $first_date);
-                    $tot_coll = $tot_coll->where(DB::raw('date(created_at)'), '=', $first_date);
+                    $txns = $txns->where(DB::raw('date(txn_date)'), '=', $first_date);
+                    $tot_coll = $tot_coll->where(DB::raw('date(txn_date)'), '=', $first_date);
                 }
             }
             if ($invoiced != NULL){
@@ -1229,7 +1221,8 @@ class TxnsController extends Controller
             'mode' =>'required',
             'round' => 'required',
             'units' => 'required|numeric',
-            'rider_id' => 'required'           
+            'rider_id' => 'required',
+            'txn_date' => 'required'           
         ]);
 
         $user = Auth::user();
@@ -1272,6 +1265,7 @@ class TxnsController extends Controller
         $txn->mode = $request->input('mode');
         $txn->round = $request->input('round');
         $txn->units = $request->input('units');
+        $txn->txn_date = $request->input('txn_date');
         $txn->company_id = $company_id;
         $txn->parcel_status_id = '8';
         $txn->parcel_type_id = $request->input('parcel_type_id');

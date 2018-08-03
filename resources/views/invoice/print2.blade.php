@@ -105,8 +105,14 @@
 </head>
 
 <body>
+
     <div class="invoice-box">
         <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="2">
+                        <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" width=100% style="padding:2px;"></span></p>
+                </td>
+            </tr>
             <tr class="top">
                 <td colspan="2">
                     <table>
