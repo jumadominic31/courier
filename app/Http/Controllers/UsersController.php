@@ -134,7 +134,7 @@ class UsersController extends Controller
 
             return redirect()->route('dashboard.customer');
         }
-        else if (Auth::attempt($credentials2)) {
+        else if (Auth::attempt($credentials2) OR Auth::attempt($credentials5)) {
             if (Session::has('oldUrl')) {
                 $oldUrl = Session::get('oldUrl');
                 Session::forget('oldUrl');
