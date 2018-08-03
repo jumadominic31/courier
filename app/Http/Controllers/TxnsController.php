@@ -728,7 +728,7 @@ class TxnsController extends Controller
             }
             
             if ($request->submitBtn == 'CreatePDF') {
-                $txns = $txns->orderBy('id','desc')->limit(50)->get();
+                $txns = $txns->orderBy('id','desc')->limit(100)->get();
                 $pdf = PDF::loadView('pdf.shipments', ['txns' => $txns, 'company_details' => $company_details, 'curr_date' => $curr_date, 'tot_coll' => $tot_coll, 'tot_count' => $tot_count, 'awb_num' => $awb_num, 'sender_company_name' => $sender_company_name, 'rider_name' => $rider_name, 'parcel_status_name' => $parcel_status_name, 'first_date' => $first_date, 'last_date' => $last_date]);
                 $pdf->setPaper('A4', 'landscape');
                 return $pdf->stream('shipments.pdf');

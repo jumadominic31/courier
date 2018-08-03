@@ -20,8 +20,8 @@
             </tr>
             @foreach($tokens as $token)
             <tr>
-                <td>{{$token['sender_company_name']}}</td>
-                <td>{{$token['balance']}}</td>
+                <td>{{$token->sender_company_name}}</td>
+                <td>{{$token->balance}}</td>
             </tr>
             @endforeach
         </table>

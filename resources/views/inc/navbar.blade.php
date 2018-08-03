@@ -33,12 +33,9 @@
                             @endif
                             <li><a href="{{ route('customer.index') }}">Customers</a></li>
                             <li><a href="{{ route('token.index') }}">Tokens</a></li>
-                            <li><a href="{{ route('contracts.index') }}">Contracts</a></li>
                             <li><a href="{{ route('users.index') }}">Users</a></li>
-                            <li><a href="{{ route('zone.index') }}">Zones</a></li>
-                            <li><a href="{{ route('station.index') }}">Stations</a></li>
-                            <li><a href="{{ route('vehicle.index') }}">Vehicles</a></li>
-                            <li><a href="{{ route('parcel.index') }}">Parcels</a></li>
+                            <li><a href="{{ route('station.index') }}">Branches</a></li>
+                            <li><a href="{{ route('parcel.index') }}">Parcel Management</a></li>
                          </ul>
                     </li>
                 @endif
@@ -47,10 +44,6 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporting <span class="caret"></span></a>
                     <ul class="dropdown-menu"> 
                         <li><a href="{{ route('shipments.index') }}">Shipments</a></li>
-                        @if(Auth::user()->usertype != 'clerk')
-                        <li><a href="{{ route('invoice.index') }}">Invoices</a></li>
-                        <li><a href="{{ route('shipments.index') }}">Payments</a></li>
-                        @endif
                     </ul>
                 </li>
                 <li>

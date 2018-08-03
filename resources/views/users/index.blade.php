@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="panel-heading">
-<h1> User Administration </h1>
+<h1>Internal Users Administration </h1>
 
     <a href="{{ route('users.create') }}" class="btn btn-success">Add User</a>
 <br>
@@ -19,13 +19,12 @@
                 <th>Full Name</th>
                 <th>Phone</th>
                 <th>Email</th>
-                <th>Home Station</th>
+                <th>Branch</th>
                 <th>User Type</th>
                 @if(Auth::user()->usertype == 'superadmin')
                 <th>Company</th>
                 @endif
                 <th>Status</th>
-                <th></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -42,13 +41,7 @@
                 <td>{{$user['company']['name']}}</td>
                 @endif
                 <td><?php if ($user['status'] == 1 ) {echo "Active";} else {echo "Inactive";} ?></td>
-                <td><a class="btn btn-default btn-xs" href="{{ route('users.edit', ['user' => $user->id ]) }}">Edit</a></td>
-                <td>
-                    {!!Form::open(['action' => ['UsersController@destroy', $user->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure?")'])!!}
-                      {{Form::hidden('_method', 'DELETE')}}
-                      {{Form::submit('Delete', ['class' => 'btn btn-danger btn-xs'])}}
-                    {!! Form::close() !!}
-                </td>   
+                <td><a class="btn btn-default btn-xs" href="{{ route('users.edit', ['user' => $user->id ]) }}">Edit</a></td>  
                 @if ($user['usertype'] == 'busowner')
                 <td></td>
                 @else

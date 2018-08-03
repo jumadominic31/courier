@@ -3,7 +3,7 @@
 @section('content')
 
 <div>
-	<h3>Parcel Types and Rates</h3>
+	<h3>Parcel Types</h3>
 	<a href="{{ route('parcel.create') }}" class="btn btn-success">Add ParcelType</a>
 	<br>
 	<table class="table table-striped">
@@ -11,11 +11,10 @@
 			<tr>
 				<th>Name</th>
 				<th>Unit</th>
-				<th>Rate (KShs.)</th>
+				<th>Status</th>
 				@if(Auth::user()->usertype == 'superadmin')
               	<th>Company</th>
               	@endif
-		        <th></th>
 		        <th></th>
 			</tr>
 		</thead>
@@ -23,17 +22,12 @@
 		<tr>
 			<td>{{$parceltyp['name']}}</td>
 			<td>{{$parceltyp['unit']}}</td>
-			<td>{{$parceltyp['rate']}}</td>
+			<td><?php if ($parceltyp['status'] == 1 ) {echo "Active";} else {echo "Inactive";} ?></td>
 			@if(Auth::user()->usertype == 'superadmin')
           	<td>{{$parceltyp['company']['name']}}</td>
           	@endif
           	<td><span class="center-block"><a class="pull-right btn btn-default btn-xs" href="{{ route('parcel.edit', ['parceltype' => $parceltyp->id ]) }}">Edit</a></span></td>
-          	<td><span class="center-block">
-            {!!Form::open(['action' => ['ParcelsController@destroy', $parceltyp->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure?")'])!!}
-              {{Form::hidden('_method', 'DELETE')}}
-              {{Form::submit('Delete', ['class' => 'btn btn-danger btn-xs'])}}
-            {!! Form::close() !!}
-          	</span></td>
+          	
 		</tr>
 		@endforeach
 	</table>

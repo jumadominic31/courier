@@ -77,26 +77,22 @@
   <!-- End options -->
   <div class="container">
     <br>
-    Total <strong> KShs. {{$tot_coll}} </strong><br>
     No of transactions<strong>{{$tot_count}} </strong><br>
   </div>
 
   <h3>Transaction Details</h3>
-  Up to 50 records <br>
+  Up to 100 records <br>
   
   <?php $i = 1 ?>
   
   <table class="table table-striped" width=100% style="font-size:11px" >
       <tr>
-        <th></th>
+        <th width="3%"></th>
         <th width="10.33%">Sender Company</th>
         <th width="9.33%">AWB#</th>
         <th width="13.33%">Origin</th>
         <th width="13.33%">Destination</th>
         <th width="8.33%">Parcel Type</th>
-        <th width="4.33%">Price</th>
-        <th width="4.33%">VAT</th>
-        <th width="8.33%">Rider</th>
         <th width="8.33%">Mode</th>
         <th width="8.33%">Parcel Status</th>         
         <th width="11.33%">Date/Time Created</th>
@@ -109,9 +105,6 @@
         <td>{{$txn['origin_addr']}}</td>
         <td>{{$txn['dest_addr']}}</td>
         <td>{{$txn['parcel_type']['name']}}</td>
-        <td>{{$txn['price']}}</td>
-        <td>{{$txn['vat']}}</td>
-        <td>{{$txn['driver']['fullname']}}</td>
         @if ($txn['mode'] == 0)
         <td>Normal</td>
         @else ($txn['mode'] == 1)

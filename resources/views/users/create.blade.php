@@ -34,7 +34,7 @@
         @else
             <div class="form-group">
                 {{Form::label('usertype', 'User Type')}}
-                {{Form::select('usertype', ['admin' => 'Admin', 'clerk' => 'Clerk', 'driver' => 'Driver'], 'clerk', ['class' => 'form-control'])}}
+                {{Form::select('usertype', ['' => '', 'admin' => 'Admin', 'clerk' => 'Clerk', 'driver' => 'Driver'], '', ['class' => 'form-control'])}}
             </div>
         @endif
         <div class="form-group">
@@ -43,7 +43,7 @@
         </div>
         <div class="form-group">
             {{Form::label('status', 'Status')}}
-            {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], 1, ['class' => 'form-control'])}}
+            {{Form::select('status', ['' => '', 1 => 'Active', 0 => 'Inactive'], 1, ['class' => 'form-control'])}}
         </div>
         @if(Auth::user()->usertype == 'superadmin')
             <div class="form-group">

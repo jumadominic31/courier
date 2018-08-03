@@ -20,8 +20,7 @@ class CustomersController extends Controller
     public function create()
     {
         $company_id = Auth::user()->company_id;
-        $zones = Zone::where('company_id', '=', $company_id)->pluck('name','id')->all();
-        return view('customer.create', ['zones' => $zones]);
+        return view('customer.create');
     }
 
     public function store(Request $request)
@@ -30,7 +29,6 @@ class CustomersController extends Controller
         $this->validate($request, [
             'name' => 'required|unique:companies',
             'city' => 'required',
-            'zone_id' => 'required',
             'phone' => 'required',
             'email' => 'sometimes|nullable|email',
             'logo' => 'image|max:1999',
@@ -58,7 +56,6 @@ class CustomersController extends Controller
         $cuscompany->shortname = strtolower(substr($name, 0, strrpos($name, ' ')));
         $cuscompany->address = $request->input('address');
         $cuscompany->city = $request->input('city');
-        $cuscompany->zone_id = $request->input('zone_id');
         $cuscompany->phone = $request->input('phone');
         $cuscompany->email = $request->input('email');
         $cuscompany->status = $request->input('status');
@@ -78,8 +75,7 @@ class CustomersController extends Controller
     {
         $company_id = Auth::user()->company_id;
         $customer = Company::find($id);
-        $zones = Zone::where('company_id', '=', $company_id)->pluck('name','id')->all();
-        return view('customer.edit',['customer'=> $customer, 'zones' => $zones]);
+        return view('customer.edit',['customer'=> $customer]);
     }
 
     public function update(Request $request, $id)
@@ -87,10 +83,10 @@ class CustomersController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'city' => 'required',
-            'zone_id' => 'required',
             'phone' => 'required',
             'email' => 'sometimes|nullable|email',
-            'logo' => 'image|max:1999'
+            'logo' => 'image|max:1999',
+            'status' => 'required'
         ]);
         
         $user_id = Auth::user()->id;
@@ -111,7 +107,6 @@ class CustomersController extends Controller
         $customer->name = $request->input('name');
         $customer->address = $request->input('address');
         $customer->city = $request->input('city');
-        $customer->zone_id = $request->input('zone_id');
         $customer->phone = $request->input('phone');
         $customer->email = $request->input('email');
         if ($request->input('status') != NULL){
@@ -147,8 +142,13 @@ class CustomersController extends Controller
     public function cususers($id)
     {
         $company_id = Auth::user()->company_id;
+        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '=', $id)->where('id', '!=', $company_id)->select('id')->count();
+        if ($cuscompanies == 0 ){
+            return redirect('/customer')->with('error', 'Company Not Found');
+        }
         $users = User::where('company_id', '=', $id)->get();
-        return view('cususers.index',['users'=> $users]);
+        $company_name = Company::where('id', '=', $id)->pluck('name')->first();
+        return view('cususers.index',['users'=> $users, 'company_name' => $company_name]);
     }
 
     public function cuscreate()
@@ -167,10 +167,9 @@ class CustomersController extends Controller
             'username' => 'required|unique:users',
             'firstname' => 'required',
             'lastname' => 'required',
-            'phone' => array('required', 'unique:users', 'regex:/^[0-9]{12}$/'),
+            'phone' => array('required', 'regex:/^[0-9]{12}$/'),
             'company_id' => 'required',
-            'status' => 'required',
-            'usertype' => 'required' 
+            'status' => 'required' 
         ]);
 
         //Set new random password
@@ -201,7 +200,7 @@ class CustomersController extends Controller
         $user->password = bcrypt($password);
         $user->company_id = $request->input('company_id');
         $user->status = $request->input('status');
-        $user->usertype = $request->input('usertype');
+        $user->usertype = 'cusadmin';
         $user->updated_by = $user_id;
         $user->save();
 

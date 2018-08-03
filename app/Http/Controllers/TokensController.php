@@ -17,10 +17,9 @@ class TokensController extends Controller
     	$user = Auth::user();
     	$company_id = $user->company_id;
         $token_bal = Token_bal::select(DB::raw('sum(balance) as token_bal'))->where('company_id', '=', $company_id)->pluck('token_bal')->first();
-        $tokens = Token_bal::where('company_id', '=', $company_id)->get();
-        $tokens = DB::table('tokens')
-                ->join('companies as c', 'tokens.sender_company_id', '=', 'c.id')
-                ->select('c.name as sender_company_name', 'tokens.balance')
+        $tokens = DB::table('token_bals')
+                ->join('companies as c', 'token_bals.sender_company_id', '=', 'c.id')
+                ->select('c.name as sender_company_name', 'token_bals.balance')
                 ->where('company_id', '=', $company_id)->get();
 
     	return view('token.index', ['tokens' => $tokens, 'token_bal' => $token_bal]);

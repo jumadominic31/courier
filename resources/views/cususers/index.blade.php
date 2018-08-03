@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="panel-heading">
-<h1> Customer User Administration </h1>
+<h1> Customer User Administration for {{$company_name}} </h1>
     <a href="{{ route('customer.index') }}" class="pull-right btn btn-default btn-xs">Go Back</a>
     <a href="{{ route('cususers.create') }}" class="btn btn-success">Add User</a>
 <br>

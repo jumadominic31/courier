@@ -8,16 +8,16 @@
                 <div class="panel-body">
                 {!!Form::open(['action' => ['ParcelsController@update', $parceltype->id],'method' => 'POST'])!!}
                     <div class="form-group">
-                        {{Form::label('name', 'ParcelType Name')}}
+                        {{Form::label('name', 'ParcelType Name*')}}
                         {{Form::text('name', $parceltype->name, ['class' => 'form-control'])}}
                     </div>
                     <div class="form-group">
-                        {{Form::label('unit', 'Unit')}}
-                        {{Form::select('unit', ['unit' => 'Unit', 'kg' => 'Kilogrammes', 'litre' => 'Litres'], $parceltype->unit, ['class' => 'form-control'])}}
+                        {{Form::label('unit', 'Unit*')}}
+                        {{Form::select('unit', ['' => '', 'unit' => 'Unit', 'kg' => 'Kilogrammes', 'litre' => 'Litres'], $parceltype->unit, ['class' => 'form-control'])}}
                     </div>
                     <div class="form-group">
-                        {{Form::label('rate', 'Rate in KShs.')}}
-                        {{Form::text('rate', $parceltype->rate, ['class' => 'form-control'])}}
+                        {{Form::label('status', 'Active Status*')}}
+                        {{Form::select('status', ['' => '', 1 => 'Active', 0 => 'Inactive'], $parceltype->status, ['class' => 'form-control'])}}                    
                     </div>
                     @if(Auth::user()->usertype == 'superadmin')
                         <div class="form-group">

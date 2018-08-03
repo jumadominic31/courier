@@ -21,10 +21,6 @@
                         {{Form::text('city', $customer->city, ['class' => 'form-control', 'placeholder' => 'City'])}}
                     </div>
                     <div class="form-group">
-                        {{Form::label('zone_id', 'Zone')}}
-                        {{Form::select('zone_id', [''=>''] + $zones, $customer->zone_id, ['class' => 'form-control'])}}
-                    </div>
-                    <div class="form-group">
                         {{Form::label('pin', 'PIN Number')}}
                         {{Form::text('pin', $customer->pin, ['class' => 'form-control', 'placeholder' => 'PIN Number'])}}
                     </div>
@@ -42,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         {{Form::label('status', 'Company Active Status')}}
-                        {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], $customer->status, ['class' => 'form-control', 'placeholder' => 'Company Active Status'])}}
+                        {{Form::select('status', ['' => '', 1 => 'Active', 0 => 'Inactive'], $customer->status, ['class' => 'form-control'])}}
                     </div>
                 {{Form::hidden('_method', 'PUT')}}
                 {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}

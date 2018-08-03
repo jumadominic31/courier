@@ -47,7 +47,7 @@ class ParcelsController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'unit' => 'required',
-            'rate' => 'required'
+            'status' => 'required'
         ]);
 
         $user_id = Auth::user()->id;
@@ -56,7 +56,7 @@ class ParcelsController extends Controller
         $parceltype = ParcelType::find($id);
         $parceltype->name = $request->input('name');
         $parceltype->unit = $request->input('unit');
-        $parceltype->rate = $request->input('rate');
+        $parceltype->status = $request->input('status');
         if (Auth::user()->usertype == 'superadmin') {
             $parceltype->company_id = $request->input('company_id');;
         } 
@@ -80,7 +80,7 @@ class ParcelsController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'unit' => 'required',
-            'rate' => 'required'
+            'status' => 'required'
         ]);
 
         $user_id = Auth::user()->id;
@@ -96,7 +96,7 @@ class ParcelsController extends Controller
         $parceltype = new ParcelType;
         $parceltype->name = $request->input('name');
         $parceltype->unit = $request->input('unit');
-        $parceltype->rate = $request->input('rate');
+        $parceltype->status = $request->input('status');
         if (Auth::user()->usertype == 'superadmin') {
             $parceltype->company_id = $request->input('company_id');;
         } 

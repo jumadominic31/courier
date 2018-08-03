@@ -43,14 +43,6 @@
             {{Form::text('last_date', '', ['class' => 'last_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
       </tr>
-      <tr>
-        <td><div class="form-group">
-              {{Form::label('invoiced', 'Invoiced')}}
-              {{Form::select('invoiced', ['' => '', '0' => 'No', '1' => 'Yes'], '', ['class' => 'form-control', 'id' => 'invoiced'])}}
-          </div></td>
-        <td></td>
-        <td></td>
-      </tr>
       
       </tbody>
     </table>
@@ -81,13 +73,11 @@
             <th width="13.33%">Origin</th>
             <th width="13.33%">Destination</th>
             <th width="8.33%">Parcel Type</th>
-            <th width="4.33%">Price</th>
-            <th width="4.33%">VAT</th>
             <th width="8.33%">Rider</th>
             <th width="8.33%">Mode</th>
             <th width="8.33%">Parcel Status</th>         
             <th width="11.33%">Date/Time Created</th>
-            <th width="3.33%">Invoiced</th>
+            <th width="3.33%">Acknowledge</th>
             <th></th>
             <th></th>
           </tr>
@@ -98,8 +88,6 @@
             <td>{{$txn['origin_addr']}}</td>
             <td>{{$txn['dest_addr']}}</td>
             <td>{{$txn['parcel_type']['name']}}</td>
-            <td>{{$txn['price']}}</td>
-            <td>{{$txn['vat']}}</td>
             <td>{{$txn['driver']['fullname']}}</td>
             @if ($txn['mode'] == 0)
             <td>Normal</td>
@@ -108,9 +96,9 @@
             @endif
             <td>{{$txn['parcel_status']['name']}}</td>
             <td>{{$txn['created_at']}}</td>
-            @if ($txn['invoiced'] == 0)
+            @if ($txn['acknowledge'] == 0)
             <td>No</td>
-            @else ($txn['invoiced'] == 1)
+            @else ($txn['acknowledge'] == 1)
             <td>Yes</td>
             @endif
             <td><a class="pull-right btn btn-default btn-xs" target="_blank" href="{{ route('shipments.print', ['awb' => $txn->id ]) }}">Print</td>

@@ -26,10 +26,6 @@
             {{Form::text('email', '', ['class' => 'form-control', 'placeholder' => 'Email Address'])}}
         </div>
         <div class="form-group">
-            {{Form::label('usertype', 'User Type')}}
-            {{Form::select('usertype', ['cusadmin' => 'Customer Admin', 'cusclerk' => 'Customer Clerk'], 'cusclerk', ['class' => 'form-control'])}}
-        </div>
-        <div class="form-group">
             {{Form::label('status', 'Status')}}
             {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], 1, ['class' => 'form-control'])}}
         </div>

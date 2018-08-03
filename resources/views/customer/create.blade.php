@@ -18,10 +18,6 @@
             {{Form::text('city', '', ['class' => 'form-control', 'placeholder' => 'City/Town'])}}
         </div>
         <div class="form-group">
-            {{Form::label('zone_id', 'Zone')}}
-            {{Form::select('zone_id', [''=>''] + $zones, '', ['class' => 'form-control'])}}
-        </div>
-        <div class="form-group">
             {{Form::label('pin', 'PIN Number')}}
             {{Form::text('pin', '', ['class' => 'form-control', 'placeholder' => 'PIN Number'])}}
         </div>
