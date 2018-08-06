@@ -5,6 +5,7 @@
 <div class="container"> 
     <h1>Add Shipment</h1>
 </div>
+<h3>Token Balance: {{$token_bal}} </h3>
 {!! Form::open(['action' => 'CusportalController@storeShipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 <div class="container">
     <div class="row">
@@ -146,7 +147,11 @@
 </div>
 <div class="row">
     <div class="col-md-12 text-center"> 
-        {{Form::submit('Submit', ['class'=>'btn btn-primary btn-xl'])}}
+        @if ($token_bal > 0)
+            {{Form::submit('Submit', ['class'=>'btn btn-primary btn-xl'])}}
+        @else
+            {{Form::submit('Submit', ['class'=>'btn btn-primary btn-xl', 'disabled' => 'true'])}}
+        @endif
     </div>
 </div>
 {!! Form::close() !!}

@@ -16,6 +16,8 @@ use App\Station;
 use App\ParcelStatus;
 use App\ParcelType;
 use App\Vehicle;
+use App\Token;
+use App\Token_bal;
 use App\Zone;
 use App\SmsApi;
 use JWTAuth;
@@ -357,11 +359,13 @@ class CusportalController extends Controller
         $company_id = $user->company_id;
         $company_addr = Company::select('address')->where('id', '=', $company_id)->pluck('address')->first();
         $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
-        $zone_id = Company::select('zone_id')->where('id', '=', $company_id)->pluck('zone_id')->first();
-        $zone_name = Company::join('zones as z1', 'companies.zone_id', '=', 'z1.id')->select('z1.name')->where('companies.id', '=', $company_id)->pluck('z1.name')->first();
+        $token_bal = Token_bal::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->pluck('balance')->first();
+        if ($token_bal == NULL)
+        {
+            $token_bal = 0;
+        }
         $parcel_types = ParcelType::where('company_id', '=', $parent_company_id)->pluck('name','id')->all();
-        $zones = Zone::where('company_id', '=', $parent_company_id)->pluck('name','id')->all();
-        return view('portal.shipments.add', ['user' => $user, 'company_addr' => $company_addr, 'zone_id' => $zone_id, 'zone_name' => $zone_name, 'parcel_types' => $parcel_types, 'zones' => $zones]);
+        return view('portal.shipments.add', ['user' => $user, 'company_addr' => $company_addr, 'parcel_types' => $parcel_types, 'token_bal' => $token_bal]);
     }
 
     public function storeShipment(Request $request)
@@ -397,14 +401,19 @@ class CusportalController extends Controller
             return $num;
         }
         
-        $prefix = Company::where('id', '=', $parent_company_id)->pluck('name')->first();
-        $prefix = strtoupper($prefix);
-        $prefix = substr($prefix, 0, 3);
+        // $prefix = Company::where('id', '=', $parent_company_id)->pluck('name')->first();
+        // $prefix = strtoupper($prefix);
+        // $prefix = substr($prefix, 0, 3);
         
-        $newawbnum = randomDigits(5);
-        $newawbnum = $prefix.date('ymd').$newawbnum;
+        // $newawbnum = randomDigits(5);
+        // $newawbnum = $prefix.date('ymd').$newawbnum;
         // $price = $request->input('price');
         // $vat = 0.16 * $price;
+
+        //get curr awb num
+        $awb = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('curr_awb')->first();
+        $last_awb = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('last_awb')->first();
+        $token_id = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('id')->first();
         
         $parcel_desc = $request->input('parcel_desc');
         $receiver_phone = $request->input('receiver_phone');
@@ -412,7 +421,7 @@ class CusportalController extends Controller
         $receiver_code_hash = Hash::make($receiver_code);
 
         $txn = new Txn;
-        $txn->awb_num = $newawbnum;
+        $txn->awb_num = $awb;
         $txn->clerk_id = $user_id;
         $txn->mode = $request->input('mode');
         $txn->round = $request->input('round');
@@ -438,6 +447,24 @@ class CusportalController extends Controller
         $txn->receiver_code = $receiver_code_hash;
         $txn->updated_by = $user->id;
         $txn->save();
+
+        //if awb == last_awb then set finished as 1
+        $token = Token::find($token_id);
+        $token->curr_awb += 1;
+        $token->balance -= 1;
+        if ($awb == $last_awb)
+        {
+            $token->finished = '1';
+            $token->curr_awb -= 1;
+        }
+        //increase curr_awb
+         $token->save();
+        //reduce token balance
+        $token_bal_id = Token_bal::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->pluck('id')->first();
+        $token_bal = Token_bal::find($token_bal_id);
+        $token_bal->balance -= 1;
+        $token_bal->save();
+
 
         if ($txn->round == 0)
         {
@@ -468,56 +495,56 @@ class CusportalController extends Controller
         $txnlog->save();
 
         //Create return AWB
-        if ($txn->round == 1)
-        {
-            $returnawbnum = randomDigits(5);
-            $returnawbnum = $prefix.date('ymd').$returnawbnum;
-            // $price = $request->input('price');
-            // $vat = 0.16 * $price;
+        // if ($txn->round == 1)
+        // {
+        //     $returnawbnum = randomDigits(5);
+        //     $returnawbnum = $prefix.date('ymd').$returnawbnum;
+        //     // $price = $request->input('price');
+        //     // $vat = 0.16 * $price;
             
-            $parcel_desc = $request->input('parcel_desc');
-            $receiver_phone = $request->input('receiver_phone');
-            $receiver_code = randomDigits(6);
-            $receiver_code_hash = Hash::make($receiver_code);
+        //     $parcel_desc = $request->input('parcel_desc');
+        //     $receiver_phone = $request->input('receiver_phone');
+        //     $receiver_code = randomDigits(6);
+        //     $receiver_code_hash = Hash::make($receiver_code);
 
-            $txn = new Txn;
-            $txn->awb_num = $returnawbnum;
-            $txn->clerk_id = $user_id;
-            $txn->mode = $request->input('mode');
-            $txn->round = $request->input('round');
-            $txn->units = $request->input('units');
-            $txn->company_id = $parent_company_id;
-            $txn->parcel_status_id = '7';
-            $txn->parcel_type_id = $request->input('parcel_type_id');
-            $txn->acknowledge = $request->input('acknowledge');
-            if ($parcel_desc != NULL){
-                $txn->parcel_desc = $parcel_desc;
-            }
-            // $txn->price = $price;
-            // $txn->vat = $vat;
-            $txn->sender_name = $user->fullname;
-            $txn->sender_company_id = $user->company_id;
-            $txn->sender_company_name = Company::select('name')->where('id', '=', $user->company_id)->pluck('name')->first();
-            $txn->origin_addr = $request->input('dest_addr');
-            $txn->sender_phone = $user->phone;
-            $txn->receiver_name = $request->input('receiver_name');
-            $txn->receiver_company_name = $request->input('receiver_company');
-            $txn->receiver_phone = $receiver_phone;
-            $txn->dest_addr = $request->input('origin_addr');
-            $txn->receiver_code = $receiver_code_hash;
-            $txn->updated_by = $user->id;
-            $txn->save();
+        //     $txn = new Txn;
+        //     $txn->awb_num = $returnawbnum;
+        //     $txn->clerk_id = $user_id;
+        //     $txn->mode = $request->input('mode');
+        //     $txn->round = $request->input('round');
+        //     $txn->units = $request->input('units');
+        //     $txn->company_id = $parent_company_id;
+        //     $txn->parcel_status_id = '7';
+        //     $txn->parcel_type_id = $request->input('parcel_type_id');
+        //     $txn->acknowledge = $request->input('acknowledge');
+        //     if ($parcel_desc != NULL){
+        //         $txn->parcel_desc = $parcel_desc;
+        //     }
+        //     // $txn->price = $price;
+        //     // $txn->vat = $vat;
+        //     $txn->sender_name = $user->fullname;
+        //     $txn->sender_company_id = $user->company_id;
+        //     $txn->sender_company_name = Company::select('name')->where('id', '=', $user->company_id)->pluck('name')->first();
+        //     $txn->origin_addr = $request->input('dest_addr');
+        //     $txn->sender_phone = $user->phone;
+        //     $txn->receiver_name = $request->input('receiver_name');
+        //     $txn->receiver_company_name = $request->input('receiver_company');
+        //     $txn->receiver_phone = $receiver_phone;
+        //     $txn->dest_addr = $request->input('origin_addr');
+        //     $txn->receiver_code = $receiver_code_hash;
+        //     $txn->updated_by = $user->id;
+        //     $txn->save();
 
-            $txnlog = new TxnLog;
-            $txnlog->awb_id = $txn->id;
-            $txnlog->status_id = $txn->parcel_status_id;
-            // $txnlog->origin_id = $txn->origin_id;
-            // $txnlog->dest_id = $txn->dest_id;
-            $txnlog->updated_by = $user->id;
-            $txnlog->company_id = $parent_company_id;
-            $txnlog->sender_company_id = $company_id;
-            $txnlog->save();
-        }
+        //     $txnlog = new TxnLog;
+        //     $txnlog->awb_id = $txn->id;
+        //     $txnlog->status_id = $txn->parcel_status_id;
+        //     // $txnlog->origin_id = $txn->origin_id;
+        //     // $txnlog->dest_id = $txn->dest_id;
+        //     $txnlog->updated_by = $user->id;
+        //     $txnlog->company_id = $parent_company_id;
+        //     $txnlog->sender_company_id = $company_id;
+        //     $txnlog->save();
+        // }
 
         $awb_num = $txn->awb_num;
         $txn_id = $txn->id;

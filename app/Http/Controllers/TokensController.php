@@ -49,6 +49,10 @@ class TokensController extends Controller
     	$sender_company_id = $request->input('sender_company_id');
     	$amount = $request->input('amount');
     	$balance = Token::orderBy('id', 'desc')->where('company_id', '=', $company_id)->where('sender_company_id', '=', $sender_company_id)->pluck('balance')->first();
+        if ($balance == NULL)
+        {
+            $balance = 0;
+        }
     	$old_last_awb = Token::orderBy('id', 'desc')->where('company_id', '=', $company_id)->pluck('last_awb')->first();
     	$first_awb = $old_last_awb + 1;
     	$last_awb = $old_last_awb + $amount;
@@ -56,21 +60,34 @@ class TokensController extends Controller
         $token = new Token();
         $token->company_id = $company_id;
         $token->sender_company_id = $sender_company_id;
-        $token->txntype = 'topup';
         $token->amount = $request->input('amount');
         $new_balance = $balance + $amount;
         $token->balance = $new_balance;
         $token->first_awb = $first_awb;
         $token->last_awb = $last_awb;
+        $token->curr_awb = $first_awb;
+        $token->finished = 0;
         $token->updated_by = $user_id;
         $token->save();
 
         //update token balance table
         $token_bal_id = Token_bal::where('company_id', '=', $company_id)->where('sender_company_id', '=', $sender_company_id)->pluck('id')->first();
-        $new_bal = Token_bal::find($token_bal_id);
-        $new_bal->balance = $new_balance;
-        $new_bal->updated_by = $user_id;
-        $new_bal->save();
+        if ($token_bal_id == NULL)
+        {
+            $token_bal = new Token_bal();
+            $token_bal->company_id = $company_id;
+            $token_bal->sender_company_id = $sender_company_id;
+            $token_bal->balance = $new_balance;
+            $token_bal->updated_by = $user_id;
+            $token_bal->save();
+        }
+        else 
+        {
+            $new_bal = Token_bal::find($token_bal_id);
+            $new_bal->balance = $new_balance;
+            $new_bal->updated_by = $user_id;
+            $new_bal->save();
+        }
 
         return redirect('/token')->with('success', $amount.' Tokens added successfully.' );
     }

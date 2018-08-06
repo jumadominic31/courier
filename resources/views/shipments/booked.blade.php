@@ -59,7 +59,7 @@
 
 
 <!-- Ajax test -->
-<form id="myForm">
+<!-- <form id="myForm">
     <table class="table table-striped" >
     <tr>
         <th width="10.33%">Sender Company</th>
@@ -96,7 +96,7 @@
 
       @endforeach
 </table>
-</form>
+</form> -->
 
 
 @endsection

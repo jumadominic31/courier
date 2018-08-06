@@ -78,6 +78,16 @@ class UsersController extends Controller
 
         $username = $request->input('username');
 
+        //Check whether the company active
+        $company_id = User::where('username', '=', $username)->pluck('company_id')->first();
+        $company_status = Company::where('id', '=', $company_id)->pluck('status')->first();
+
+        //Incorrect username/password if company is inactive
+        if ($company_status == '0')
+        {
+            return redirect()->back()->with('error', 'Incorrect username/password');
+        }
+
         $credentials1 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'superadmin', 'status' => 1);
         $credentials2 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'admin', 'status' => 1);
         $credentials3 = array('username' => $request->input('username'), 'password' => $request->input('password'), 'usertype' => 'cusadmin', 'status' => 1);
