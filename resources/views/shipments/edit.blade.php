@@ -4,18 +4,7 @@
 <div class="row">
     <div ><h2>Edit Shipment <br> <a href="{{ route('shipments.index') }}" class=" btn btn-default btn-xs">Go Back</a></h2></div>
 </div>
-<div class="row">
-    <div class="col-md-6 col-md-offset-5">
-        <span class="center-block">
-            {!!Form::open(['action' => ['TxnsController@resetReceivercode', $txn->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure you want to reset receiver code?")'])!!}
-              {{Form::hidden('_method', 'POST')}}
-              {{Form::submit('Reset Receiver Code', ['class' => 'btn btn-danger'])}}
-            {!! Form::close() !!}
-        </span>
-    </div>
-</div>
 
-<hr>
 {!!Form::open(['action' => ['TxnsController@update', $txn->id],'method' => 'POST'])!!}
     <div class="row">
         <div class="col-sm-6">
@@ -24,8 +13,18 @@
                     <h3 class="panel-title">AWB and Status</h3>
                 </div>
                 <div class="panel-body">
-                    <strong>{{$txn['awb_num']}}</strong>
-                    <p>{{$txn->parcel_status['name']}}</p>
+                    <div class="input-group">
+                        <span class="input-group-addon" >AWB Num:</span>
+                        <input type="text" id="awb_num" name="awb_num" value="{{$txn['awb_num']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Parcel Status:</span>
+                        {{Form::text('parcel_status', $txn->parcel_status['name'], ['class' => 'form-control'])}}
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Ship Date:</span>
+                        <input type="text" id="txn_date" name="txn_date" value="{{$txn['txn_date']}}" class="form-control first_date"  aria-describedby="basic-addon1">
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,6 +41,10 @@
                         @else
                             {{Form::select('parcel_type_id', ['' => ''] + $parcel_types, $txn->parcel_type_id, ['class' => 'form-control', 'disabled' => 'true'])}}
                         @endif
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Description:</span>
+                        <input type="text" id="parcel_desc" name="parcel_desc" value="{{$txn['parcel_desc']}}" class="form-control"  aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
@@ -90,12 +93,16 @@
                         <input type="text" id="sender_name" name="sender_name" value="{{$txn['sender_name']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon">Phone</span>
-                        <input type="text" id="sender_phone" name="sender_phone" value="{{$txn['sender_phone']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
+                        <span class="input-group-addon">Company *</span>
+                        {{Form::select('sender_company', ['' => ''] + $companies + ['0' => 'Others'], $txn['sender_company_id'], ['class' => 'form-control', 'id' => 'sender_company'])}}
+                    </div>
+                    <div class="input-group" id="other_company_name" style="display: none ;">
+                        <span class="input-group-addon">Company Name *</span>
+                        <input type="text" id="other_company" name="other_company" value="{{ old('other_company') }}" class="form-control"  aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon" >ID Num</span>
-                        <input type="text" id="sender_id_num" name="sender_id_num" value="{{$txn['sender_id_num']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
+                        <span class="input-group-addon">Phone</span>
+                        <input type="text" id="sender_phone" name="sender_phone" value="{{$txn['sender_phone']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
                     </div>
                 </div>
             </div>
@@ -112,12 +119,12 @@
                             <input type="text" id="receiver_name" name="receiver_name" value="{{$txn['receiver_name']}}" class="form-control"  aria-describedby="basic-addon1">
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon">Phone</span>
-                            <input type="text" id="receiver_phone" name="receiver_phone" value="{{$txn['receiver_phone']}}" class="form-control"  aria-describedby="basic-addon1">
+                            <span class="input-group-addon">Company *</span>
+                            <input type="text" id="receiver_company" name="receiver_company" value="{{$txn['receiver_company']}}" class="form-control"  aria-describedby="basic-addon1">
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon" >ID Num</span>
-                            <input type="text" id="receiver_id_num" name="receiver_id_num" value="{{$txn['receiver_id_num']}}" class="form-control"  aria-describedby="basic-addon1">
+                            <span class="input-group-addon">Phone</span>
+                            <input type="text" id="receiver_phone" name="receiver_phone" value="{{$txn['receiver_phone']}}" class="form-control"  aria-describedby="basic-addon1">
                         </div>
                     @else
                         <div class="input-group">
@@ -125,12 +132,12 @@
                             <input type="text" id="receiver_name" name="receiver_name" value="{{$txn['receiver_name']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
                         </div>
                         <div class="input-group">
+                            <span class="input-group-addon">Company *</span>
+                            <input type="text" id="receiver_company" name="receiver_company" value="{{$txn['receiver_company_name']}}" class="form-control"  aria-describedby="basic-addon1">
+                        </div>
+                            <div class="input-group">
                             <span class="input-group-addon">Phone</span>
                             <input type="text" id="receiver_phone" name="receiver_phone" value="{{$txn['receiver_phone']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" >ID Num</span>
-                            <input type="text" id="receiver_id_num" name="receiver_id_num" value="{{$txn['receiver_id_num']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
                         </div>
                     @endif
                     
@@ -243,4 +250,19 @@
 {{Form::hidden('_method', 'PUT')}}
 {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
 {!! Form::close() !!}
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('#sender_company').change(function(){
+            var i= $('#sender_company').val();
+            if (i == '0'){
+                $('#other_company_name').show();
+            }
+            else {
+                $('#other_company_name').hide();
+            }
+        });
+    });
+</script>
+
 @endsection

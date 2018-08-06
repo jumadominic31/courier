@@ -1007,7 +1007,7 @@ class TxnsController extends Controller
                 ->orderby('t.id', 'desc')
                 ->get();
         
-        $companies = Company::pluck('name','id');
+        $companies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name','id')->all();
         return view('shipments.edit',['txn'=> $txn, 'companies' => $companies, 'parcel_statuses' => $parcel_statuses, 'parcel_types' => $parcel_types, 'stations' => $stations,  'origin_addr' => $origin_addr, 'dest_addr' => $dest_addr, 'drivers' => $drivers, 'vehicles' => $vehicles, 'statusDet' => $statusDet]);
     }
 
