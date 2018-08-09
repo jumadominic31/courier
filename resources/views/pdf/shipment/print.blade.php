@@ -100,9 +100,9 @@ span.SpellE
 .MsoChpDefault
   {mso-style-type:export-only;
   mso-default-props:yes;
-  font-size:10.0pt;
-  mso-ansi-font-size:10.0pt;
-  mso-bidi-font-size:10.0pt;
+  font-size:9.0pt;
+  mso-ansi-font-size:9.0pt;
+  mso-bidi-font-size:9.0pt;
   font-family:"Calibri","sans-serif";
   mso-ascii-font-family:Calibri;
   mso-hansi-font-family:Calibri;
@@ -131,7 +131,7 @@ div.WordSection1
   mso-para-margin:0in;
   mso-para-margin-bottom:.0001pt;
   mso-pagination:widow-orphan;
-  font-size:10.0pt;
+  font-size:9.0pt;
   font-family:"Calibri","sans-serif";}
 </style>
 <![endif]--><!--[if gte mso 9]><xml>
@@ -140,17 +140,29 @@ div.WordSection1
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
  </o:shapelayout></xml><![endif]-->
+ <script type="text/javascript">
+  function printDiv(divName) {
+     var printContents = document.getElementById(divName).innerHTML;
+     var originalContents = document.body.innerHTML;
+     document.body.innerHTML = printContents;
+     window.print();
+     document.body.innerHTML = originalContents;
+  }
+</script>
 </head>
 
 <body lang=EN-US style='tab-interval:.5in'>
+  <div id='printBtn'>
+    <input type="button" onclick="printDiv('WordSection1')" value="Print" />
+  </div>
 
-<div class=WordSection1>
+<div id=WordSection1>
 <div id=copy1>
 <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0in 0in 0in 0in'>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Receiver Copy</span></p>
   </td>
@@ -163,23 +175,22 @@ div.WordSection1
  </tr>
  <tr style='mso-yfti-irow:1'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border-top:none;
-  border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-left:solid windowtext 1.0pt;border-bottom:none;
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
     <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;"></span></p>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:none;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:center;line-height:normal'><b><span style='font-size:12.0pt;
   font-family:"Arial","sans-serif"'>{{$parent_company['name']}}</span></b></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-left:none;border-bottom:none;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:center;line-height:normal'></p>
@@ -188,12 +199,12 @@ div.WordSection1
  <tr style='mso-yfti-irow:2'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border-top:none;
   border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
@@ -230,7 +241,7 @@ div.WordSection1
  <tr style='mso-yfti-irow:4'>
   <td width=78 valign=top style='width:58.25pt;border-top:none;border-left:
   solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
-  solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
   style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
@@ -255,7 +266,7 @@ div.WordSection1
   normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
   </td>
   <td width=89 valign=top style='width:66.6pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
@@ -281,7 +292,7 @@ div.WordSection1
   normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
   </td>
   <td width=94 colspan=2 valign=top style='width:70.55pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
@@ -333,13 +344,13 @@ div.WordSection1
   padding:0in 5.4pt 0in 5.4pt'>
   @if ($txn['parcel_type_id'] == '10')
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:10.0pt;
+  normal'><span style='font-size:9.0pt;
   mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span></p>
 
   @endif
   @if ($txn['acknowledge'] == '1')
     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-    normal'><span style='font-size:10.0pt;
+    normal'><span style='font-size:9.0pt;
     mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Acknowledgement Required</span></p>
   @endif
   </td>
@@ -348,21 +359,19 @@ div.WordSection1
   <td width=156 colspan=2 valign=top style='width:116.85pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Sender
-  Signature</span></b></p>
+  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Sender Signature</span></b></p>
   </td>
   <td width=156 colspan=3 valign=top style='width:116.85pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:116.9pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Receiver
-  Name and Signature</span></b></p>
+  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'></span></b></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:117.0pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -397,7 +406,7 @@ div.WordSection1
  style='border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0in 0in 0in 0in'>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Acknowledgment Copy 1</span></p>
   </td>
@@ -410,38 +419,36 @@ div.WordSection1
  </tr>
  <tr style='mso-yfti-irow:1'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border-top:none;
-  border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-left:solid windowtext 1.0pt;border-bottom:none;
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
-    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;">
-  </span></p>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;"></span></p>
+
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:none;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:center;line-height:normal'><b><span style='font-size:12.0pt;
   font-family:"Arial","sans-serif"'>{{$parent_company['name']}}</span></b></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-left:none;border-bottom:none;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:center;line-height:normal'></span></p>
+  text-align:center;line-height:normal'></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:2'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border-top:none;
   border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
@@ -478,7 +485,7 @@ div.WordSection1
  <tr style='mso-yfti-irow:4'>
   <td width=78 valign=top style='width:58.25pt;border-top:none;border-left:
   solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
-  solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
   style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
@@ -503,7 +510,7 @@ div.WordSection1
   normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
   </td>
   <td width=89 valign=top style='width:66.6pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
@@ -529,7 +536,7 @@ div.WordSection1
   normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
   </td>
   <td width=94 colspan=2 valign=top style='width:70.55pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
@@ -581,13 +588,13 @@ div.WordSection1
   padding:0in 5.4pt 0in 5.4pt'>
   @if ($txn['parcel_type_id'] == '10')
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:10.0pt;
+  normal'><span style='font-size:9.0pt;
   mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span></p>
 
   @endif
   @if ($txn['acknowledge'] == '1')
     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-    normal'><span style='font-size:10.0pt;
+    normal'><span style='font-size:9.0pt;
     mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Acknowledgement Required</span></p>
   @endif
   </td>
@@ -596,21 +603,19 @@ div.WordSection1
   <td width=156 colspan=2 valign=top style='width:116.85pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Sender
-  Signature</span></b></p>
+  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Sender Signature</span></b></p>
   </td>
   <td width=156 colspan=3 valign=top style='width:116.85pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:116.9pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Receiver
-  Name and Signature</span></b></p>
+  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'></span></b></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:117.0pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -642,7 +647,7 @@ div.WordSection1
  style='border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0in 0in 0in 0in'>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Acknowledgment Copy 2</span></p>
   </td>
@@ -655,38 +660,36 @@ div.WordSection1
  </tr>
  <tr style='mso-yfti-irow:1'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border-top:none;
-  border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-left:solid windowtext 1.0pt;border-bottom:none;
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
-    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;">
-  </span></p>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;"></span></p>
+
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:none;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:center;line-height:normal'><b><span style='font-size:12.0pt;
   font-family:"Arial","sans-serif"'>{{$parent_company['name']}}</span></b></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-left:none;border-bottom:none;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:center;line-height:normal'></span></p>
+  text-align:center;line-height:normal'></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:2'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border-top:none;
   border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
@@ -723,7 +726,7 @@ div.WordSection1
  <tr style='mso-yfti-irow:4'>
   <td width=78 valign=top style='width:58.25pt;border-top:none;border-left:
   solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
-  solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
   style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
@@ -748,7 +751,7 @@ div.WordSection1
   normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
   </td>
   <td width=89 valign=top style='width:66.6pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
@@ -774,7 +777,7 @@ div.WordSection1
   normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
   </td>
   <td width=94 colspan=2 valign=top style='width:70.55pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
@@ -826,13 +829,13 @@ div.WordSection1
   padding:0in 5.4pt 0in 5.4pt'>
   @if ($txn['parcel_type_id'] == '10')
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:10.0pt;
+  normal'><span style='font-size:9.0pt;
   mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span></p>
 
   @endif
   @if ($txn['acknowledge'] == '1')
     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-    normal'><span style='font-size:10.0pt;
+    normal'><span style='font-size:9.0pt;
     mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Acknowledgement Required</span></p>
   @endif
   </td>
@@ -841,21 +844,19 @@ div.WordSection1
   <td width=156 colspan=2 valign=top style='width:116.85pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Sender
-  Signature</span></b></p>
+  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Sender Signature</span></b></p>
   </td>
   <td width=156 colspan=3 valign=top style='width:116.85pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:116.9pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Receiver
-  Name and Signature</span></b></p>
+  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'></span></b></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:117.0pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -887,7 +888,7 @@ div.WordSection1
  style='border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0in 0in 0in 0in'>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Client Copy</span></p>
   </td>
@@ -900,24 +901,22 @@ div.WordSection1
  </tr>
  <tr style='mso-yfti-irow:1'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border-top:none;
-  border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-left:solid windowtext 1.0pt;border-bottom:none;
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
-    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;">
-  </span></p>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+    <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;"></span></p>
+
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:none;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:center;line-height:normal'><b><span style='font-size:12.0pt;
   font-family:"Arial","sans-serif"'>{{$parent_company['name']}}</span></b></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-left:none;border-bottom:none;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:center;line-height:normal'></p>
@@ -926,12 +925,12 @@ div.WordSection1
  <tr style='mso-yfti-irow:2'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border-top:none;
   border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
-  border-right:solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
@@ -942,6 +941,7 @@ div.WordSection1
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Date/time: {{$txn['created_at']}}</span></p>
   </td>
+ </tr>
  </tr>
  <tr style='mso-yfti-irow:3'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border:solid windowtext 1.0pt;
@@ -968,7 +968,7 @@ div.WordSection1
  <tr style='mso-yfti-irow:4'>
   <td width=78 valign=top style='width:58.25pt;border-top:none;border-left:
   solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
-  solid white 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+  none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
   style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
@@ -993,7 +993,7 @@ div.WordSection1
   normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
   </td>
   <td width=89 valign=top style='width:66.6pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
@@ -1019,7 +1019,7 @@ div.WordSection1
   normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
   </td>
   <td width=94 colspan=2 valign=top style='width:70.55pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
@@ -1071,13 +1071,13 @@ div.WordSection1
   padding:0in 5.4pt 0in 5.4pt'>
   @if ($txn['parcel_type_id'] == '10')
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:10.0pt;
+  normal'><span style='font-size:9.0pt;
   mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span></p>
 
   @endif
   @if ($txn['acknowledge'] == '1')
     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-    normal'><span style='font-size:10.0pt;
+    normal'><span style='font-size:9.0pt;
     mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Acknowledgement Required</span></p>
   @endif
   </td>

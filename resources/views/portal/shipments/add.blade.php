@@ -5,7 +5,6 @@
 <div class="container"> 
     <h1>Add Shipment</h1>
 </div>
-<h3>Token Balance: {{$token_bal}} </h3>
 {!! Form::open(['action' => 'CusportalController@storeShipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 <div class="container">
     <div class="row">
@@ -17,11 +16,15 @@
                 <div class="panel-body">
                     <div class="input-group">
                         <span class="input-group-addon" >Name</span>
-                        <input type="text" id="sender_name" name="sender_name" value="{{$user['fullname']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
+                        <input type="text" id="sender_name" name="sender_name" value="{{old('receiver_name')}}" class="form-control"  aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Company</span>
                         <input type="text" id="sender_company" name="sender_company" value="{{$user['company']['name']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Department</span>
+                        <input type="text" id="sender_dept" name="sender_dept" value="{{$user['company']['name']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Phone</span>
@@ -56,12 +59,24 @@
         <div class="col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Origin</h3>
+                    <h3 class="panel-title">Origin - Physical Address</h3>
                 </div>
                 <div class="panel-body">
                     <div class="input-group">
-                        <span class="input-group-addon" >Physical Address *</span>
-                        <input type="text" id="origin_addr" name="origin_addr" value="{{ old('origin_addr')  }}" class="form-control"  aria-describedby="basic-addon1" >
+                        <span class="input-group-addon" >Building Name *</span>
+                        <input type="text" id="origin_addr_1" name="origin_addr_1" value="{{ old('origin_addr_1')  }}" class="form-control"  aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Floor no/Office no</span>
+                        <input type="text" id="origin_addr_2" name="origin_addr_2" value="{{ old('origin_addr_2')  }}" class="form-control"  aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Street/Road Name</span>
+                        <input type="text" id="origin_addr_3" name="origin_addr_3" value="{{ old('origin_addr_3')  }}" class="form-control"  aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Area Name</span>
+                        <input type="text" id="origin_addr_4" name="origin_addr_4" value="{{ old('origin_addr_4')  }}" class="form-control"  aria-describedby="basic-addon1" >
                     </div>
                 </div>
             </div>
@@ -69,12 +84,24 @@
         <div class="col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Destination</h3>
+                    <h3 class="panel-title">Destination - Physical Address</h3>
                 </div>
                 <div class="panel-body">
                     <div class="input-group">
-                        <span class="input-group-addon" >Physical Address *</span>
-                        <input type="text" id="dest_addr" name="dest_addr" value="{{ old('dest_addr') }}" class="form-control"  aria-describedby="basic-addon1" >
+                        <span class="input-group-addon" >Building Name *</span>
+                        <input type="text" id="dest_addr_1" name="dest_addr_1" value="{{ old('dest_addr_1')  }}" class="form-control"  aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Floor no/Office no</span>
+                        <input type="text" id="dest_addr_2" name="dest_addr_2" value="{{ old('dest_addr_2')  }}" class="form-control"  aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Street/Road Name</span>
+                        <input type="text" id="dest_addr_3" name="dest_addr_3" value="{{ old('dest_addr_3')  }}" class="form-control"  aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Area Name</span>
+                        <input type="text" id="dest_addr_4" name="dest_addr_4" value="{{ old('dest_addr_4')  }}" class="form-control"  aria-describedby="basic-addon1" >
                     </div>
                 </div>
             </div>
@@ -106,11 +133,7 @@
                 <div class="panel-body">
                     <div class="input-group">
                         <span class="input-group-addon" >Mode *</span>
-                        {{Form::select('mode', ['' => '', 0 => 'Normal', 1 => 'Express'],  old('mode') , ['class' => 'form-control'])}}
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" >Round trip *</span>
-                        {{Form::select('round', ['' => '', 0 => 'No', 1 => 'Yes'], old('round'), ['class' => 'form-control'])}}
+                        {{Form::select('mode', ['' => '', 0 => 'Normal', 1 => 'Express'],  '0' , ['class' => 'form-control'])}}
                     </div>
                 </div>
             </div>
@@ -133,7 +156,7 @@
         <div class="col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Acknowledgement Receipt</h3>
+                    <h3 class="panel-title">Bring Back Acknowledgement Docs</h3>
                 </div>
                 <div class="panel-body">
                     <div class="input-group">
@@ -147,11 +170,7 @@
 </div>
 <div class="row">
     <div class="col-md-12 text-center"> 
-        @if ($token_bal > 0)
-            {{Form::submit('Submit', ['class'=>'btn btn-primary btn-xl'])}}
-        @else
-            {{Form::submit('Submit', ['class'=>'btn btn-primary btn-xl', 'disabled' => 'true'])}}
-        @endif
+        {{Form::submit('Submit', ['class'=>'btn btn-primary btn-xl'])}}
     </div>
 </div>
 {!! Form::close() !!}

@@ -1032,7 +1032,7 @@ class TxnsController extends Controller
         $origin_addr = $txn->origin_addr;
         $dest_addr = $txn->dest_addr;
         $stations = Zone::pluck('name','id')->all();
-        $drivers = User::where('usertype', '=', 'driver')->pluck('fullname','id')->all();
+        $drivers = User::where('usertype', '=', 'driver')->where('company_id', '=', $company_id)->pluck('fullname','id')->all();
         $vehicles = Vehicle::pluck('name','id')->all();
         $statusDet = DB::table('txn_logs as t')
                 ->join('parcel_statuses as p', 't.status_id', '=', 'p.id')

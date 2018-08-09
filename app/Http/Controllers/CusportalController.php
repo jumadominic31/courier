@@ -359,26 +359,27 @@ class CusportalController extends Controller
         $company_id = $user->company_id;
         $company_addr = Company::select('address')->where('id', '=', $company_id)->pluck('address')->first();
         $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
-        $token_bal = Token_bal::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->pluck('balance')->first();
-        if ($token_bal == NULL)
-        {
-            $token_bal = 0;
-        }
+        // $token_bal = Token_bal::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->pluck('balance')->first();
+        // if ($token_bal == NULL)
+        // {
+        //     $token_bal = 0;
+        // }
         $parcel_types = ParcelType::where('company_id', '=', $parent_company_id)->pluck('name','id')->all();
-        return view('portal.shipments.add', ['user' => $user, 'company_addr' => $company_addr, 'parcel_types' => $parcel_types, 'token_bal' => $token_bal]);
+        return view('portal.shipments.add', ['user' => $user, 'company_addr' => $company_addr, 'parcel_types' => $parcel_types]);
     }
 
     public function storeShipment(Request $request)
     {   
         $this->validate($request, [
+            'sender_name' => 'required',
             'receiver_name' => 'required',
             'receiver_company' => 'required',
-            'receiver_phone' => array('required', 'regex:/^[0-9]{12}$/'),
-            'origin_addr' => 'required',
-            'dest_addr' => 'required',
+            'receiver_phone' => array('required', 'regex:/^[0-9]{9,14}$/'),
+            'origin_addr_1' => 'required',
+            'dest_addr_1' => 'required',
             'parcel_type_id' => 'required',
             'mode' =>'required',
-            'round' => 'required',
+            // 'round' => 'required',
             'acknowledge' => 'required',
             'units' => 'required|numeric' //,
             // 'price' => 'required'            
@@ -400,6 +401,17 @@ class CusportalController extends Controller
                $num .= $numbers[$i];
             return $num;
         }
+
+        $origin_addr_1 = $request->input('origin_addr_1');
+        $origin_addr_2 = $request->input('origin_addr_2');
+        $origin_addr_3 = $request->input('origin_addr_3');
+        $origin_addr_4 = $request->input('origin_addr_4');
+        $dest_addr_1 = $request->input('dest_addr_1');
+        $dest_addr_2 = $request->input('dest_addr_2');
+        $dest_addr_3 = $request->input('dest_addr_3');
+        $dest_addr_4 = $request->input('dest_addr_4');
+        $origin_addr = $origin_addr_1. ", " .$origin_addr_2. ", " .$origin_addr_3. ", " .$origin_addr_4;
+        $dest_addr = $dest_addr_1. ", " .$dest_addr_2. ", " .$dest_addr_3. ", " .$dest_addr_4;
         
         // $prefix = Company::where('id', '=', $parent_company_id)->pluck('name')->first();
         // $prefix = strtoupper($prefix);
@@ -411,9 +423,11 @@ class CusportalController extends Controller
         // $vat = 0.16 * $price;
 
         //get curr awb num
-        $awb = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('curr_awb')->first();
-        $last_awb = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('last_awb')->first();
-        $token_id = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('id')->first();
+        // $awb = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('curr_awb')->first();
+        // $last_awb = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('last_awb')->first();
+        // $token_id = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('id')->first();
+        $curr_awb = Txn::where('company_id', '=', $parent_company_id)->orderby('id', 'desc')->pluck('awb_num')->first();
+        $awb = $curr_awb + 1;
         
         $parcel_desc = $request->input('parcel_desc');
         $receiver_phone = $request->input('receiver_phone');
@@ -424,7 +438,7 @@ class CusportalController extends Controller
         $txn->awb_num = $awb;
         $txn->clerk_id = $user_id;
         $txn->mode = $request->input('mode');
-        $txn->round = $request->input('round');
+        // $txn->round = $request->input('round');
         $txn->units = $request->input('units');
         $txn->company_id = $parent_company_id;
         $txn->parcel_status_id = '7';
@@ -435,35 +449,35 @@ class CusportalController extends Controller
         }
         // $txn->price = $price;
         // $txn->vat = $vat;
-        $txn->sender_name = $user->fullname;
+        $txn->sender_name = $request->input('sender_name');
         $txn->sender_company_id = $user->company_id;
         $txn->sender_company_name = Company::select('name')->where('id', '=', $user->company_id)->pluck('name')->first();
-        $txn->origin_addr = $request->input('origin_addr');
+        $txn->origin_addr = $origin_addr;
         $txn->sender_phone = $user->phone;
         $txn->receiver_name = $request->input('receiver_name');
         $txn->receiver_company_name = $request->input('receiver_company');
         $txn->receiver_phone = $receiver_phone;
-        $txn->dest_addr = $request->input('dest_addr');
+        $txn->dest_addr = $dest_addr;
         $txn->receiver_code = $receiver_code_hash;
         $txn->updated_by = $user->id;
         $txn->save();
 
         //if awb == last_awb then set finished as 1
-        $token = Token::find($token_id);
-        $token->curr_awb += 1;
-        $token->balance -= 1;
-        if ($awb == $last_awb)
-        {
-            $token->finished = '1';
-            $token->curr_awb -= 1;
-        }
-        //increase curr_awb
-         $token->save();
-        //reduce token balance
-        $token_bal_id = Token_bal::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->pluck('id')->first();
-        $token_bal = Token_bal::find($token_bal_id);
-        $token_bal->balance -= 1;
-        $token_bal->save();
+        // $token = Token::find($token_id);
+        // $token->curr_awb += 1;
+        // $token->balance -= 1;
+        // if ($awb == $last_awb)
+        // {
+        //     $token->finished = '1';
+        //     $token->curr_awb -= 1;
+        // }
+        // //increase curr_awb
+        //  $token->save();
+        // //reduce token balance
+        // $token_bal_id = Token_bal::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->pluck('id')->first();
+        // $token_bal = Token_bal::find($token_bal_id);
+        // $token_bal->balance -= 1;
+        // $token_bal->save();
 
 
         if ($txn->round == 0)
