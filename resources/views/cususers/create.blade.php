@@ -4,7 +4,7 @@
     <h1>Create User</h1>
     <a href="{{ route('customer.index') }}" class="pull-right btn btn-default">Go Back</a>
 	<br>
-    {!! Form::open(['action' => 'CustomersController@cusstore', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::open(['action' => ['CustomersController@cusstore', $company_id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
             {{Form::label('username', 'Username')}}
             {{Form::text('username', '', ['class' => 'form-control', 'placeholder' => 'Username'])}}
@@ -26,12 +26,12 @@
             {{Form::text('email', '', ['class' => 'form-control', 'placeholder' => 'Email Address'])}}
         </div>
         <div class="form-group">
-            {{Form::label('status', 'Status')}}
-            {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], 1, ['class' => 'form-control'])}}
+            {{Form::label('station_id', 'Branch/Department')}}
+            {{Form::select('station_id', ['' => ''] + $stations, '', ['class' => 'form-control'])}}
         </div>
         <div class="form-group">
-            {{Form::label('company_id', 'Company Name')}}
-            {{Form::select('company_id', ['' => ''] + $cuscompanies, '', ['class' => 'form-control'])}}
+            {{Form::label('status', 'Status')}}
+            {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], 1, ['class' => 'form-control'])}}
         </div>
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}

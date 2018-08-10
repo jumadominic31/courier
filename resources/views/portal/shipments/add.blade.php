@@ -24,7 +24,7 @@
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Department</span>
-                        <input type="text" id="sender_dept" name="sender_dept" value="{{$user['company']['name']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
+                        <input type="text" id="sender_dept" name="sender_dept" value="{{$user['station']['name']}}" class="form-control"  aria-describedby="basic-addon1" disabled="true">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Phone</span>

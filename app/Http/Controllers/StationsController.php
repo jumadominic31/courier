@@ -121,4 +121,56 @@ class StationsController extends Controller
         $station->delete();
         return redirect('/station')->with('success', 'Station Deleted');
     }
+
+    public function cusbranches($id)
+    {
+        $company_id = Auth::user()->company_id;
+        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '=', $id)->where('id', '!=', $company_id)->select('id')->count();
+        if ($cuscompanies == 0 ){
+            return redirect('/customer')->with('error', 'Company Not Found');
+        }
+        $stations = Station::where('company_id', '=', $id)->get();
+        $company_name = Company::where('id', '=', $id)->pluck('name')->first();
+        return view('cusbranches.index',['stations'=> $stations, 'company_id' => $id, 'company_name' => $company_name]);
+    }
+
+    public function cusbranchcreate($id)
+    {
+        $company_id = Auth::user()->company_id;
+        // $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name','id')->all();
+        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '=', $id)->where('id', '!=', $company_id)->select('id')->count();
+        if ($cuscompanies == 0 ){
+            return redirect('/customer')->with('error', 'Company Not Found');
+        }
+        $stations = Station::where('company_id', '=', $id)->pluck('name','id')->all();
+        return view('cusbranches.create', ['branches' => $stations, 'company_id' => $id]);
+    }
+
+    public function cusbranchstore(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'status' => 'required'
+        ]);
+
+        $user = Auth::user();
+        $user_id = $user->id;
+        $company_id = $id;
+
+        $existing = Station::where('company_id', '=', $company_id)->pluck('name')->toArray();
+        $name = $request->input('name');
+        $name = strtolower($name);
+        if (in_array($name, array_map("strtolower", $existing))){
+            return redirect('cusbranches/'.$company_id)->with('error', 'Station Exists');
+        }
+
+        $station = new Station;
+        $station->name = $request->input('name');
+        $station->status = $request->input('status');
+        $station->company_id = $company_id;
+        $station->updated_by = $user_id;
+        $station->save();
+
+        return redirect('cusbranches/'.$company_id)->with('success', 'Station Created');
+    }
 }

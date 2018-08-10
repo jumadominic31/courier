@@ -4,7 +4,7 @@
 <div class="panel-heading">
 <h1> Customer User Administration for {{$company_name}} </h1>
     <a href="{{ route('customer.index') }}" class="pull-right btn btn-default btn-xs">Go Back</a>
-    <a href="{{ route('cususers.create') }}" class="btn btn-success">Add User</a>
+    <a href="{{ route('cususers.create', ['company_id' => $company_id ]) }}" class="btn btn-success">Add User</a>
 <br>
 </div>
     @if(count($users) > 0)

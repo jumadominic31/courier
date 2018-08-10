@@ -37,7 +37,7 @@
 		          <td><span class="center-block"><a class="pull-right btn btn-default btn-xs" href="{{ route('cususers.index', ['customer' => $customer->id ]) }}">Users</a></span></td>
 		          <td><span class="center-block"><a class="pull-right btn btn-default btn-xs" href="{{ route('customer.edit', ['customer' => $customer->id ]) }}">Edit</a></span></td>
 		          <td><span class="center-block">
-		          </span><a class="pull-right btn btn-default btn-xs" href="#">Branches</a></td>
+		          </span><a class="pull-right btn btn-default btn-xs" href="{{ route('cusbranches.index', ['customer' => $customer->id ]) }}">Branches</a></td>
 		     </tr>
 	          @endforeach
           </table>

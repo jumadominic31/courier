@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Company;
 use App\User;
 use App\Zone;
+use App\Station;
 use Auth;
 
 class CustomersController extends Controller
@@ -148,17 +149,21 @@ class CustomersController extends Controller
         }
         $users = User::where('company_id', '=', $id)->get();
         $company_name = Company::where('id', '=', $id)->pluck('name')->first();
-        return view('cususers.index',['users'=> $users, 'company_name' => $company_name]);
+        return view('cususers.index',['users'=> $users, 'company_id' => $id, 'company_name' => $company_name]);
     }
 
-    public function cuscreate()
+    public function cuscreate($id)
     {
         $company_id = Auth::user()->company_id;
-        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name','id')->all();
-        return view('cususers.create', ['cuscompanies' => $cuscompanies]);
+        $stations = Station::where('company_id', '=', $id)->pluck('name','id')->all();
+        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '=', $id)->where('id', '!=', $company_id)->select('id')->count();
+        if ($cuscompanies == 0 ){
+            return redirect('/customer')->with('error', 'Company Not Found');
+        }
+        return view('cususers.create', ['company_id' => $id, 'stations' => $stations]);
     }
 
-    public function cusstore(Request $request)
+    public function cusstore(Request $request, $id)
     {
         $company_id = Auth::user()->company_id;
         $user_id = Auth::user()->id;
@@ -167,8 +172,8 @@ class CustomersController extends Controller
             'username' => 'required|unique:users',
             'firstname' => 'required',
             'lastname' => 'required',
-            'phone' => array('required', 'regex:/^[0-9]{12}$/'),
-            'company_id' => 'required',
+            'station_id' => 'required',
+            'phone' => array('required', 'regex:/^[0-9]{9,14}$/'),
             'status' => 'required' 
         ]);
 
@@ -183,6 +188,8 @@ class CustomersController extends Controller
             }
             return implode($pass); //turn the array into a string
         }
+
+        $company_id = $id;
         
         //$password = randomPassword();
         $password = 'courier123';
@@ -198,7 +205,8 @@ class CustomersController extends Controller
         $user->phone = $request->input('phone');
         $user->email = $email;
         $user->password = bcrypt($password);
-        $user->company_id = $request->input('company_id');
+        $user->company_id = $company_id;
+        $user->station_id = $request->input('station_id');
         $user->status = $request->input('status');
         $user->usertype = 'cusadmin';
         $user->updated_by = $user_id;
@@ -239,7 +247,7 @@ class CustomersController extends Controller
             Mail::to($email)->send(new GeneratePassword($password)); 
         }*/
 
-        return redirect('/customer')->with('success', 'User Created');
+        return redirect('/cususers/'.$company_id)->with('success', 'User Created');
     }
 
     public function cususerdestroy($id)

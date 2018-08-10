@@ -326,14 +326,30 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'cususers.cususerdestroy'
         ]);
 
-        Route::get('/cususers/new/create', [
+        Route::get('/cususers/new/create/{id}', [
             'uses' => 'CustomersController@cuscreate' , 
             'as' => 'cususers.create'
         ]);
 
-        Route::post('/cususers/new/store', [
+        Route::post('/cususers/new/store/{id}', [
             'uses' => 'CustomersController@cusstore' , 
             'as' => 'cususers.store'
+        ]);
+
+        //// Customers
+        Route::get('/cusbranches/{id}', [
+            'uses' => 'StationsController@cusbranches' , 
+            'as' => 'cusbranches.index'
+        ]);
+
+        Route::get('/cusbranches/new/create/{id}', [
+            'uses' => 'StationsController@cusbranchcreate' , 
+            'as' => 'cusbranches.create'
+        ]);
+
+        Route::post('/cusbranches/new/store/{id}', [
+            'uses' => 'StationsController@cusbranchstore' , 
+            'as' => 'cusbranches.store'
         ]);
     // });
     //////Customer portal
