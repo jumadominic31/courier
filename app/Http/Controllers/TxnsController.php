@@ -763,27 +763,31 @@ class TxnsController extends Controller
         $user_id = $user->id;
         $company_id = Auth::user()->company_id;
 
-        $this->validate($request, [
-            'awb_num' => 'required',
-            'rider_id' => 'required'
-        ]);
-
+        $driver_id = $request->input('driver_id');
         $awb_num = $request->input('awb_num');
+        $txn = $driver_id . " " . $awb_num;
 
-        $txn = Txn::where('awb_num', '=', $awb_num)->first();
-        $count += 1;
-        $txn->parcel_status_id = '9';
-        $txn->driver_id = $request->input('rider_id');
-        $txn->updated_by = $user->id;
-        $txn->save();
+        // $this->validate($request, [
+        //     'awb_num' => 'required',
+        //     'rider_id' => 'required'
+        // ]);
 
-        $txnlog = new TxnLog;
-        $txnlog->awb_id = $txn->id;
-        $txnlog->status_id = '9';
-        $txnlog->updated_by = $user->id;
-        $txnlog->company_id = $company_id;
-        $txnlog->sender_company_id = $txn->sender_company_id;
-        $txnlog->save();
+        // $awb_num = $request->input('awb_num');
+
+        // $txn = Txn::where('awb_num', '=', $awb_num)->first();
+        // $count += 1;
+        // $txn->parcel_status_id = '9';
+        // $txn->driver_id = $request->input('rider_id');
+        // $txn->updated_by = $user->id;
+        // $txn->save();
+
+        // $txnlog = new TxnLog;
+        // $txnlog->awb_id = $txn->id;
+        // $txnlog->status_id = '9';
+        // $txnlog->updated_by = $user->id;
+        // $txnlog->company_id = $company_id;
+        // $txnlog->sender_company_id = $txn->sender_company_id;
+        // $txnlog->save();
 
         return response()->json(['txn' => $txn], 201);
 
