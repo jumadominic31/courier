@@ -16,8 +16,6 @@
         <th width="13.33%">Origin</th>
         <th width="13.33%">Destination</th>
         <th width="8.33%">Parcel Type</th>
-        <th width="4.33%">Price</th>
-        <th width="4.33%">VAT</th>
         <th width="8.33%">Rider</th>
         <th width="8.33%">Mode</th>
         <th width="8.33%">Parcel Status</th>         
@@ -31,8 +29,6 @@
         <td>{{$txn['origin_addr']}}</td>
         <td>{{$txn['dest_addr']}}</td>
         <td>{{$txn['parcel_type']['name']}}</td>
-        <td>{{$txn['price']}}</td>
-        <td>{{$txn['vat']}}</td>
         <td>{{$txn['driver']['fullname']}}</td>
         @if ($txn['mode'] == 0)
         <td>Normal</td>

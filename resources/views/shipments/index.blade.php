@@ -32,7 +32,7 @@
       <tr>
         <td><div class="form-group">
               {{Form::label('parcel_status_id', 'Parcel Status')}}
-              {{Form::select('parcel_status_id', ['' => ''] + $parcel_status, '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
+              {{Form::select('parcel_status_id', ['' => '', '7' => 'Booked', '10' => 'Received at sort facility', '2' => 'Dispatched', '4' => 'Received at destination', '6' => 'Cancelled', '5' => 'Lost'], '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
           </div></td>
           <td ><div class="form-group">
             {{Form::label('first_date', 'First Booked Date')}}

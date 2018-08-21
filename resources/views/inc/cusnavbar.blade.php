@@ -36,12 +36,13 @@
                      </ul>
                 </li> -->
                 
-                <li>
+                <!-- <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporting <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('portal.shipments.index') }}">Shipments</a></li>
                     </ul>
-                </li>
+                </li> -->
+                <li><a href="{{ route('portal.shipments.index') }}">Shipments</a></li>
                 <li><a href="{{ route('portal.shipments.add') }}">Book Shipment</a></li>
                 <li><a href="{{ route('portal.shipments.awb') }}">AWB Search</a></li>
                 

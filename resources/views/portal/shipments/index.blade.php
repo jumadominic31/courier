@@ -29,7 +29,7 @@
       <tr>
         <td><div class="form-group">
               {{Form::label('parcel_status_id', 'Parcel Status')}}
-              {{Form::select('parcel_status_id', ['' => '', '7' => 'Booked', '9' => 'Picked by rider to sort facility', '10' => 'Received at sort facility', '2' => 'Dispatched to receiver', '4' => 'Received', '6' => 'Cancelled', '5' => 'Lost' ], '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
+              {{Form::select('parcel_status_id', ['' => '', '7' => 'Booked', '10' => 'Received at sort facility', '2' => 'Dispatched to receiver', '4' => 'Received', '6' => 'Cancelled', '5' => 'Lost' ], '', ['class' => 'form-control', 'id' => 'parcel_status_id'])}}
           </div></td>
         <td></td>
         <td></td>

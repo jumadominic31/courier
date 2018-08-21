@@ -166,17 +166,10 @@
                     <h3 class="panel-title">Booking Mode</h3>
                 </div>
                 <div class="panel-body">
-                @if ($txn->parcel_status_id == '7')
-                    <div class="input-group">
-                            <span class="input-group-addon" >Mode *</span>
-                            {{Form::select('mode', ['' => '', 1 => 'Express', 0 => 'Normal'], $txn->mode, ['class' => 'form-control'])}}
-                        </div>
-                @else
                         <div class="input-group">
                             <span class="input-group-addon" >Mode *</span>
                             {{Form::select('mode', ['' => '', 1 => 'Express', 0 => 'Normal'], $txn->mode, ['class' => 'form-control', 'disabled' => 'true'])}}
                         </div>
-                @endif
                         <div class="input-group">
                             <span class="input-group-addon" >Round trip *</span>
                             {{Form::select('round', ['' => '', 1 => 'Yes', 0 => 'No'], $txn->round, ['class' => 'form-control', 'disabled' => 'true'])}}

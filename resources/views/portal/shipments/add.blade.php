@@ -133,7 +133,7 @@
                 <div class="panel-body">
                     <div class="input-group">
                         <span class="input-group-addon" >Mode *</span>
-                        {{Form::select('mode', ['' => '', 0 => 'Normal', 1 => 'Express'],  '0' , ['class' => 'form-control'])}}
+                        {{Form::select('mode', ['' => '', 0 => 'Normal', 1 => 'Express'],  '0' , ['class' => 'form-control', 'disabled' => 'true' ])}}
                     </div>
                 </div>
             </div>

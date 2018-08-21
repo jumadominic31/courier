@@ -42,13 +42,35 @@
 				<th>Description</th>
 			</tr>
 		</thead>
-		@foreach($parcelstatus as $parcelst)
 		<tr>
-			<td>{{$parcelst['id']}}</td>
-			<td>{{$parcelst['name']}}</td>
-			<td>{{$parcelst['description']}}</td>
+			<td>1</td>
+			<td>Booked</td>
+			<td>Parcel booked by/is at customer</td>
 		</tr>
-		@endforeach
+		<tr>
+			<td>2</td>
+			<td>Received at sort facility</td>
+			<td>Parcel received at sort facility</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>Dispatched</td>
+			<td>Parcel dispatched from sort facility. On transit</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>Received at destination</td>
+			<td>Parcel taken by receiver at destination</td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>Cancelled</td>
+			<td>Shipment cancelled</td>
+		</tr><tr>
+			<td>6</td>
+			<td>Lost</td>
+			<td>Parcel cannot be traced</td>
+		</tr>
 	</table>
 </div>
 

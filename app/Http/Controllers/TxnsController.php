@@ -1190,16 +1190,15 @@ class TxnsController extends Controller
 
         // $txn = Txn::where('sender_company_id', '=', $company_id)->find($id);
         $txn = Txn::join('parcel_types', 'txns.parcel_type_id', '=', 'parcel_types.id')
-                ->select('txns.id as id', 'txns.awb_num as awb_num', 'txns.origin_addr as origin_addr', 'txns.dest_addr as dest_addr', 'txns.parcel_type_id as parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_desc as parcel_desc', 'txns.sender_name', 'txns.sender_company_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_company_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.receiver_sign', 'txns.units as units', 'txns.mode as mode', 'txns.round as round', 'txns.created_at')
+                ->select('txns.id as id', 'txns.awb_num as awb_num', 'txns.origin_addr as origin_addr', 'txns.dest_addr as dest_addr', 'txns.parcel_type_id as parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_desc as parcel_desc', 'txns.sender_name', 'txns.sender_company_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_company_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.receiver_sign', 'txns.units as units', 'txns.mode as mode', 'txns.round as round', 'txns.created_at', 'txns.acknowledge as acknowledge')
                 ->where('txns.id', '=', $id)
+                ->where('txns.company_id', '=', $company_id)
                 ->first();
         if ($txn == null){
             return redirect('/shipments')->with('error', 'Txn not found');
         }
         
-        // return view('portal.shipments.print',['txn'=> $txn, 'companies' => $companies, 'parcel_statuses' => $parcel_statuses, 'parcel_types' => $parcel_types, 'zones' => $zones, 'origin_addr' => $origin_addr, 'dest_addr' => $dest_addr, 'drivers' => $drivers, 'vehicles' => $vehicles, 'statusDet' => $statusDet]);
-        $pdf = PDF::loadView('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
-        return $pdf->stream('shipments.pdf');
+        return view('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
     }
 
     public function resetDrivercode($id)
