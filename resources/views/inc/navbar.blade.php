@@ -32,7 +32,7 @@
                                 <li><a href="{{ route('company.index') }}">Companies</a></li>
                             @endif
                             <li><a href="{{ route('customer.index') }}">Customers</a></li>
-                            <li><a href="{{ route('token.index') }}">Tokens</a></li>
+                            <!-- <li><a href="{{ route('token.index') }}">Tokens</a></li> -->
                             <li><a href="{{ route('users.index') }}">Users</a></li>
                             <li><a href="{{ route('station.index') }}">Branches</a></li>
                             <li><a href="{{ route('parcel.index') }}">Parcel Management</a></li>
@@ -40,20 +40,20 @@
                     </li>
                 @endif
                 
-                <li>
+                <!-- <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporting <span class="caret"></span></a>
                     <ul class="dropdown-menu"> 
                         <li><a href="{{ route('shipments.index') }}">Shipments</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shipments <span class="caret"></span></a>
                     <ul class="dropdown-menu"> 
-                        <li><a href="{{ route('shipments.index') }}">Shipments - Home</a></li>
-                        <li><a href="{{ route('shipments.booked') }}">Shipments - Booked</a></li>
-                        <li><a href="{{ route('shipments.pickedtosortfacility') }}">Shipments - Picked from Customer</a></li>
+                        <li><a href="{{ route('shipments.index') }}">Shipments - Reports</a></li>
+                        <li><a href="{{ route('shipments.booked') }}">Shipments - Operations</a></li>
+                        <!-- <li><a href="{{ route('shipments.pickedtosortfacility') }}">Shipments - Picked from Customer</a></li>
                         <li><a href="{{ route('shipments.receivedatsortfacility') }}">Shipments - At Sort Facility</a></li>
-                        <li><a href="{{ route('shipments.dispatchedShipments') }}">Shipments - Out of Dispatch</a></li>
+                        <li><a href="{{ route('shipments.dispatchedShipments') }}">Shipments - Out of Dispatch</a></li> -->
                         <li><a href="{{ route('shipments.receivedShipments') }}">Shipments - Received</a></li>
                     </ul>
                 </li>

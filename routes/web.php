@@ -121,6 +121,11 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'shipments.booked'
         ]);
 
+        Route::post('/shipments/booked', [
+            'uses' => 'TxnsController@getbookedShipments',
+            'as' => 'shipments.booked'
+        ]);
+
         Route::post('/shipments/pickedtosort', [
             'uses' => 'TxnsController@assignpickupShipments',
             'as' => 'shipments.pickedtosort'

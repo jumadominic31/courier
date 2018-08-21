@@ -748,11 +748,25 @@ class TxnsController extends Controller
         return view('shipments.index', ['txns' => $txns, 'zones' => $zones,  'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll, 'tot_count' => $tot_count, 'cuscompanies' => $cuscompanies, 'riders' => $riders]);
     }
 
-    public function getbookedShipments()
+    public function getbookedShipments(Request $request)
     {
         $company_id = Auth::user()->company_id;
         $riders = User::where('company_id', '=', $company_id)->where('usertype', '=', 'driver')->pluck('fullname','id')->all();
-        $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '7')->orderBy('id','desc')->get();
+        $parcel_status_id = $request->input('parcel_status_id');
+        if ($request->isMethod('POST')){
+            $txns = Txn::where('company_id', '=', $company_id);
+            if ($parcel_status_id != NULL){
+                $txns = $txns->where('parcel_status_id','=', $parcel_status_id);
+            }
+            else {
+                $txns = $txns->where('parcel_status_id', '=', '7')->orWhere('parcel_status_id', '=', '10')->orWhere('parcel_status_id', '=', '2');
+            }
+            $txns = $txns->orderBy('id','desc')->get();
+        }
+        else 
+        {
+            $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '7')->orWhere('parcel_status_id', '=', '10')->orWhere('parcel_status_id', '=', '2')->orderBy('id','desc')->get();
+        }
         return view('shipments.booked', ['txns' => $txns, 'riders' => $riders]);
     }
 
@@ -767,29 +781,84 @@ class TxnsController extends Controller
         $awb_num = $request->input('awb_num');
         $txn = $driver_id . " " . $awb_num;
 
-        // $this->validate($request, [
-        //     'awb_num' => 'required',
-        //     'rider_id' => 'required'
-        // ]);
+        $this->validate($request, [
+            'awb_num' => 'required'
+        ]);
 
-        // $awb_num = $request->input('awb_num');
+        $awb_num = $request->input('awb_num');
+        $driver_id = $request->input('driver_id');
+        $check_received = $request->input('check_received');
 
-        // $txn = Txn::where('awb_num', '=', $awb_num)->first();
-        // $count += 1;
-        // $txn->parcel_status_id = '9';
-        // $txn->driver_id = $request->input('rider_id');
-        // $txn->updated_by = $user->id;
-        // $txn->save();
+        if ($check_received == "true"){
+            
+            if ($driver_id == NULL){
+                $txn = Txn::where('awb_num', '=', $awb_num)->first();
+                if ($txn->parcel_status_id == '10'){
+                    //do nothing
+                }
+                else {
+                    $txn->parcel_status_id = '10';
+                    $txn->driver_id = $driver_id;
+                    $txn->updated_by = $user->id;
+                    $txn->save();
 
-        // $txnlog = new TxnLog;
-        // $txnlog->awb_id = $txn->id;
-        // $txnlog->status_id = '9';
-        // $txnlog->updated_by = $user->id;
-        // $txnlog->company_id = $company_id;
-        // $txnlog->sender_company_id = $txn->sender_company_id;
-        // $txnlog->save();
+                    $txnlog = new TxnLog;
+                    $txnlog->awb_id = $txn->id;
+                    $txnlog->status_id = '10';
+                    $txnlog->updated_by = $user->id;
+                    $txnlog->company_id = $company_id;
+                    $txnlog->sender_company_id = $txn->sender_company_id;
+                    $txnlog->save();
+                }
+                $status = "Received at sort facility";
 
-        return response()->json(['txn' => $txn], 201);
+            }
+            else {
+                $txn = Txn::where('awb_num', '=', $awb_num)->first();
+                $txn->parcel_status_id = '2';
+                $txn->driver_id = $driver_id;
+                $txn->updated_by = $user->id;
+                $txn->save();
+
+                $txnlog = new TxnLog;
+                $txnlog->awb_id = $txn->id;
+                $txnlog->status_id = '2';
+                $txnlog->updated_by = $user->id;
+                $txnlog->company_id = $company_id;
+                $txnlog->sender_company_id = $txn->sender_company_id;
+                $txnlog->save();
+
+                $status = "Dispatched";
+            }
+            
+
+            
+        }
+        else if ($check_received == "false") {
+            if ($txn->parcel_status_id == '7'){
+                    //do nothing
+            }
+            else {
+                $txn = Txn::where('awb_num', '=', $awb_num)->first();
+                // $count += 1;
+                $txn->parcel_status_id = '7';
+                $txn->driver_id = NULL;
+                $txn->updated_by = $user->id;
+                $txn->save();
+
+                $txnlog = new TxnLog;
+                $txnlog->awb_id = $txn->id;
+                $txnlog->status_id = '7';
+                $txnlog->updated_by = $user->id;
+                $txnlog->company_id = $company_id;
+                $txnlog->sender_company_id = $txn->sender_company_id;
+                $txnlog->save();
+            }
+
+            $status = "Reverted to booked state";
+        }
+
+        return response()->json(['status' => $status], 201);
 
     }
 

@@ -406,26 +406,35 @@ class CusportalController extends Controller
         $origin_addr_2 = $request->input('origin_addr_2');
         $origin_addr_3 = $request->input('origin_addr_3');
         $origin_addr_4 = $request->input('origin_addr_4');
+        
         $dest_addr_1 = $request->input('dest_addr_1');
         $dest_addr_2 = $request->input('dest_addr_2');
         $dest_addr_3 = $request->input('dest_addr_3');
         $dest_addr_4 = $request->input('dest_addr_4');
-        $origin_addr = $origin_addr_1. ", " .$origin_addr_2. ", " .$origin_addr_3. ", " .$origin_addr_4;
-        $dest_addr = $dest_addr_1. ", " .$dest_addr_2. ", " .$dest_addr_3. ", " .$dest_addr_4;
         
-        // $prefix = Company::where('id', '=', $parent_company_id)->pluck('name')->first();
-        // $prefix = strtoupper($prefix);
-        // $prefix = substr($prefix, 0, 3);
+        $origin_addr = $origin_addr_1;
+        $dest_addr = $dest_addr_1;
         
-        // $newawbnum = randomDigits(5);
-        // $newawbnum = $prefix.date('ymd').$newawbnum;
-        // $price = $request->input('price');
-        // $vat = 0.16 * $price;
+        if ($origin_addr_2 != NULL){
+            $origin_addr = $origin_addr. ", " .$origin_addr_2;
+        }
+        if ($origin_addr_3 != NULL){
+            $origin_addr = $origin_addr. ", " .$origin_addr_3;
+        }
+        if ($origin_addr_4 != NULL){
+            $origin_addr = $origin_addr. ", " .$origin_addr_4;
+        }
 
-        //get curr awb num
-        // $awb = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('curr_awb')->first();
-        // $last_awb = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('last_awb')->first();
-        // $token_id = Token::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->where('finished', '=', '0')->pluck('id')->first();
+        if ($dest_addr_2 != NULL){
+            $dest_addr = $dest_addr. ", " .$dest_addr_2;
+        }
+        if ($dest_addr_3 != NULL){
+            $dest_addr = $dest_addr. ", " .$dest_addr_3;
+        }
+        if ($dest_addr_4 != NULL){
+            $dest_addr = $dest_addr. ", " .$dest_addr_4;
+        }
+        
         $curr_awb = Txn::where('company_id', '=', $parent_company_id)->orderby('id', 'desc')->pluck('awb_num')->first();
         $awb = $curr_awb + 1;
         
@@ -461,23 +470,6 @@ class CusportalController extends Controller
         $txn->receiver_code = $receiver_code_hash;
         $txn->updated_by = $user->id;
         $txn->save();
-
-        //if awb == last_awb then set finished as 1
-        // $token = Token::find($token_id);
-        // $token->curr_awb += 1;
-        // $token->balance -= 1;
-        // if ($awb == $last_awb)
-        // {
-        //     $token->finished = '1';
-        //     $token->curr_awb -= 1;
-        // }
-        // //increase curr_awb
-        //  $token->save();
-        // //reduce token balance
-        // $token_bal_id = Token_bal::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->pluck('id')->first();
-        // $token_bal = Token_bal::find($token_bal_id);
-        // $token_bal->balance -= 1;
-        // $token_bal->save();
 
 
         if ($txn->round == 0)
