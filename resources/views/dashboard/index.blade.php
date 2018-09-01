@@ -34,7 +34,7 @@
                     <a href="{{ route('shipments.index') }}" style='text-decoration: none; color: black'>
                         <div class="well dash-box">
                             <h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> {{$dispatched}} </h2>
-                            <h4>Today Picked</h4>
+                            <h4>Today On transit</h4>
                         </div>
                     </a>
                 </div>
@@ -47,10 +47,10 @@
                     </a>
                 </div>
                 <div class="col-sm-3">
-                    <a href="{{ route('shipments.index') }}" style='text-decoration: none; color: black'>
+                    <a href="{{ route('shipments.booked') }}" style='text-decoration: none; color: black'>
                         <div class="well dash-box">
-                            <h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> {{$received}} </h2>
-                            <h4>Unallocated Shipment</h4>
+                            <h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> {{$unallocated}} </h2>
+                            <h4>Unallocated Shipments</h4>
                         </div>
                     </a>
                 </div>

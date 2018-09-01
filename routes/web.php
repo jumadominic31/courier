@@ -167,6 +167,11 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'shipments.receivedShipments'
         ]);
 
+        Route::post('/shipments/receivedShipments', [
+            'uses' => 'TxnsController@receivedatcusShipments',
+            'as' => 'shipments.receivedShipments'
+        ]);
+
         //tokens
         //token statement
         Route::get('/token', [

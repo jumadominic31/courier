@@ -1016,11 +1016,50 @@ class TxnsController extends Controller
         return view('shipments.dispatched', ['txns' => $txns]);
     }
 
-        public function receivedatcusShipments()
+    public function receivedatcusShipments(Request $request)
     {
         $company_id = Auth::user()->company_id;
-        $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '4')->orderBy('id','desc')->get();
-        return view('shipments.received', ['txns' => $txns]);
+        $curr_date = date('Y-m-d');
+
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $company_details = Company::where('id', '=', $company_id)->get();
+        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name', 'id')->all();
+
+        $sender_company_id = $request->input('sender_company_id');
+        $first_date = $request->input('first_date');
+
+        if ($request->isMethod('POST')){
+            $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '4');
+            if ($sender_company_id != NULL){
+                $txns = $txns->where('sender_company_id','=', $sender_company_id);
+            }
+            if ($first_date != NULL){
+                $txns = $txns->where(DB::raw('date(updated_at)'),'>=',$first_date);
+            }
+            $txns = $txns->orderBy('updated_at','desc')->limit(300)->get();
+
+            if ($sender_company_id == '0') {
+                $sender_company_name = 'Others';
+            } 
+            else if ($sender_company_id != NULL) {
+                $sender_company_name = Company::where('id', '=', $sender_company_id)->pluck('name')->first();
+            } 
+            else {
+                $sender_company_name = 'All';
+            }
+
+            if ($request->submitBtn == 'CreatePDF') {
+                // $txns = $txns->orderBy('id','desc')->limit(300)->get();
+                $pdf = PDF::loadView('pdf.shipment.received', ['txns' => $txns, 'company_details' => $company_details, 'curr_date' => $curr_date, 'sender_company_name' => $sender_company_name, 'first_date' => $first_date]);
+                $pdf->setPaper('A4', 'portrait');
+                return $pdf->stream('received_shipments.pdf');
+            }
+        }
+        else {
+            $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '4')->orderBy('updated_at','desc')->where(DB::raw('date(updated_at)'),'>=',$curr_date)->limit(300)->get();
+        }
+
+        return view('shipments.received', ['txns' => $txns, 'company_details' => $company_details, 'cuscompanies' => $cuscompanies]);
     }
 
     public function getAwbsearch(Request $request)

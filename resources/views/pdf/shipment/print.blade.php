@@ -164,12 +164,12 @@ div.WordSection1
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Receiver Copy</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Receiver Copy</span></p>
   </td>
   <td width=312 colspan=4 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:right;line-height:normal'><span style='font-size:9.5pt;font-family:
+  text-align:right;line-height:normal'><span style='font-size:9.0pt;font-family:
   "Arial","sans-serif"'>Waybill No: <b>{{$txn['awb_num']}}</b></span></p>
   </td>
  </tr>
@@ -178,7 +178,7 @@ div.WordSection1
   border-left:solid windowtext 1.0pt;border-bottom:none;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;"></span></p>
 
   </td>
@@ -201,40 +201,40 @@ div.WordSection1
   border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Date/time: {{$txn['created_at']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Date/time: {{$txn['created_at']}}</span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border:solid windowtext 1.0pt;
   border-top:none;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>From
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>From
   (Shipper's Information)</span></b></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>To
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>To
   (Receiver's Information)</span></b></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Shipment
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Shipment
   Details</span></b></p>
   </td>
  </tr>
@@ -243,80 +243,80 @@ div.WordSection1
   solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
   none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
   </td>
   <td width=127 colspan=2 valign=top style='width:95.4pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_name']}}</span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_company_name']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_company_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_phone']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
   </td>
   <td width=89 valign=top style='width:66.6pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
   </td>
   <td width=122 colspan=2 valign=top style='width:91.45pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_name']}}</span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_company_name']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_company_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_phone']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
   </td>
   <td width=94 colspan=2 valign=top style='width:70.55pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Description:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Description:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Quantity:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Quantity:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Mode:
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Mode:
   </span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Round:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Round:</span></b></p>
   </td>
   <td width=114 valign=top style='width:85.35pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['parcel_type_name']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['parcel_type_name']}}</span></span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;{{$txn['parcel_desc']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;{{$txn['parcel_desc']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['units']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['units']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     @if ($txn['mode'] == 0)
     Normal
     @else ($txn['mode'] == 1)
@@ -324,7 +324,7 @@ div.WordSection1
     @endif
   </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     @if ($txn['round'] == 0)
     No
     @else ($txn['round'] == 1)
@@ -337,49 +337,46 @@ div.WordSection1
   <td width=156 colspan=2 valign=top style='width:116.85pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Comments</span></b></p><p></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Comments</span></b></p><p></p>
   </td>
   <td width=468 colspan=7 valign=top style='width:350.75pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
-  @if ($txn['parcel_type_id'] == '10')
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;
-  mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span></p>
-
-  @endif
-  @if ($txn['acknowledge'] == '1')
-    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-    normal'><span style='font-size:9.0pt;
-    mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Acknowledgement Required</span></p>
-  @endif
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'>  
+    @if ($txn['parcel_type_id'] == '10')
+    <span style='font-size:9.0pt; mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span>
+    @endif
+    @if ($txn['acknowledge'] == '1')
+    <span style='font-size:9.0pt; mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>- Acknowledgement Required</span>
+    @endif
+  </p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:6'>
   <td width=156 colspan=2 valign=top style='width:116.85pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Sender Signature</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Sender Signature</span></b></p>
   </td>
   <td width=156 colspan=3 valign=top style='width:116.85pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:116.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'></span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'></span></b></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:117.0pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:7;mso-yfti-lastrow:yes'>
@@ -408,12 +405,12 @@ div.WordSection1
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Acknowledgment Copy 1</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Acknowledgment Copy 1</span></p>
   </td>
   <td width=312 colspan=4 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:right;line-height:normal'><span style='font-size:9.5pt;font-family:
+  text-align:right;line-height:normal'><span style='font-size:9.0pt;font-family:
   "Arial","sans-serif"'>Waybill No: <b>{{$txn['awb_num']}}</b></span></p>
   </td>
  </tr>
@@ -422,7 +419,7 @@ div.WordSection1
   border-left:solid windowtext 1.0pt;border-bottom:none;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;"></span></p>
 
   </td>
@@ -445,40 +442,40 @@ div.WordSection1
   border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Date/time: {{$txn['created_at']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Date/time: {{$txn['created_at']}}</span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border:solid windowtext 1.0pt;
   border-top:none;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>From
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>From
   (Shipper's Information)</span></b></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>To
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>To
   (Receiver's Information)</span></b></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Shipment
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Shipment
   Details</span></b></p>
   </td>
  </tr>
@@ -487,80 +484,80 @@ div.WordSection1
   solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
   none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
   </td>
   <td width=127 colspan=2 valign=top style='width:95.4pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_name']}}</span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_company_name']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_company_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_phone']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
   </td>
   <td width=89 valign=top style='width:66.6pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
   </td>
   <td width=122 colspan=2 valign=top style='width:91.45pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_name']}}</span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_company_name']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_company_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_phone']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
   </td>
   <td width=94 colspan=2 valign=top style='width:70.55pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Description:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Description:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Quantity:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Quantity:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Mode:
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Mode:
   </span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Round:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Round:</span></b></p>
   </td>
   <td width=114 valign=top style='width:85.35pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['parcel_type_name']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['parcel_type_name']}}</span></span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;{{$txn['parcel_desc']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;{{$txn['parcel_desc']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['units']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['units']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     @if ($txn['mode'] == 0)
     Normal
     @else ($txn['mode'] == 1)
@@ -568,7 +565,7 @@ div.WordSection1
     @endif
   </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     @if ($txn['round'] == 0)
     No
     @else ($txn['round'] == 1)
@@ -581,49 +578,46 @@ div.WordSection1
 <td width=156 colspan=2 valign=top style='width:116.85pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Comments</span></b></p><p></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Comments</span></b></p><p></p>
   </td>
   <td width=468 colspan=7 valign=top style='width:350.75pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
-  @if ($txn['parcel_type_id'] == '10')
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;
-  mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span></p>
-
-  @endif
-  @if ($txn['acknowledge'] == '1')
-    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-    normal'><span style='font-size:9.0pt;
-    mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Acknowledgement Required</span></p>
-  @endif
+    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'>  
+    @if ($txn['parcel_type_id'] == '10')
+    <span style='font-size:9.0pt; mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span>
+    @endif
+    @if ($txn['acknowledge'] == '1')
+    <span style='font-size:9.0pt; mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>- Acknowledgement Required</span>
+    @endif
+  </p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:6'>
   <td width=156 colspan=2 valign=top style='width:116.85pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Sender Signature</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Sender Signature</span></b></p>
   </td>
   <td width=156 colspan=3 valign=top style='width:116.85pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:116.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'></span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'></span></b></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:117.0pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:7;mso-yfti-lastrow:yes'>
@@ -649,12 +643,12 @@ div.WordSection1
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Acknowledgment Copy 2</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Acknowledgment Copy 2</span></p>
   </td>
   <td width=312 colspan=4 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:right;line-height:normal'><span style='font-size:9.5pt;font-family:
+  text-align:right;line-height:normal'><span style='font-size:9.0pt;font-family:
   "Arial","sans-serif"'>Waybill No: <b>{{$txn['awb_num']}}</b></span></p>
   </td>
  </tr>
@@ -663,7 +657,7 @@ div.WordSection1
   border-left:solid windowtext 1.0pt;border-bottom:none;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;"></span></p>
 
   </td>
@@ -686,40 +680,40 @@ div.WordSection1
   border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Date/time: {{$txn['created_at']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Date/time: {{$txn['created_at']}}</span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3'>
   <td width=205 colspan=3 valign=top style='width:153.65pt;border:solid windowtext 1.0pt;
   border-top:none;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>From
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>From
   (Shipper's Information)</span></b></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>To
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>To
   (Receiver's Information)</span></b></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Shipment
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Shipment
   Details</span></b></p>
   </td>
  </tr>
@@ -728,80 +722,80 @@ div.WordSection1
   solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
   none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
   </td>
   <td width=127 colspan=2 valign=top style='width:95.4pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_name']}}</span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_company_name']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_company_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_phone']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
   </td>
   <td width=89 valign=top style='width:66.6pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
   </td>
   <td width=122 colspan=2 valign=top style='width:91.45pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_name']}}</span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_company_name']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_company_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_phone']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
   </td>
   <td width=94 colspan=2 valign=top style='width:70.55pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Description:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Description:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Quantity:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Quantity:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Mode:
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Mode:
   </span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Round:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Round:</span></b></p>
   </td>
   <td width=114 valign=top style='width:85.35pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['parcel_type_name']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['parcel_type_name']}}</span></span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;{{$txn['parcel_desc']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;{{$txn['parcel_desc']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['units']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['units']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     @if ($txn['mode'] == 0)
     Normal
     @else ($txn['mode'] == 1)
@@ -809,7 +803,7 @@ div.WordSection1
     @endif
   </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     @if ($txn['round'] == 0)
     No
     @else ($txn['round'] == 1)
@@ -822,49 +816,46 @@ div.WordSection1
 <td width=156 colspan=2 valign=top style='width:116.85pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Comments</span></b></p><p></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Comments</span></b></p><p></p>
   </td>
   <td width=468 colspan=7 valign=top style='width:350.75pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
-  @if ($txn['parcel_type_id'] == '10')
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;
-  mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span></p>
-
-  @endif
-  @if ($txn['acknowledge'] == '1')
-    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-    normal'><span style='font-size:9.0pt;
-    mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Acknowledgement Required</span></p>
-  @endif
+    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'>  
+    @if ($txn['parcel_type_id'] == '10')
+    <span style='font-size:9.0pt; mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span>
+    @endif
+    @if ($txn['acknowledge'] == '1')
+    <span style='font-size:9.0pt; mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>- Acknowledgement Required</span>
+    @endif
+  </p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:6'>
   <td width=156 colspan=2 valign=top style='width:116.85pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Sender Signature</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Sender Signature</span></b></p>
   </td>
   <td width=156 colspan=3 valign=top style='width:116.85pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:116.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'></span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'></span></b></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:117.0pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:7;mso-yfti-lastrow:yes'>
@@ -890,12 +881,12 @@ div.WordSection1
   <td width=312 colspan=5 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Client Copy</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Client Copy</span></p>
   </td>
   <td width=312 colspan=4 valign=top style='width:233.8pt;border:solid windowtext 1.0pt;
   border-left:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:right;line-height:normal'><span style='font-size:9.5pt;font-family:
+  text-align:right;line-height:normal'><span style='font-size:9.0pt;font-family:
   "Arial","sans-serif"'>Waybill No: <b>{{$txn['awb_num']}}</b></span></p>
   </td>
  </tr>
@@ -904,7 +895,7 @@ div.WordSection1
   border-left:solid windowtext 1.0pt;border-bottom:none;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     <img src="{{asset('images/Elite_logo.png')}}" alt="Logo" height="30px" style="padding:2px;"></span></p>
 
   </td>
@@ -927,19 +918,19 @@ div.WordSection1
   border-left:solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;
   border-right:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Email: <a href="mailto:{{$parent_company['email']}}">{{$parent_company['email']}}</a></span></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone: {{$parent_company['phone']}}</span></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Date/time: {{$txn['created_at']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Date/time: {{$txn['created_at']}}</span></p>
   </td>
  </tr>
  </tr>
@@ -947,21 +938,21 @@ div.WordSection1
   <td width=205 colspan=3 valign=top style='width:153.65pt;border:solid windowtext 1.0pt;
   border-top:none;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>From
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>From
   (Shipper's Information)</span></b></p>
   </td>
   <td width=211 colspan=3 valign=top style='width:158.05pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>To
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>To
   (Receiver's Information)</span></b></p>
   </td>
   <td width=208 colspan=3 valign=top style='width:155.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Shipment
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Shipment
   Details</span></b></p>
   </td>
  </tr>
@@ -970,80 +961,80 @@ div.WordSection1
   solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
   none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
   </td>
   <td width=127 colspan=2 valign=top style='width:95.4pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_name']}}</span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_company_name']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_company_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['sender_phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['sender_phone']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['origin_addr']}}</span></span></p>
   </td>
   <td width=89 valign=top style='width:66.6pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Name:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
-  style='font-size:9.5pt;font-family:"Arial","sans-serif"'> </span></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Company:</span></b><span
+  style='font-size:9.0pt;font-family:"Arial","sans-serif"'> </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Phone:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Address:</span></b></p>
   </td>
   <td width=122 colspan=2 valign=top style='width:91.45pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_name']}}</span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_company_name']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_company_name']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_phone']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['receiver_phone']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['dest_addr']}}</span></span></p>
   </td>
   <td width=94 colspan=2 valign=top style='width:70.55pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Type:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Description:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Description:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Quantity:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Quantity:</span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Mode:
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Mode:
   </span></b></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Round:</span></b></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Round:</span></b></p>
   </td>
   <td width=114 valign=top style='width:85.35pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span class=SpellE><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['parcel_type_name']}}</span></span></p>
+  normal'><span class=SpellE><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['parcel_type_name']}}</span></span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;{{$txn['parcel_desc']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;{{$txn['parcel_desc']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>{{$txn['units']}}</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>{{$txn['units']}}</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     @if ($txn['mode'] == 0)
     Normal
     @else ($txn['mode'] == 1)
@@ -1051,7 +1042,7 @@ div.WordSection1
     @endif
   </span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>
     @if ($txn['round'] == 0)
     No
     @else ($txn['round'] == 1)
@@ -1064,51 +1055,48 @@ div.WordSection1
 <td width=156 colspan=2 valign=top style='width:116.85pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Comments</span></b></p><p></p>
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Comments</span></b></p><p></p>
   </td>
   <td width=468 colspan=7 valign=top style='width:350.75pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
-  @if ($txn['parcel_type_id'] == '10')
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.0pt;
-  mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span></p>
-
-  @endif
-  @if ($txn['acknowledge'] == '1')
-    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-    normal'><span style='font-size:9.0pt;
-    mso-bidi-font-size:9.5pt;font-family:"Arial","sans-serif";color:blue'>Acknowledgement Required</span></p>
-  @endif
+    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'>  
+    @if ($txn['parcel_type_id'] == '10')
+    <span style='font-size:9.0pt; mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>Collect Cheque</span>
+    @endif
+    @if ($txn['acknowledge'] == '1')
+    <span style='font-size:9.0pt; mso-bidi-font-size:9.0pt;font-family:"Arial","sans-serif";color:blue'>- Acknowledgement Required</span>
+    @endif
+  </p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:6'>
   <td width=156 colspan=2 valign=top style='width:116.85pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Sender
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Sender
   Signature</span></b></p>
   </td>
   <td width=156 colspan=3 valign=top style='width:116.85pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:116.9pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>Rider
+  normal'><b><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>Rider
   Name and Signature</span></b></p>
   </td>
   <td width=156 colspan=2 valign=top style='width:117.0pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:9.5pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
+  normal'><span style='font-size:9.0pt;font-family:"Arial","sans-serif"'>&nbsp;</span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:7;mso-yfti-lastrow:yes'>

@@ -626,13 +626,15 @@ class RiderController extends Controller
     
         $validator = Validator::make(($request->all()), [
             'receiver_sign' => 'required',
+            'receiver_id_num' => 'required'
             // 'receiver_code' => 'required'
         ]);
         
         if ($validator->fails()){
             $response = array('response' => $validator->messages(), 'success' => false);
             return $response;
-        } else {
+        } 
+        else {
             $receiver_sign = $request->input('receiver_sign');
             $receiver_sign = substr($receiver_sign, strpos($receiver_sign, ",")+1);
             $image = base64_decode($receiver_sign);

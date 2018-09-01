@@ -378,7 +378,6 @@ class CusportalController extends Controller
             'origin_addr_1' => 'required',
             'dest_addr_1' => 'required',
             'parcel_type_id' => 'required',
-            'mode' =>'required',
             // 'round' => 'required',
             'acknowledge' => 'required',
             'units' => 'required|numeric' //,
@@ -446,7 +445,7 @@ class CusportalController extends Controller
         $txn = new Txn;
         $txn->awb_num = $awb;
         $txn->clerk_id = $user_id;
-        $txn->mode = $request->input('mode');
+        $txn->mode = '0';
         // $txn->round = $request->input('round');
         $txn->units = $request->input('units');
         $txn->company_id = $parent_company_id;
@@ -669,7 +668,7 @@ class CusportalController extends Controller
         $txn->parcel_type_id = $request->input('parcel_type_id');
         // $txn->price = $price;
         // $txn->vat = $vat;
-        $txn->mode = $request->input('mode');
+        $txn->mode = '0';
         $txn->round = $request->input('round');
         $txn->units = $request->input('units');
         $txn->acknowledge = $request->input('acknowledge');
