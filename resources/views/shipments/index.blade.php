@@ -68,13 +68,6 @@
     <div class="panel-body">
       <div class="col-md-4 col-sm-12 col-xs-12">
         <div class="well dash-box">
-            <h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> 
-            {{$tot_coll}} </h2>
-            <h4>Total Sales</h4>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-12 col-xs-12">
-        <div class="well dash-box">
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
             {{$tot_count}} </h2>
             <h4>No of Transactions</h4>

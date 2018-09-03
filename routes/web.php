@@ -80,6 +80,16 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'shipments.index'
         ]);
 
+        Route::get('/shipments/bycustomer', [
+            'uses' => 'TxnsController@shipmentsbyCus',
+            'as' => 'shipments.bycustomer'
+        ]);   
+
+        Route::get('/shipments/byrider', [
+            'uses' => 'TxnsController@shipmentsbyRider',
+            'as' => 'shipments.byrider'
+        ]);      
+
         Route::get('/shipment/{txn}/edit', [
             'uses' => 'TxnsController@edit' , 
             'as' => 'shipments.edit'

@@ -45,8 +45,11 @@
                 
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporting <span class="caret"></span></a>
+
                     <ul class="dropdown-menu"> 
                         <li><a href="{{ route('shipments.index') }}">Shipments</a></li>
+                        <li><a href="{{ route('shipments.bycustomer') }}">Statistics by Customers</a></li>
+                        <li><a href="{{ route('shipments.byrider') }}">Statistics by Riders</a></li>
                         <li><a href="{{ route('invoice.index2') }}">Invoices</a></li>
                         <li><a href="{{ route('shipments.index') }}">Payments</a></li>
                     </ul>
@@ -62,6 +65,7 @@
                         <li><a href="{{ route('shipments.receivedShipments') }}">Shipments - Received</a></li>
                     </ul>
                 </li>
+                <li><a href="{{ route('shipments.add') }}">Book Shipment</a></li>
                 <li><a href="{{ route('shipments.awb') }}">AWB Search</a></li>
                 
             </ul>

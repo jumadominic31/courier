@@ -16,6 +16,7 @@ use App\Zone;
 use App\ParcelStatus;
 use App\ParcelType;
 use App\Vehicle;
+use Carbon\Carbon;
 use JWTAuth;
 use Validator;
 use Auth;
@@ -615,6 +616,8 @@ class TxnsController extends Controller
         $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
         $company_details = Company::where('id', '=', $company_id)->get();
         $curr_date = date('Y-m-d');
+        $curr_mon = date('Y-m');
+        $last_mon = date("Y-m", strtotime("-1 months"));
         
         $parcel_status = ParcelStatus::pluck('name', 'id')->all();
         // $clerks = User::where(function($q) { $q->where('usertype','=','cusclerk')->orWhere('usertype','=','cusadmin'); })->where('company_id', '=', $company_id)->pluck('fullname', 'id')->all();
@@ -730,14 +733,44 @@ class TxnsController extends Controller
         }
         else {
             $tot_count = Txn::where('company_id','=',$company_id)->count();
-            $txns = Txn::where('company_id','=',$company_id)->orderBy('id','desc')->get();
-            $tot_coll = Txn::select('company_id', DB::raw('sum(price) as tot_coll'))->where('company_id', '=', $company_id)->groupBy('company_id')->pluck('tot_coll')->first();
+            $txns = Txn::where('company_id','=',$company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $curr_mon)->orderBy('id','desc')->get();
+            $tot_coll = Txn::select('company_id', DB::raw('sum(price) as tot_coll'))->where('company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $curr_mon)->groupBy('company_id')->pluck('tot_coll')->first();
             if ($tot_coll == NULL) {
                 $tot_coll = 0;
             }
         }
 
         return view('shipments.index', ['txns' => $txns, 'zones' => $zones,  'parcel_status' => $parcel_status, 'tot_coll' => $tot_coll, 'tot_count' => $tot_count, 'cuscompanies' => $cuscompanies, 'riders' => $riders]);
+    }
+
+    public function shipmentsbyCus()
+    {
+        $company_id = Auth::user()->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $company_details = Company::where('id', '=', $company_id)->get();
+        $curr_year = date('Y');
+
+        $txns = Txn::where('company_id', '=', $parent_company_id)
+                    ->where('parcel_status_id' , '!=', '6')
+                    ->where(DB::raw('DATE_FORMAT(created_at, "%Y")'), '=', $curr_year)
+                    ->select('sender_company_id', DB::raw('count(if(month(txn_date) = 1, 1, NULL)) as Jan'), DB::raw('count(if(month(txn_date) = 2, 1, NULL)) as Feb'), DB::raw('count(if(month(txn_date) = 3, 1, NULL)) as Mar'), DB::raw('count(if(month(txn_date) = 4, 1, NULL)) as Apr'), DB::raw('count(if(month(txn_date) = 5, 1, NULL)) as May'), DB::raw('count(if(month(txn_date) = 6, 1, NULL)) as Jun'), DB::raw('count(if(month(txn_date) = 7, 1, NULL)) as Jul'), DB::raw('count(if(month(txn_date) = 8, 1, NULL)) as Aug'), DB::raw('count(if(month(txn_date) = 9, 1, NULL)) as Sep'), DB::raw('count(if(month(txn_date) = 10, 1, NULL)) as Oct'), DB::raw('count(if(month(txn_date) = 11, 1, NULL)) as Nov'), DB::raw('count(if(month(txn_date) = 12, 1, NULL)) as December'), DB::raw('count(*) as Total'))
+                    ->groupBy('sender_company_id')->orderBy('Total', 'desc')->get();
+        return view('shipments.bycustomer', ['txns' => $txns]);
+    }
+
+    public function shipmentsbyRider()
+    {
+        $company_id = Auth::user()->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $company_details = Company::where('id', '=', $company_id)->get();
+        $curr_year = date('Y');
+
+        $txns = Txn::where('company_id', '=', $parent_company_id)
+                    ->where('parcel_status_id' , '!=', '6')
+                    ->where(DB::raw('DATE_FORMAT(created_at, "%Y")'), '=', $curr_year)
+                    ->select('driver_id', DB::raw('count(if(month(txn_date) = 1, 1, NULL)) as Jan'), DB::raw('count(if(month(txn_date) = 2, 1, NULL)) as Feb'), DB::raw('count(if(month(txn_date) = 3, 1, NULL)) as Mar'), DB::raw('count(if(month(txn_date) = 4, 1, NULL)) as Apr'), DB::raw('count(if(month(txn_date) = 5, 1, NULL)) as May'), DB::raw('count(if(month(txn_date) = 6, 1, NULL)) as Jun'), DB::raw('count(if(month(txn_date) = 7, 1, NULL)) as Jul'), DB::raw('count(if(month(txn_date) = 8, 1, NULL)) as Aug'), DB::raw('count(if(month(txn_date) = 9, 1, NULL)) as Sep'), DB::raw('count(if(month(txn_date) = 10, 1, NULL)) as Oct'), DB::raw('count(if(month(txn_date) = 11, 1, NULL)) as Nov'), DB::raw('count(if(month(txn_date) = 12, 1, NULL)) as December'), DB::raw('count(*) as Total'))
+                    ->groupBy('driver_id')->orderBy('Total', 'desc')->get();
+        return view('shipments.byrider', ['txns' => $txns]);
     }
 
     public function getbookedShipments()
