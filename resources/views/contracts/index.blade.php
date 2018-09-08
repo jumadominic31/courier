@@ -21,6 +21,8 @@
 		          <th>Min Charge</th>
 		          <th>Shipment Limit</th>
 		          <th>Cost Overlimit</th>
+		          <th>Big Luggage</th>
+		          <th>Outside Coverage</th>
 		          <th>Status</th>
 		          <th></th>
 	          </tr>
@@ -33,6 +35,8 @@
 		          <td>{{$contract['min_charge']}}</td>
 		          <td>{{$contract['txns_limit']}}</td>
 		          <td>{{$contract['txn_cost_overlimit']}}</td>
+		          <td>{{$contract['big_luggage']}}</td>
+		          <td>{{$contract['out_coverage']}}</td>
 		          <td><?php if ($contract['status'] == 1 ) {echo "Active";} else {echo "Inactive";} ?></td>
 		          <td><span class="center-block"><a class="pull-right btn btn-default" href="{{ route('contracts.edit', ['contract' => $contract->id ]) }}">Edit</a></span></td>
 		      </tr>

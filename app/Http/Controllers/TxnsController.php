@@ -640,6 +640,7 @@ class TxnsController extends Controller
         $clerk_id = $request->input('clerk_id');
         $sender_company_id = $request->input('sender_company_id');
         $rider_id = $request->input('rider_id');
+        $page_ref = $request->input('page_ref');
         
         if ($request->isMethod('POST')){
             $txns = Txn::where('company_id', '=', $company_id);
@@ -674,6 +675,10 @@ class TxnsController extends Controller
             if ($invoiced != NULL){
                 $txns = $txns->where('invoiced','=', $invoiced);
                 $tot_coll = $tot_coll->where('invoiced','=', $invoiced);      
+            }
+            if ($page_ref != NULL){
+                $txns = $txns->where('page','=', $page_ref);
+                $tot_coll = $tot_coll->where('page','=', $page_ref);      
             }
             if ($rider_id != NULL){
                 $txns = $txns->where('driver_id','=', $rider_id);
@@ -723,18 +728,18 @@ class TxnsController extends Controller
             }
             
             if ($request->submitBtn == 'CreatePDF') {
-                $txns = $txns->orderBy('id','desc')->limit(50)->get();
+                $txns = $txns->orderBy('txn_date','desc')->limit(300)->get();
                 $pdf = PDF::loadView('pdf.shipments', ['txns' => $txns, 'company_details' => $company_details, 'curr_date' => $curr_date, 'tot_coll' => $tot_coll, 'tot_count' => $tot_count, 'awb_num' => $awb_num, 'sender_company_name' => $sender_company_name, 'rider_name' => $rider_name, 'parcel_status_name' => $parcel_status_name, 'first_date' => $first_date, 'last_date' => $last_date]);
                 $pdf->setPaper('A4', 'landscape');
                 return $pdf->stream('shipments.pdf');
             }
 
-            $txns = $txns->orderBy('id','desc')->paginate(10);
+            $txns = $txns->orderBy('txn_date','desc')->paginate(10);
         }
         else {
-            $tot_count = Txn::where('company_id','=',$company_id)->count();
-            $txns = Txn::where('company_id','=',$company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $curr_mon)->orderBy('id','desc')->get();
-            $tot_coll = Txn::select('company_id', DB::raw('sum(price) as tot_coll'))->where('company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $curr_mon)->groupBy('company_id')->pluck('tot_coll')->first();
+            $tot_count = Txn::where('company_id','=',$company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $curr_mon)->where('parcel_status_id', '!=', '6')->count();
+            $txns = Txn::where('company_id','=',$company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $curr_mon)->orderBy('txn_date','desc')->get();
+            $tot_coll = Txn::select('company_id', DB::raw('sum(price) as tot_coll'))->where('company_id', '=', $company_id)->where('parcel_status_id', '!=', '6')->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $curr_mon)->groupBy('company_id')->pluck('tot_coll')->first();
             if ($tot_coll == NULL) {
                 $tot_coll = 0;
             }
@@ -1029,7 +1034,7 @@ class TxnsController extends Controller
         $origin_addr = $txn->origin_addr;
         $dest_addr = $txn->dest_addr;
         $stations = Zone::pluck('name','id')->all();
-        $drivers = User::where('usertype', '=', 'driver')->pluck('fullname','id')->all();
+        $riders = User::where('company_id', '=', $company_id)->where('usertype', '=', 'driver')->pluck('fullname','id')->all();
         $vehicles = Vehicle::pluck('name','id')->all();
         $statusDet = DB::table('txn_logs as t')
                 ->join('parcel_statuses as p', 't.status_id', '=', 'p.id')
@@ -1040,60 +1045,70 @@ class TxnsController extends Controller
                 ->orderby('t.id', 'desc')
                 ->get();
         
-        $companies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name','id')->all();
-        return view('shipments.edit',['txn'=> $txn, 'companies' => $companies, 'parcel_statuses' => $parcel_statuses, 'parcel_types' => $parcel_types, 'stations' => $stations,  'origin_addr' => $origin_addr, 'dest_addr' => $dest_addr, 'drivers' => $drivers, 'vehicles' => $vehicles, 'statusDet' => $statusDet]);
+        $companies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->orderBy('name', 'asc')->pluck('name','id')->all();
+        return view('shipments.edit',['txn'=> $txn, 'companies' => $companies, 'parcel_statuses' => $parcel_statuses, 'parcel_types' => $parcel_types, 'stations' => $stations,  'origin_addr' => $origin_addr, 'dest_addr' => $dest_addr, 'riders' => $riders, 'vehicles' => $vehicles, 'statusDet' => $statusDet]);
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            // 'parcel_status_id' => 'required',
-            // 'dest_id' => 'required',
-            // 'sender_name' => 'required',
-            // 'sender_phone' => 'required',
-            // 'receiver_name' => 'required',
-            // 'receiver_phone' => 'required',
-            'price' => 'required'
+            'sender_name' => 'required',
+            'sender_company' => 'required',
+            'receiver_name' => 'required',
+            'receiver_company' => 'required',
+            'origin_addr' => 'required',
+            'dest_addr' => 'required',
+            'parcel_type_id' => 'required',
+            'big_luggage' =>'required',
+            'out_coverage' => 'required',
+            'units' => 'required|numeric',
+            'rider_id' => 'required',
+            'txn_date' => 'required'
         ]);
 
         $user = Auth::user();
+        $user_id = Auth::user()->id;
         $company_id = Auth::user()->company_id;
-        $price = $request->input('price');
-        $vat = 0.16 * $price;
+
+        $parcel_desc = $request->input('parcel_desc');
+        $sender_company_id = $request->input('sender_company');
+        $page = $request->input('page');
 
         $txn = Txn::find($id);
-        // $txn->parcel_type_id = $request->input('parcel_type_id');
-        $txn->price = $price;
-        $txn->vat = $vat;
-        // $txn->mode = $request->input('mode');
-        // $txn->round = $request->input('round');
-        // $txn->units = $request->input('units');
-        // $txn->sender_name = $request->input('sender_name');
-        // $txn->sender_phone = $request->input('sender_phone');
-        // $txn->sender_id_num = $request->input('sender_id_num');
-        // $txn->receiver_name = $request->input('receiver_name');
-        // $txn->receiver_phone = $request->input('receiver_phone');
-        // $txn->receiver_id_num = $request->input('receiver_id_num');
+        $txn->clerk_id = $user_id;
+        $txn->origin_addr = $request->input('origin_addr');
+        $txn->dest_addr = $request->input('dest_addr');
+        $txn->mode = '0';
+        $txn->round = '0';
+        $txn->big_luggage = $request->input('big_luggage');
+        $txn->out_coverage = $request->input('out_coverage');
+        $txn->units = $request->input('units');
+        $txn->txn_date = $request->input('txn_date');
+        $txn->company_id = $company_id;
+        $txn->parcel_status_id = '8';
+        $txn->parcel_type_id = $request->input('parcel_type_id');
+        if ($parcel_desc != NULL){
+            $txn->parcel_desc = $parcel_desc;
+        }
+        $txn->price = 0;
+        $txn->vat = 0;
+        $txn->sender_name = $request->input('sender_name');
+        $txn->sender_company_id = $sender_company_id;
+        if ($sender_company_id != '0'){
+            $txn->sender_company_name = Company::select('name')->where('id', '=', $sender_company_id)->pluck('name')->first();  
+        }
+        else {
+            $txn->sender_company_name = $request->input('other_company');
+        }
+        $txn->sender_phone = '254722000000';
+        $txn->receiver_name = $request->input('receiver_name');
+        $txn->receiver_company_name = $request->input('receiver_company');
+        $txn->receiver_phone = '254722000000';
+        $txn->driver_id = $request->input('rider_id');
+        if ($page != NULL) {
+            $txn->page = $page;
+        }
         $txn->updated_by = $user->id;
-
-        // if ($txn->parcel_status_id != $request->input('parcel_status_id')) {
-        //     $txnlog = new TxnLog;
-        //     $txnlog->awb_id = $txn->id;
-        //     $txnlog->status_id = $request->input('parcel_status_id');
-        //     $txnlog->origin_id = $txn->origin_id;
-        //     if ($txn->dest_id != $request->input('dest_id')) {
-        //         $txnlog->dest_id = $request->input('dest_id');
-        //     }
-        //     else {
-        //         $txnlog->dest_id = $txn->dest_id; 
-        //     }
-        //     $txnlog->updated_by = $user->id;
-        //     $txnlog->company_id = $company_id;
-        //     $txnlog->save();
-        // }
-
-        // $txn->dest_id = $request->input('dest_id');
-        // $txn->parcel_status_id = $request->input('parcel_status_id');
         $txn->save();
 
         $userlog = new UserLog();
@@ -1244,15 +1259,13 @@ class TxnsController extends Controller
         $this->validate($request, [
             'sender_name' => 'required',
             'sender_company' => 'required',
-            'sender_phone' => array('required', 'regex:/^[0-9]{12}$/'),
             'receiver_name' => 'required',
             'receiver_company' => 'required',
-            'receiver_phone' => array('required', 'regex:/^[0-9]{12}$/'),
             'origin_addr' => 'required',
             'dest_addr' => 'required',
             'parcel_type_id' => 'required',
-            'mode' =>'required',
-            'round' => 'required',
+            'big_luggage' =>'required',
+            'out_coverage' => 'required',
             'units' => 'required|numeric',
             'rider_id' => 'required',
             'txn_date' => 'required'           
@@ -1276,27 +1289,22 @@ class TxnsController extends Controller
         $newawbnum = randomDigits(5);
         $newawbnum = $prefix.date('ymd').$newawbnum;
         
-        if ($request->input('price')){
-            $price = $request->input('price');
-            $vat = 0.16 * $price;
-        }
-        else {
-            $price = 0;
-            $vat = 0;
-        }
         $receiver_code = randomDigits(6);
         $receiver_code_hash = Hash::make($receiver_code);
 
         $parcel_desc = $request->input('parcel_desc');
         $sender_company_id = $request->input('sender_company');
+        $page = $request->input('page');
 
         $txn = new Txn;
         $txn->awb_num = $newawbnum;
         $txn->clerk_id = $user_id;
         $txn->origin_addr = $request->input('origin_addr');
         $txn->dest_addr = $request->input('dest_addr');
-        $txn->mode = $request->input('mode');
-        $txn->round = $request->input('round');
+        $txn->mode = '0';
+        $txn->round = '0';
+        $txn->big_luggage = $request->input('big_luggage');
+        $txn->out_coverage = $request->input('out_coverage');
         $txn->units = $request->input('units');
         $txn->txn_date = $request->input('txn_date');
         $txn->company_id = $company_id;
@@ -1305,8 +1313,8 @@ class TxnsController extends Controller
         if ($parcel_desc != NULL){
             $txn->parcel_desc = $parcel_desc;
         }
-        $txn->price = $price;
-        $txn->vat = $vat;
+        $txn->price = 0;
+        $txn->vat = 0;
         $txn->sender_name = $request->input('sender_name');
         $txn->sender_company_id = $sender_company_id;
         if ($sender_company_id != '0'){
@@ -1315,12 +1323,15 @@ class TxnsController extends Controller
         else {
             $txn->sender_company_name = $request->input('other_company');
         }
-        $txn->sender_phone = $request->input('sender_phone');
+        $txn->sender_phone = '254722000000';
         $txn->receiver_name = $request->input('receiver_name');
         $txn->receiver_company_name = $request->input('receiver_company');
-        $txn->receiver_phone = $request->input('receiver_phone');
+        $txn->receiver_phone = '254722000000';
         $txn->driver_id = $request->input('rider_id');
         $txn->receiver_code = $receiver_code_hash;
+        if ($page != NULL) {
+            $txn->page = $page;
+        }
         $txn->updated_by = $user->id;
         $txn->save();
 
@@ -1334,45 +1345,37 @@ class TxnsController extends Controller
         $txnlog->sender_company_id = $sender_company_id;
         $txnlog->save();
 
-        // $sender_phone = '254'.$request->input('sender_phone');
-        // $receiver_phone = '254'.$request->input('receiver_phone');
-        // Send password via SMS
-        // if ($sender_phone != NULL)
-        // {
-        //     $atgusername   = env('ATGUSERNAME');
-        //     $atgapikey     = env('ATGAPIKEY');
-        //     $recipients = '+'.$sender_phone;
-        //     $message    = "Dear sender, Your parcel is booked under AWB ".$txn->awb_num.". Cost = ".$txn->price. ". Check status at http://bit.ly/2Dv9o7m";
-        //     $gateway    = new AfricasTalkingGateway($atgusername, $atgapikey);
-        //     try 
-        //     { 
-        //       $send_results = $gateway->sendMessage($recipients, $message);
-        //     }
-        //     catch ( AfricasTalkingGatewayException $e )
-        //     {
-        //       echo 'Encountered an error while sending: '.$e->getMessage();
-        //     }
-        // }
-
-        //     if ($receiver_phone != NULL)
-        //     {
-        //         $atgusername   = env('ATGUSERNAME');
-        //         $atgapikey     = env('ATGAPIKEY');
-        //         $recipients = '+'.$receiver_phone;
-        //         $message    = "Dear receiver, please expect parcel booked under AWB ".$txn->awb_num.". Your code is ".$receiver_code. ". Check status at http://bit.ly/2Dv9o7m";
-        //         $gateway    = new AfricasTalkingGateway($atgusername, $atgapikey);
-        //         try 
-        //         { 
-        //           $rec_results = $gateway->sendMessage($recipients, $message);
-        //         }
-        //         catch ( AfricasTalkingGatewayException $e )
-        //         {
-        //           echo 'Encountered an error while sending: '.$e->getMessage();
-        //         }
-        //     }
-            
-        //     //return response()->json(['txn' => $txn, 'send_results' => $send_results, 'rec_results' => $rec_results], 201);
-
         return redirect('/shipments')->with('success', 'Shipment Booked');
+    }
+
+    public function cancelShipment(Request $request, $id)
+    {
+        $user = Auth::user();
+        $company_id = Auth::user()->company_id;
+
+        $txn = Txn::find($id);
+        $txn->parcel_status_id = '6';
+        $txn->updated_by = $user->id;
+        $txn->save();
+
+        $sender_company_id = $txn->sender_company_id;
+
+        $txnlog = new TxnLog();
+        $txnlog->awb_id = $id;
+        $txnlog->status_id = '6';
+        $txnlog->updated_by = $user->id;
+        $txnlog->company_id = $company_id;
+        $txnlog->sender_company_id = $sender_company_id;
+        $txnlog->save();
+
+        $userlog = new UserLog();
+        $userlog->username = $user->username;
+        $userlog->activity = "Cancelled txn ".$txn->awb_num;
+        $userlog->ipaddress = $_SERVER['REMOTE_ADDR'];
+        $userlog->useragent = $_SERVER['HTTP_USER_AGENT'];
+        $userlog->company_id = $company_id;
+        $userlog->save();
+
+        return redirect('/shipments')->with('success', 'Shipment Cancelled');
     }
 }

@@ -27,10 +27,6 @@
                         <span class="input-group-addon">Company Name *</span>
                         <input type="text" id="other_company" name="other_company" value="{{ old('other_company') }}" class="form-control"  aria-describedby="basic-addon1">
                     </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">Phone *</span>
-                        <input type="text" id="sender_phone" name="sender_phone" value="{{ old('sender_phone') }}" class="form-control" placeholder="e.g. 254723000000" aria-describedby="basic-addon1">
-                    </div>
                 </div>
             </div>
 		</div>
@@ -47,10 +43,6 @@
                     <div class="input-group">
                         <span class="input-group-addon">Company *</span>
                         <input type="text" id="receiver_company" name="receiver_company" value="{{ old('receiver_company') }}" class="form-control"  aria-describedby="basic-addon1">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">Phone *</span>
-                        <input type="text" id="receiver_phone" name="receiver_phone" value="{{ old('receiver_phone') }}" class="form-control" placeholder="e.g. 254723000000" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
@@ -88,76 +80,12 @@
         <div class="col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Shipment Type</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="input-group">
-                        <span class="input-group-addon" >Type *</span>
-                        {{Form::select('parcel_type_id', ['' => ''] + $parcel_types, old('parcel_type_id'), ['class' => 'form-control'])}}
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" >Description</span>
-                        <input type="text" id="parcel_desc" name="parcel_desc" value="{{ old('parcel_desc') }}" class="form-control"  aria-describedby="basic-addon1">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Booking Mode</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="input-group">
-                        <span class="input-group-addon" >Mode *</span>
-                        {{Form::select('mode', ['' => '', 1 => 'Express', 0 => 'Normal'],  old('mode') , ['class' => 'form-control'])}}
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" >Round trip *</span>
-                        {{Form::select('round', ['' => '', 1 => 'Yes', 0 => 'No'], old('round'), ['class' => 'form-control'])}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Units</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="input-group">
-                        <span class="input-group-addon" >No of units *</span>
-                        <input type="text" id="units" name="units" value="{{ old('units')}}" class="form-control" placeholder="e.g. 1" aria-describedby="basic-addon1">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
                     <h3 class="panel-title">Rider</h3>
                 </div>
                 <div class="panel-body">
                     <div class="input-group">
                         <span class="input-group-addon" >Name *</span>
                         {{Form::select('rider_id', ['' => ''] + $riders , old('rider_id'), ['class' => 'form-control'])}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Price</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="input-group">
-                        <span class="input-group-addon" >Amount</span>
-                        <input type="text" id="price" name="price" value="{{ old('price')}}" class="form-control"  aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
@@ -169,13 +97,58 @@
                 </div>
                 <div class="panel-body">
                     <div class="input-group">
-                        <span class="input-group-addon" >Date</span>
+                        <span class="input-group-addon" >Date *</span>
                         <input type="text" id="txn_date" name="txn_date" value="{{ old('txn_date')}}" class="form-control first_date"  aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Shipment Type</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <span class="input-group-addon" >Type *</span>
+                        {{Form::select('parcel_type_id', ['' => ''] + $parcel_types, old('parcel_type_id'), ['class' => 'form-control'])}}
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >No of units *</span>
+                        <input type="text" id="units" name="units" value="{{ old('units')}}" class="form-control" placeholder="e.g. 1" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Description</span>
+                        <input type="text" id="parcel_desc" name="parcel_desc" value="{{ old('parcel_desc') }}" class="form-control"  aria-describedby="basic-addon1">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Other Options</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <span class="input-group-addon" >Outside Coverage *</span>
+                        {{Form::select('out_coverage', ['' => '', 0 => 'No', 1 => 'Yes'],  '0' , ['class' => 'form-control'])}}
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Big Luggage *</span>
+                        {{Form::select('big_luggage', ['' => '', 0 => 'No', 1 => 'Yes'],  '0' , ['class' => 'form-control'])}}
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" >Page</span>
+                        <input type="text" id="page" name="page" value="{{ old('page') }}" class="form-control"  aria-describedby="basic-addon1">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>
 <div class="row">
 	<div class="col-md-12 text-center"> 

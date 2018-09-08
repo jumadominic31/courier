@@ -167,7 +167,7 @@ class CustomersController extends Controller
             'username' => 'required|unique:users',
             'firstname' => 'required',
             'lastname' => 'required',
-            'phone' => array('required', 'unique:users', 'regex:/^[0-9]{12}$/'),
+            'phone' => array('required', 'regex:/^[0-9]{12}$/'),
             'company_id' => 'required',
             'status' => 'required',
             'usertype' => 'required' 

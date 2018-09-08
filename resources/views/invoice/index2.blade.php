@@ -62,6 +62,10 @@
         <td>{{number_format($invoice['vat'], 2, '.', ',')}}</td>
         <td><a class="pull-right btn btn-default btn-xs" href="{{ route('invoice.print2', ['id' => $invoice->id ]) }}" target="_blank">View Details</a></td>
         <td>
+          {!!Form::open(['action' => ['InvoicesController@voidInvoice', $invoice->id],'method' => 'POST', 'onsubmit' => 'return confirm("Are you sure you want to void this invoice?")'])!!}
+            {{Form::hidden('_method', 'PUT')}}
+            {{Form::submit('Void Invoice', ['class' => 'btn btn-danger btn-xs'])}}
+          {!! Form::close() !!}
         </td>
     </tr>
       @endforeach

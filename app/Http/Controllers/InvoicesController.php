@@ -145,7 +145,7 @@ class InvoicesController extends Controller
         $month = $request->input('month');
         
         if ($request->isMethod('POST')){
-            $invoices = Nuinvoice::where('parent_company_id', '=', $parent_company_id);
+            $invoices = Nuinvoice::where('voided', '=', '0')->where('parent_company_id', '=', $parent_company_id);
 
             if ($invoice_num != NULL){
                 $invoices = $invoices->where('invoice_num','like','%'.$invoice_num.'%');
@@ -167,7 +167,7 @@ class InvoicesController extends Controller
             $invoices = $invoices->orderBy('month','desc')->get();
         }
         else {
-            $invoices = Nuinvoice::where('parent_company_id','=',$parent_company_id)->orderBy('month','desc')->get();
+            $invoices = Nuinvoice::where('voided', '=', '0')->where('parent_company_id','=',$parent_company_id)->orderBy('month','desc')->get();
         }
 
         return view('invoice.index2', ['invoices' => $invoices, 'cuscompanies' => $cuscompanies]);
@@ -301,7 +301,7 @@ class InvoicesController extends Controller
             return redirect('/invoice/add2')->with('error', 'Cannot create invoice. Choose upto the previous month ');   
         }
 
-        $invoice_exist = Nuinvoice::where('company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(month, "%Y-%m")'), '=', $month)->count();
+        $invoice_exist = Nuinvoice::where('company_id', '=', $company_id)->where('voided', '=', 0)->where(DB::raw('DATE_FORMAT(month, "%Y-%m")'), '=', $month)->count();
         if ($invoice_exist > 0) {
             return redirect('/invoice/add2')->with('error', 'Invoice Existing. ');
         }
@@ -311,8 +311,15 @@ class InvoicesController extends Controller
         $min_charge = Contract::where('id', '=', $contract_id)->pluck('min_charge')->first();
         $min_txns = Contract::where('id', '=', $contract_id)->pluck('txns_limit')->first();
         $txn_cost_overlimit = Contract::where('id', '=', $contract_id)->pluck('txn_cost_overlimit')->first();
+        $big_luggage = Contract::where('id', '=', $contract_id)->pluck('big_luggage')->first();
+        $out_coverage = Contract::where('id', '=', $contract_id)->pluck('out_coverage')->first(); 
 
-        $total_txns = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $month)->count();
+        $txns = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $month)->count();
+        $big_luggage_txns = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $month)->where('big_luggage', '=', '1')->count();
+        $out_coverage_txns = Txn::where('sender_company_id', '=', $company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $month)->where('out_coverage', '=', '1')->count();
+        $total_txns = $txns - ($big_luggage_txns + $out_coverage_txns);
+        $big_luggage_charge = $big_luggage_txns * $big_luggage;
+        $out_coverage_charge = $out_coverage_txns * $out_coverage;
         if ($total_txns <= $min_txns){
             $extra_txns = 0;
             $extra_charge = 0;
@@ -321,10 +328,9 @@ class InvoicesController extends Controller
             $extra_txns = $total_txns - $min_txns;
             $extra_charge = $extra_txns * $txn_cost_overlimit;
         }
-        $subtotal_charge = $min_charge + $extra_charge;
+        $subtotal_charge = $min_charge + $extra_charge + $big_luggage_charge + $out_coverage_charge;
         $vat = 0.16 * $subtotal_charge;
-
-
+        
         //post invoice
         $nuinvoice = new Nuinvoice;
         $nuinvoice->invoice_num = $curr_invoice;
@@ -335,8 +341,12 @@ class InvoicesController extends Controller
         $nuinvoice->min_txns = $min_txns;
         $nuinvoice->extra_txns = $extra_txns;
         $nuinvoice->total_txns = $total_txns;
+        $nuinvoice->big_luggage_txns = $big_luggage_txns;
+        $nuinvoice->out_coverage_txns = $out_coverage_txns;
         $nuinvoice->min_charge = $min_charge;
         $nuinvoice->extra_charge = $extra_charge;
+        $nuinvoice->big_luggage_charge = $big_luggage_charge;
+        $nuinvoice->out_coverage_charge = $out_coverage_charge;
         $nuinvoice->subtotal_charge = $subtotal_charge;
         $nuinvoice->discount = 0;
         $nuinvoice->total_charge = $subtotal_charge;
@@ -349,33 +359,27 @@ class InvoicesController extends Controller
         return redirect('/invoice2')->with('success', 'Invoice Added. ');
     }    
 
-    public function voidInvoice($id)
+    public function voidInvoice(Request $request, $id)
     {
         $user = Auth::user();
         $company_id = Auth::user()->company_id;
 
         //void invoice
-        $invoice = Invoice::find($id);
-        $invoice->amount = 0;
-        $invoice->vat = 0;
-        $invoice->bal = 0 - $invoice->paid;
+        $invoice = Nuinvoice::find($id);
+        $invoice->voided = 1;
         $invoice->save();
 
         $invoice_num = $invoice->invoice_num;
 
-        $sel_txns = Txn::select('id')->where('invoice_id', '=', $id)->pluck('id')->toArray();
-        if (count($sel_txns) > 0){
-            foreach ($sel_txns as $sel){
-                //update invoice details
-                $txn = Txn::find($sel);
-                $txn->invoiced = 0;
-                $txn->updated_by = $user->id;
-                $txn->invoice_id = NULL;
-                $txn->save();
-            }
+        $userlog = new UserLog();
+        $userlog->username = $user->username;
+        $userlog->activity = "Voided invoice id". $invoice_num;
+        $userlog->ipaddress = $_SERVER['REMOTE_ADDR'];
+        $userlog->useragent = $_SERVER['HTTP_USER_AGENT'];
+        $userlog->company_id = $company_id;
+        $userlog->save();
 
-        }
-        return redirect('/invoice')->with('success', 'Invoice '. $invoice_num .' voided. ');
+        return redirect('/invoice2')->with('success', 'Invoice '. $invoice_num .' voided. ');
 	}
 
     public function showInvoice($id)
@@ -436,7 +440,7 @@ class InvoicesController extends Controller
 
         $company_details = Company::where('id', '=', $company_id)->first();
 
-        $invoice = Nuinvoice::where('parent_company_id', '=', $company_id)->where('id', '=', $id)->first();
+        $invoice = Nuinvoice::where('voided', '=', '0')->where('parent_company_id', '=', $company_id)->where('id', '=', $id)->first();
         if ($invoice == null){
             return redirect('/invoice2')->with('error', 'Invoice not found');
         }

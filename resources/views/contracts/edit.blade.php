@@ -38,6 +38,14 @@
                         {{Form::text('txn_cost_overlimit', $contract->txn_cost_overlimit, ['class' => 'form-control'])}}
                     </div>
                     <div class="form-group">
+                        {{Form::label('big_luggage', 'Big Luggage Charge')}}
+                        {{Form::text('big_luggage', $contract->big_luggage, ['class' => 'form-control'])}}
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('out_coverage', 'Outside Coverage Charge')}}
+                        {{Form::text('out_coverage', $contract->out_coverage, ['class' => 'form-control'])}}
+                    </div>
+                    <div class="form-group">
                         {{Form::label('status', 'Status')}}
                         {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], $contract->status, ['class' => 'form-control'])}}
                     </div>

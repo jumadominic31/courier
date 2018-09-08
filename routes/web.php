@@ -166,6 +166,11 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'shipments.receivedShipments'
         ]);
 
+        Route::match(array('PUT', 'PATCH'), '/shipments/cancel/{awb}', [
+            'uses' => 'TxnsController@cancelShipment' , 
+            'as' => 'shipments.cancelShipment'
+        ]);
+
         //tokens
         //token statement
         Route::get('/token', [

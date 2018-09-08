@@ -42,7 +42,9 @@ class ContractsController extends Controller
             'end_date' => 'required|date',
             'min_charge' => 'required|numeric',
             'txns_limit' => 'required|numeric',
-            'txn_cost_overlimit' => 'required|numeric'
+            'txn_cost_overlimit' => 'required|numeric',
+            'big_luggage' => 'required|numeric',
+            'out_coverage' => 'required|numeric'
         ]);
 
         $last_contract = Contract::where('parent_company_id', '=', $parent_company_id)->orderBy('id','desc')->pluck('contract_num')->first();
@@ -56,27 +58,31 @@ class ContractsController extends Controller
     	$prefix = substr($prefix, 0, 3);
     	$curr_contract = $prefix.$curr_contract;
 
-        $company_id = $request->input('company_id');
-        $start_date = $request->input('start_date');
-        $end_date = $request->input('end_date');
-        $min_charge = $request->input('min_charge');
-        $txns_limit = $request->input('txns_limit');
-        $txn_cost_overlimit = $request->input('txn_cost_overlimit');
+      $company_id = $request->input('company_id');
+      $start_date = $request->input('start_date');
+      $end_date = $request->input('end_date');
+      $min_charge = $request->input('min_charge');
+      $txns_limit = $request->input('txns_limit');
+      $txn_cost_overlimit = $request->input('txn_cost_overlimit');
+      $big_luggage = $request->input('big_luggage');
+      $out_coverage = $request->input('out_coverage');
 
-       	$contract = new Contract;
-       	$contract->contract_num = $curr_contract;
-       	$contract->parent_company_id = $parent_company_id;
-       	$contract->company_id = $company_id;
-       	$contract->start_date = $start_date;
-       	$contract->end_date = $end_date;
-       	$contract->min_charge = $min_charge;
-       	$contract->txns_limit = $txns_limit;
-       	$contract->txn_cost_overlimit = $txn_cost_overlimit;
-       	$contract->status = '1';
-       	$contract->updated_by = $user_id;
-       	$contract->save();
+     	$contract = new Contract;
+     	$contract->contract_num = $curr_contract;
+     	$contract->parent_company_id = $parent_company_id;
+     	$contract->company_id = $company_id;
+     	$contract->start_date = $start_date;
+     	$contract->end_date = $end_date;
+     	$contract->min_charge = $min_charge;
+     	$contract->txns_limit = $txns_limit;
+     	$contract->txn_cost_overlimit = $txn_cost_overlimit;
+      $contract->big_luggage = $big_luggage;
+      $contract->out_coverage = $out_coverage;
+     	$contract->status = '1';
+     	$contract->updated_by = $user_id;
+     	$contract->save();
 
-        return redirect('/contracts')->with('success', 'Contract Created');
+      return redirect('/contracts')->with('success', 'Contract Created');
     }
 
     public function edit($id)
@@ -98,32 +104,38 @@ class ContractsController extends Controller
     	$user_id = $user->id;
     	$parent_company_id = $user->company_id;
 
-        $this->validate($request, [
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'min_charge' => 'required|numeric',
-            'txns_limit' => 'required|numeric',
-            'txn_cost_overlimit' => 'required|numeric',
-            'status' => 'required'
-        ]);
-        
-        $start_date = $request->input('start_date');
-        $end_date = $request->input('end_date');
-        $min_charge = $request->input('min_charge');
-        $txns_limit = $request->input('txns_limit');
-        $txn_cost_overlimit = $request->input('txn_cost_overlimit');
-        $status = $request->input('status');
+      $this->validate($request, [
+          'start_date' => 'required|date',
+          'end_date' => 'required|date',
+          'min_charge' => 'required|numeric',
+          'txns_limit' => 'required|numeric',
+          'txn_cost_overlimit' => 'required|numeric',
+          'big_luggage' => 'required|numeric',
+          'out_coverage' => 'required|numeric',
+          'status' => 'required'
+      ]);
+      
+      $start_date = $request->input('start_date');
+      $end_date = $request->input('end_date');
+      $min_charge = $request->input('min_charge');
+      $txns_limit = $request->input('txns_limit');
+      $txn_cost_overlimit = $request->input('txn_cost_overlimit');
+      $big_luggage = $request->input('big_luggage');
+      $out_coverage = $request->input('out_coverage');
+      $status = $request->input('status');
 
-        $contract = Contract::find($id);
-       	$contract->start_date = $start_date;
-       	$contract->end_date = $end_date;
-       	$contract->min_charge = $min_charge;
-       	$contract->txns_limit = $txns_limit;
-       	$contract->txn_cost_overlimit = $txn_cost_overlimit;
-       	$contract->status = $status;
-       	$contract->updated_by = $user_id;
-       	$contract->save();
+      $contract = Contract::find($id);
+     	$contract->start_date = $start_date;
+     	$contract->end_date = $end_date;
+     	$contract->min_charge = $min_charge;
+     	$contract->txns_limit = $txns_limit;
+     	$contract->txn_cost_overlimit = $txn_cost_overlimit;
+      $contract->big_luggage = $big_luggage;
+      $contract->out_coverage = $out_coverage;
+     	$contract->status = $status;
+     	$contract->updated_by = $user_id;
+     	$contract->save();
 
-       	return redirect('/contracts')->with('success', 'Contract updated');        
+     	return redirect('/contracts')->with('success', 'Contract updated');        
     }
 }

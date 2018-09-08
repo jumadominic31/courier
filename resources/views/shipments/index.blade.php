@@ -46,8 +46,8 @@
       </tr>
       <tr>
         <td><div class="form-group">
-              {{Form::label('invoiced', 'Invoiced')}}
-              {{Form::select('invoiced', ['' => '', '0' => 'No', '1' => 'Yes'], '', ['class' => 'form-control', 'id' => 'invoiced'])}}
+              {{Form::label('page_ref', 'Page Ref')}}
+              {{Form::text('page_ref', '', ['class' => 'form-control'])}}
           </div></td>
         <td></td>
         <td></td>
@@ -85,9 +85,8 @@
             <th width="13.33%">Destination</th>
             <th width="8.33%">Parcel Type</th>
             <th width="8.33%">Rider</th>
-            <th width="8.33%">Mode</th>
+            <th width="8.33%">Page Ref</th>
             <th width="8.33%">Parcel Status</th>
-            <th></th>
             <th></th>
           </tr>
           @foreach($txns as $txn)
@@ -99,13 +98,8 @@
             <td>{{$txn['dest_addr']}}</td>
             <td>{{$txn['parcel_type']['name']}}</td>
             <td>{{$txn['driver']['fullname']}}</td>
-            @if ($txn['mode'] == 0)
-            <td>Normal</td>
-            @else ($txn['mode'] == 1)
-            <td>Express</td>
-            @endif
+            <td>{{$txn['page']}}</td>
             <td>{{$txn['parcel_status']['name']}}</td>
-            <td><a class="pull-right btn btn-default btn-xs" target="_blank" href="{{ route('shipments.print', ['awb' => $txn->id ]) }}">Print</td>
             <td><a class="pull-right btn btn-default btn-xs" href="{{ route('shipments.edit', ['awb' => $txn->id ]) }}">Edit/Details</a></td>
         </tr>
           @endforeach

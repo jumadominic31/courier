@@ -29,6 +29,14 @@
             {{Form::label('txn_cost_overlimit', 'Cost for Shipment Over Limit')}}
             {{Form::text('txn_cost_overlimit', '', ['class' => 'form-control'])}}
         </div>
+        <div class="form-group">
+            {{Form::label('big_luggage', 'Big Luggage Charge')}}
+            {{Form::text('big_luggage', '', ['class' => 'form-control'])}}
+        </div>
+        <div class="form-group">
+            {{Form::label('out_coverage', 'Outside Coverage Charge')}}
+            {{Form::text('out_coverage', '', ['class' => 'form-control'])}}
+        </div>
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
     

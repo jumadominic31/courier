@@ -12,7 +12,7 @@
         border: 1px solid #eee;
         box-shadow: 0 0 10px rgba(0, 0, 0, .15);
         font-size: 14px;
-        line-height: 24px;
+        line-height: 20px;
         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
         color: #555;
     }
@@ -154,7 +154,11 @@
                 <td colspan="3">
                     <table>
                         <tr>
-                            <td>Invoice Period: {{$formatted_month}}<br>Total Shipments: {{$invoice['total_txns']}}</td>
+                            <td>Invoice Period: {{$formatted_month}}<br>
+                                Total Shipments: {{$invoice['total_txns']}}<br>
+                                Big Luggage: {{$invoice['big_luggage_txns']}}<br>
+                                Outside Coverage: {{$invoice['out_coverage_txns']}}<br>
+                            </td>
                             <td>Contract Num: {{$contract['contract_num']}}</td>
                         </tr>
                     </table>
@@ -180,13 +184,31 @@
                     {{number_format($invoice['min_charge'], 2, '.', ',')}}
                 </td>
             </tr>
-            <tr class="item last">
+            <tr class="item">
                 <td>
                     Extra {{$invoice['extra_txns']}} shipments at Kes. {{number_format($contract['txn_cost_overlimit'], 2, '.', ',')}}
                 </td>
                 
                 <td>
                     {{number_format($invoice['extra_charge'], 2, '.', ',')}}
+                </td>
+            </tr>
+            <tr class="item">
+                <td>
+                    Big Luggage {{$invoice['big_luggage_txns']}} shipments at Kes. {{number_format($contract['big_luggage'], 2, '.', ',')}}
+                </td>
+                
+                <td>
+                    {{number_format($invoice['big_luggage_charge'], 2, '.', ',')}}
+                </td>
+            </tr>
+            <tr class="item last">
+                <td>
+                    Outside Coverage {{$invoice['out_coverage_txns']}} shipments at Kes. {{number_format($contract['out_coverage'], 2, '.', ',')}}
+                </td>
+                
+                <td>
+                    {{number_format($invoice['out_coverage_charge'], 2, '.', ',')}}
                 </td>
             </tr>
 

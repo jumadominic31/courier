@@ -77,13 +77,10 @@
   <!-- End options -->
   <div class="container">
     <br>
-    Total <strong> KShs. {{$tot_coll}} </strong><br>
     No of transactions<strong>{{$tot_count}} </strong><br>
   </div>
 
   <h3>Transaction Details</h3>
-  Up to 50 records <br>
-  
   <?php $i = 1 ?>
   
   <table class="table table-striped" width=100% style="font-size:11px" >
