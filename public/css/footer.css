@@ -16,3 +16,9 @@
     border-radius: 10px;
     width:30%;
 }
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}

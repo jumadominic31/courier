@@ -734,7 +734,7 @@ class TxnsController extends Controller
                 return $pdf->stream('shipments.pdf');
             }
 
-            $txns = $txns->orderBy('txn_date','desc')->paginate(10);
+            $txns = $txns->orderBy('txn_date','desc')->get();
         }
         else {
             $tot_count = Txn::where('company_id','=',$company_id)->where(DB::raw('DATE_FORMAT(txn_date, "%Y-%m")'), '=', $curr_mon)->where('parcel_status_id', '!=', '6')->count();

@@ -59,6 +59,7 @@
       }
     </script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <div class="clearfix"></div>
     <footer id="footer">
     <!-- style = "background:#333333;color:#ffffff;text-align:center;padding:30px;margin-top:30px;" -->
         Developed by Avanet Technologies 2018    
