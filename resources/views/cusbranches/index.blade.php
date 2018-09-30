@@ -23,7 +23,7 @@
               <tr>
                   <td>{{$station['name']}}</td>
                   <td><?php if ($station['status'] == 1 ) {echo "Active";} else {echo "Inactive";} ?></td>
-                  <td><span class="center-block"><a class="pull-right btn btn-default btn-xs" href="{{ route('station.edit', ['station' => $station->id ]) }}">Edit</a></span></td>
+                  <td><span class="center-block"><a class="pull-right btn btn-default btn-xs" href="{{ route('cusbranches.editCusbranch', ['station' => $station->id ]) }}">Edit</a></span></td>
               </tr>
               @endforeach
           </table>

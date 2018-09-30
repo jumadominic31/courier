@@ -346,6 +346,16 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'cususers.store'
         ]);
 
+        Route::get('/cusuers/{id}/edit', [
+            'uses' => 'CustomersController@editUser' , 
+            'as' => 'cususers.editUser'
+        ]);
+
+        Route::match(array('PUT', 'PATCH'), '/cususers/{id}', [
+            'uses' => 'CustomersController@updateUser' , 
+            'as' => 'cususers.updateUser'
+        ]);
+
         //// Customers
         Route::get('/cusbranches/{id}', [
             'uses' => 'StationsController@cusbranches' , 
@@ -360,6 +370,16 @@ Route::group(['middleware' => 'auth'] , function () {
         Route::post('/cusbranches/new/store/{id}', [
             'uses' => 'StationsController@cusbranchstore' , 
             'as' => 'cusbranches.store'
+        ]);
+
+        Route::get('/cusbranches/{id}/edit', [
+            'uses' => 'StationsController@editCusbranch' , 
+            'as' => 'cusbranches.editCusbranch'
+        ]);
+
+        Route::match(array('PUT', 'PATCH'), '/cusbranches/{id}', [
+            'uses' => 'StationsController@updateCusbranch' , 
+            'as' => 'cusbranches.updateCusbranch'
         ]);
     // });
     //////Customer portal

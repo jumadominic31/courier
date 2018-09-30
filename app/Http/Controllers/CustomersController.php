@@ -154,13 +154,14 @@ class CustomersController extends Controller
 
     public function cuscreate($id)
     {
-        $company_id = Auth::user()->company_id;
+        $parent_company_id = Auth::user()->company_id;
         $stations = Station::where('company_id', '=', $id)->pluck('name','id')->all();
-        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '=', $id)->where('id', '!=', $company_id)->select('id')->count();
+        $cuscompanies = Company::where('parent_company_id', '=', $parent_company_id)->where('id', '=', $id)->where('id', '!=', $parent_company_id)->select('id')->count();
+        $company_name = Company::select('name')->where('id', '=', $id)->pluck('name')->first();
         if ($cuscompanies == 0 ){
             return redirect('/customer')->with('error', 'Company Not Found');
         }
-        return view('cususers.create', ['company_id' => $id, 'stations' => $stations]);
+        return view('cususers.create', ['company_id' => $id, 'company_name' => $company_name, 'stations' => $stations]);
     }
 
     public function cusstore(Request $request, $id)
@@ -255,5 +256,54 @@ class CustomersController extends Controller
         $user = User::find($id);
         $user->delete();
         return redirect('/customer')->with('success', 'User Deleted');
+    }
+
+    public function editUser($id)
+    {
+        $parent_company_id = Auth::user()->company_id;
+        $user_id = Auth::user()->id;
+        $company_id = User::select('company_id')->where('id', '=', $id)->pluck('company_id')->first();
+        $company_name = Company::select('name')->where('id', '=', $company_id)->pluck('name')->first();
+        $stations = Station::where('company_id', '=', $company_id)->pluck('name','id')->all();
+        $user = User::where('company_id', '!=', $parent_company_id)->find($id);
+        if ($user == NULL){
+            return redirect('/customer')->with('error', 'User Not Found');
+        }
+
+        return view('cususers.edit',['user'=> $user, 'stations' => $stations, 'company_id' => $company_id, 'company_name' => $company_name ]);
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $parent_company_id = Auth::user()->company_id;
+        $company_id = User::select('company_id')->where('id', '=', $id)->pluck('company_id')->first();
+
+        $this->validate($request, [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'station_id' => 'required',
+            'status' => 'required',
+            'phone' => ['required', 'regex:/^[0-9]{12}$/']
+        ]);
+        
+        
+        $user = User::find($id);
+        
+        $firstname = $request->input('firstname');
+        $lastname = $request->input('lastname');
+        $station_id = $request->input('station_id');
+        $user->firstname = $firstname;
+        $user->lastname = $lastname;
+        $user->fullname = $firstname.' '.$lastname;
+        $user->phone = $request->input('phone');
+        $user->email = $request->input('email');
+        $user->station_id = $station_id;
+        $user->status = $request->input('status');
+        $user->updated_by = $user_id;
+        $user->save();
+        
+        return redirect('/cususers/'.$company_id)->with('success', 'User details updated');
     }
 }

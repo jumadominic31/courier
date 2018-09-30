@@ -136,14 +136,15 @@ class StationsController extends Controller
 
     public function cusbranchcreate($id)
     {
-        $company_id = Auth::user()->company_id;
+        $parent_company_id = Auth::user()->company_id;
         // $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name','id')->all();
-        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '=', $id)->where('id', '!=', $company_id)->select('id')->count();
+        $cuscompanies = Company::where('parent_company_id', '=', $parent_company_id)->where('id', '=', $id)->where('id', '!=', $parent_company_id)->select('id')->count();
+        $company_name = Company::select('name')->where('id', '=', $id)->pluck('name')->first();
         if ($cuscompanies == 0 ){
             return redirect('/customer')->with('error', 'Company Not Found');
         }
         $stations = Station::where('company_id', '=', $id)->pluck('name','id')->all();
-        return view('cusbranches.create', ['branches' => $stations, 'company_id' => $id]);
+        return view('cusbranches.create', ['branches' => $stations, 'company_id' => $id, 'company_name' => $company_name]);
     }
 
     public function cusbranchstore(Request $request, $id)
@@ -172,5 +173,39 @@ class StationsController extends Controller
         $station->save();
 
         return redirect('cusbranches/'.$company_id)->with('success', 'Station Created');
+    }
+
+    public function editCusbranch($id)
+    {
+        $parent_company_id = Auth::user()->company_id;
+        $user_id = Auth::user()->id;
+        $company_id = Station::select('company_id')->where('id', '=', $id)->pluck('company_id')->first();
+        $company_name = Company::select('name')->where('id', '=', $company_id)->pluck('name')->first();
+        $station = Station::where('company_id', '!=', $parent_company_id)->find($id);
+        if ($station == NULL){
+            return redirect('/customer')->with('error', 'Station Not Found');
+        }
+
+        return view('cusbranches.edit',['station' => $station, 'company_id' => $company_id, 'company_name' => $company_name]);
+    }
+
+    public function updateCusbranch(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'status' => 'required'
+        ]);
+
+        $user_id = Auth::user()->id;
+        $parent_company_id = Auth::user()->company_id;
+        $company_id = Station::select('company_id')->where('id', '=', $id)->pluck('company_id')->first();
+        
+        $station = Station::find($id);
+        $station->name = $request->input('name');
+        $station->status = $request->input('status');
+        $station->updated_by = $user_id;
+        $station->save();
+        
+        return redirect('/cusbranches/'.$company_id)->with('success', 'Station details updated');
     }
 }

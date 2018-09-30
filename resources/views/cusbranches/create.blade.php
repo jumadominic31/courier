@@ -6,6 +6,10 @@
 	<br>
     {!! Form::open(['action' => ['StationsController@cusbranchstore', $company_id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
+            {{Form::label('company_name', 'Company Name')}}
+            {{Form::text('company_name', $company_name, ['class' => 'form-control', 'placeholder' => 'Company Name', 'disabled' => 'true'])}}
+        </div>
+        <div class="form-group">
             {{Form::label('name', 'Branch Name')}}
             {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Branch Name'])}}
         </div>

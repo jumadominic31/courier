@@ -6,6 +6,10 @@
 	<br>
     {!! Form::open(['action' => ['CustomersController@cusstore', $company_id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
+            {{Form::label('company_name', 'Company Name')}}
+            {{Form::text('company_name', $company_name, ['class' => 'form-control', 'placeholder' => 'Company Name', 'disabled' => 'true'])}}
+        </div>
+        <div class="form-group">
             {{Form::label('username', 'Username')}}
             {{Form::text('username', '', ['class' => 'form-control', 'placeholder' => 'Username'])}}
         </div>

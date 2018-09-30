@@ -23,8 +23,8 @@
                 <th>User Type</th>
                 <th>Company</th>
                 <th>Status</th>
-                <!-- <th></th> -->
                 <th></th>
+                <!-- <th></th> -->
             </tr>
             @foreach($users as $user)
             <tr>
@@ -36,12 +36,13 @@
                 <td>{{$user['usertype']}}</td>
                 <td>{{$user['company']['name']}}</td>
                 <td><?php if ($user['status'] == 1 ) {echo "Active";} else {echo "Inactive";} ?></td>
-                <td><span class="center-block">
+                <td><a class="pull-right btn btn-default btn-xs" href="{{ route('cususers.editUser', ['id' => $user->id ]) }}">Edit</a></td>
+                <!-- <td><span class="center-block">
                     {!!Form::open(['action' => ['CustomersController@cususerdestroy', $user->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure?")'])!!}
                       {{Form::hidden('_method', 'DELETE')}}
                       {{Form::submit('Delete', ['class' => 'btn btn-danger btn-xs'])}}
                     {!! Form::close() !!}
-                </span></td>
+                </span></td> -->
             </tr>
             @endforeach
         </table>
