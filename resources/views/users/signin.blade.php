@@ -27,6 +27,7 @@
           <div class="col-sm-offset-2 col-sm-8">
             
             <form action="{{ route('users.signin') }}" method="post">
+      <center><img src="{{asset('images/Elite_logo.png')}}" alt="Logo" width="70%" height="auto" style="padding:2px;"></center>
             <h1>Courier Management System</h1>
               <div class="form-group">
                     <label for="username">Username</label>

@@ -56,16 +56,17 @@
             <td>{{$txn['created_at']}}</td>
             <td>
               @if($txn['parcel_status_id'] == 7)
-                <input class="check_received" type="checkbox"></td>
+                <input class="check_received" type="checkbox">
+                </td>
                 <td></td>
               @elseif($txn['parcel_status_id'] == 10)
                 <input class="check_received" type="checkbox" checked></td>
                 <td class="driver_id"> 
                   {{Form::select('driver_id', ['' => ''] + $riders, '', ['class' => 'form-control input-sm'])}}
                 </td>
-                @elseif($txn['parcel_status_id'] == 2)
+              @elseif($txn['parcel_status_id'] == 2)
                 <input class="check_received" type="checkbox" checked></td>
-                <td class="driver_id"> {{$txn['driver']['fullname']}}
+                <td class="driver_id"> {{Form::select('driver_id', ['' => ''] + $riders, $txn['driver_id'], ['class' => 'form-control input-sm'])}}
                 </td>
               @endif
             
@@ -79,7 +80,7 @@
 
 <script>
 
-      
+     
       $(document).on('click', '#updateTxn', function(e) {
        e.preventDefault();
        var currentRow = $(this).closest("tr");
