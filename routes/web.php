@@ -85,6 +85,11 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'shipments.edit'
         ]);
 
+        Route::match(array('PUT', 'PATCH'), '/shipment/{awb}/update', [
+            'uses' => 'TxnsController@update' , 
+            'as' => 'shipments.update'
+        ]);
+
         Route::get('/shipment/print/{awb}', [
             'uses' => 'TxnsController@print_awb' , 
             'as' => 'shipments.print'
@@ -100,9 +105,24 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'shipments.resetreceiver'
         ]);
 
+        Route::get('/shipment/{awb}/return', [
+            'uses' => 'TxnsController@return_page' , 
+            'as' => 'shipments.return'
+        ]);
+
         Route::match(array('PUT', 'PATCH'), '/shipment/{awb}', [
-            'uses' => 'TxnsController@update' , 
-            'as' => 'shipments.update'
+            'uses' => 'TxnsController@postreturnShipment' , 
+            'as' => 'shipments.postreturnShipment'
+        ]);
+
+        Route::get('/shipment/{awb}/return_confirm', [
+            'uses' => 'TxnsController@return_confirm' , 
+            'as' => 'shipments.return_confirm'
+        ]);
+
+        Route::get('/shipment/return_print/{awb}', [
+            'uses' => 'TxnsController@returnPrint' , 
+            'as' => 'shipments.returnPrint'
         ]);
 
         Route::get('/awb', [
@@ -170,6 +190,16 @@ Route::group(['middleware' => 'auth'] , function () {
         Route::post('/shipments/receivedShipments', [
             'uses' => 'TxnsController@receivedatcusShipments',
             'as' => 'shipments.receivedShipments'
+        ]);
+
+        Route::get('/shipments/returnedShipments', [
+            'uses' => 'TxnsController@returnedShipments',
+            'as' => 'shipments.returnedShipments'
+        ]);
+
+        Route::post('/shipments/returnedShipments', [
+            'uses' => 'TxnsController@returnedShipments',
+            'as' => 'shipments.returnedShipments'
         ]);
 
         //tokens

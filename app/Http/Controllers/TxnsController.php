@@ -1240,6 +1240,128 @@ class TxnsController extends Controller
         return view('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
     }
 
+    public function return_page($id)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $company_id = Auth::user()->company_id;
+
+        $txn = Txn::where('company_id', '=', $company_id)->where('awb_num', '=', $id)->where('parcel_status_id', '=', '2')->first();
+        if ($txn == null){
+            return redirect('/shipments/booked')->with('error', 'Shipment cannot be returned before it is dispatched');
+        }
+        
+        return view('shipments.return',['txn'=> $txn]);
+    }
+
+    public function postreturnShipment(Request $request, $id)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $company_id = Auth::user()->company_id;
+
+        $this->validate($request, [
+            'return_reason' => 'required'
+        ]);
+
+
+        //change parcel_status
+        $txn = Txn::find($id);
+        $txn->parcel_status_id = '11';
+        $txn->return_reason = $request->input('return_reason');
+        $txn->updated_by = $user->id;
+        $txn->save();
+
+        $txnlog = new TxnLog;
+        $txnlog->awb_id = $txn->id;
+        $txnlog->status_id = '11';
+        $txnlog->updated_by = $user->id;
+        $txnlog->company_id = $company_id;
+        $txnlog->sender_company_id = $txn->sender_company_id;
+        $txnlog->save();
+
+        return redirect('/shipment/'.$id.'/return_confirm')->with('Shipment posted to be returned' );
+    }
+
+    public function return_confirm($id)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $company_id = Auth::user()->company_id;
+
+        $txn = Txn::where('company_id', '=', $company_id)->where('id', '=', $id)->where('parcel_status_id', '=', '11')->first();
+        if ($txn == null){
+            return redirect('/shipments/booked')->with('error', 'Shipment cannot be returned before it is dispatched');
+        }
+        
+        return view('shipments.return_confirm',['txn'=> $txn]);
+    }
+
+    public function returnPrint($id)
+    {
+        $company_id = Auth::user()->company_id;
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $parent_company = Company::where('id', '=', $parent_company_id)->first();
+
+        // $txn = Txn::where('sender_company_id', '=', $company_id)->find($id);
+        $txn = Txn::join('parcel_types', 'txns.parcel_type_id', '=', 'parcel_types.id')
+                ->select('txns.id as id', 'txns.awb_num as awb_num', 'txns.origin_addr as origin_addr', 'txns.dest_addr as dest_addr', 'txns.parcel_type_id as parcel_type_id', 'parcel_types.name as parcel_type_name', 'txns.parcel_desc as parcel_desc', 'txns.sender_name', 'txns.sender_company_name', 'txns.sender_phone', 'txns.sender_id_num', 'txns.sender_sign', 'txns.receiver_name', 'txns.receiver_company_name', 'txns.receiver_phone', 'txns.receiver_id_num', 'txns.return_reason', 'txns.receiver_sign', 'txns.units as units', 'txns.mode as mode', 'txns.round as round', 'txns.created_at', 'txns.acknowledge as acknowledge')
+                ->where('txns.id', '=', $id)
+                ->where('txns.company_id', '=', $company_id)
+                ->first();
+        if ($txn == null){
+            return redirect('/shipments/booked')->with('error', 'Txn not found');
+        }
+        
+        return view('pdf.return.form', ['txn' => $txn, 'parent_company' => $parent_company]);
+    }
+
+    public function returnedShipments(Request $request)
+    {
+        $company_id = Auth::user()->company_id;
+        $curr_date = date('Y-m-d');
+
+        $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $company_details = Company::where('id', '=', $company_id)->get();
+        $cuscompanies = Company::where('parent_company_id', '=', $company_id)->where('id', '!=', $company_id)->pluck('name', 'id')->all();
+
+        $sender_company_id = $request->input('sender_company_id');
+        $first_date = $request->input('first_date');
+
+        if ($request->isMethod('POST')){
+            $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '11');
+            if ($sender_company_id != NULL){
+                $txns = $txns->where('sender_company_id','=', $sender_company_id);
+            }
+            if ($first_date != NULL){
+                $txns = $txns->where(DB::raw('date(updated_at)'),'>=',$first_date);
+            }
+            $txns = $txns->orderBy('updated_at','desc')->limit(300)->get();
+
+            if ($sender_company_id == '0') {
+                $sender_company_name = 'Others';
+            } 
+            else if ($sender_company_id != NULL) {
+                $sender_company_name = Company::where('id', '=', $sender_company_id)->pluck('name')->first();
+            } 
+            else {
+                $sender_company_name = 'All';
+            }
+
+            if ($request->submitBtn == 'CreatePDF') {
+                // $txns = $txns->orderBy('id','desc')->limit(300)->get();
+                $pdf = PDF::loadView('pdf.shipment.received', ['txns' => $txns, 'company_details' => $company_details, 'curr_date' => $curr_date, 'sender_company_name' => $sender_company_name, 'first_date' => $first_date]);
+                $pdf->setPaper('A4', 'portrait');
+                return $pdf->stream('received_shipments.pdf');
+            }
+        }
+        else {
+            $txns = Txn::where('company_id','=',$company_id)->where('parcel_status_id', '=', '11')->orderBy('updated_at','desc')->where(DB::raw('date(updated_at)'),'>=',$curr_date)->limit(300)->get();
+        }
+
+        return view('shipments.returned', ['txns' => $txns, 'company_details' => $company_details, 'cuscompanies' => $cuscompanies]);
+    }
+
     public function resetDrivercode($id)
     {
         $user = Auth::user();

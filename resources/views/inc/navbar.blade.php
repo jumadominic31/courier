@@ -55,6 +55,7 @@
                         <li><a href="{{ route('shipments.receivedatsortfacility') }}">Shipments - At Sort Facility</a></li>
                         <li><a href="{{ route('shipments.dispatchedShipments') }}">Shipments - Out of Dispatch</a></li> -->
                         <li><a href="{{ route('shipments.receivedShipments') }}">Shipments - Received</a></li>
+                        <li><a href="{{ route('shipments.returnedShipments') }}">Shipments - Returned</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ route('shipments.awb') }}">AWB Search</a></li>

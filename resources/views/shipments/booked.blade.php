@@ -37,6 +37,7 @@
         <th width="9%">Received</th>
         <th width="9%">Assign Rider</th>
         <th></th>
+        <th></th>
     </tr>
     @foreach($txns as $txn)
     
@@ -71,7 +72,12 @@
               @endif
             
             <td><button class="btn btn-primary" id="updateTxn" >Update</button></td>
-        
+            @if($txn['parcel_status_id'] == 2)
+              <td><button class="btn btn-warning" id="returnTxn" >Return</button></td>
+            @else
+              <td><button class="btn btn-warning" id="returnTxn" disabled="true">Return</button></td>
+            @endif
+
         </tr>
 
       @endforeach
@@ -105,6 +111,15 @@
              //window.location = window.location.href;
           }
         });
+
+
+       });
+
+      $(document).on('click', '#returnTxn', function(e) {
+       e.preventDefault();
+       var currentRow = $(this).closest("tr");
+       var awb_num = currentRow.find(".awb_num").text();
+       window.location = '/shipment/' + awb_num + '/return' ;
 
 
        });
