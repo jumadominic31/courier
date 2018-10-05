@@ -49,12 +49,13 @@
     <table class="table table-striped" >
         <tr>
             <th width="10%">Sender Company</th>         
-            <th width="20%">Date/Time Received</th>
+            <th width="10%">Date Returned</th>
             <th width="10%">AWB#</th>
             <th width="15%">Origin</th>
             <th width="15%">Destination</th>
             <th width="10%">Parcel Type</th>
             <th width="10%">Receiver Name</th>
+            <th width="10%">Return Reason</th>
             <th width="10%"></th>
         </tr>
         @foreach($txns as $txn)
@@ -66,6 +67,7 @@
             <td>{{$txn['dest_addr']}}</td>
             <td>{{$txn['parcel_type']['name']}}</td>
             <td>{{$txn['receiver_name']}}</td>
+            <td>{{$txn['return_reason']}}</td>
             <td><a class="pull-right btn btn-default btn-xs" target="_blank" href="{{ route('shipments.returnPrint', ['awb' => $txn->id ]) }}">Print</td>
         </tr>
           @endforeach
