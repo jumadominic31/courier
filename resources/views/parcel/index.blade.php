@@ -66,10 +66,16 @@
 			<td>5</td>
 			<td>Cancelled</td>
 			<td>Shipment cancelled</td>
-		</tr><tr>
+		</tr>
+		<tr>
 			<td>6</td>
 			<td>Lost</td>
 			<td>Parcel cannot be traced</td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td>Returned to sender</td>
+			<td>Parcel returned to sender</td>
 		</tr>
 	</table>
 </div>

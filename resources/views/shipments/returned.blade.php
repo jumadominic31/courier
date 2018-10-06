@@ -27,7 +27,7 @@
               {{Form::select('sender_company_id', ['' => ''] + $cuscompanies + [0 => 'Others'] ,'', ['class' => 'form-control'])}}
           </div></td>
         <td width="50%"><div class="form-group">
-            {{Form::label('first_date', 'First Booked Date')}}
+            {{Form::label('first_date', 'Returned Date')}}
             {{Form::text('first_date', '', ['class' => ' first_date form-control', 'placeholder' => 'yyyy-mm-dd'])}}
           </div></td>
   </tr>

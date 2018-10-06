@@ -121,7 +121,6 @@
        var awb_num = currentRow.find(".awb_num").text();
        window.location = '/shipment/' + awb_num + '/return' ;
 
-
        });
 
       
