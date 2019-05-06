@@ -19,15 +19,23 @@
                     {{Form::text('username', $user->username, ['class' => 'form-control', 'placeholder' => 'Username', 'disabled' => 'true'])}}
                 </div>
                 <div class="form-group">
-                    {{Form::label('firstname', 'First Name')}}
+                    {{Form::label('firstname', 'First Name *')}}
                     {{Form::text('firstname', $user->firstname, ['class' => 'form-control', 'placeholder' => 'First Name'])}}
                 </div>
                 <div class="form-group">
-                    {{Form::label('lastname', 'Last Name')}}
+                    {{Form::label('lastname', 'Last Name *')}}
                     {{Form::text('lastname', $user->lastname, ['class' => 'form-control', 'placeholder' => 'Last Name'])}}
                 </div>
                 <div class="form-group">
-                    {{Form::label('phone', 'Phone Number')}}
+                    {{Form::label('pass1', 'Password')}}
+                    {{Form::password('pass1',  ['class' => 'form-control'])}}
+                </div>
+                <div class="form-group">
+                    {{Form::label('pass2', 'Password Again')}}
+                    {{Form::password('pass2',  ['class' => 'form-control'])}}
+                </div>
+                <div class="form-group">
+                    {{Form::label('phone', 'Phone Number *')}}
                     {{Form::text('phone', $user->phone, ['class' => 'form-control', 'placeholder' => 'Format example 254722000000'])}}
                 </div>
                 <div class="form-group">
@@ -35,11 +43,11 @@
                     {{Form::text('email', $user->email, ['class' => 'form-control', 'placeholder' => 'Email Address'])}}
                 </div>
                 <div class="form-group">
-                    {{Form::label('station_id', 'Branch/Department')}}
+                    {{Form::label('station_id', 'Branch/Department *')}}
                     {{Form::select('station_id', ['' => ''] + $stations, $user->station_id, ['class' => 'form-control'])}}
                 </div>
                 <div class="form-group">
-                    {{Form::label('status', 'Status')}}
+                    {{Form::label('status', 'Status *')}}
                     {{Form::select('status', [1 => 'Active', 0 => 'Inactive'], $user->status, ['class' => 'form-control'])}}
                 </div>
                 {{Form::hidden('_method', 'PUT')}}

@@ -173,27 +173,30 @@ class CustomersController extends Controller
             'username' => 'required|unique:users',
             'firstname' => 'required',
             'lastname' => 'required',
+            'pass1' => 'required|same:pass1',
+            'pass2' => 'required|same:pass1',
             'station_id' => 'required',
             'phone' => array('required', 'regex:/^[0-9]{9,14}$/'),
             'status' => 'required' 
         ]);
 
         //Set new random password
-        function randomPassword() {
-            $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
-            $pass = array(); //remember to declare $pass as an array
-            $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-            for ($i = 0; $i < 8; $i++) {
-                $n = rand(0, $alphaLength);
-                $pass[] = $alphabet[$n];
-            }
-            return implode($pass); //turn the array into a string
-        }
+        // function randomPassword() {
+        //     $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+        //     $pass = array(); //remember to declare $pass as an array
+        //     $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        //     for ($i = 0; $i < 8; $i++) {
+        //         $n = rand(0, $alphaLength);
+        //         $pass[] = $alphabet[$n];
+        //     }
+        //     return implode($pass); //turn the array into a string
+        // }
 
         $company_id = $id;
         
         //$password = randomPassword();
-        $password = 'courier123';
+        // $password = 'courier123';
+        $password = $request->input('pass1');
         $email = $request->input('email');
         $firstname = $request->input('firstname');
         $lastname = $request->input('lastname');
@@ -283,12 +286,15 @@ class CustomersController extends Controller
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
+            'pass1' => 'same:pass1',
+            'pass2' => 'same:pass1',
             'station_id' => 'required',
             'status' => 'required',
             'phone' => ['required', 'regex:/^[0-9]{12}$/']
         ]);
         
-        
+        $password = $request->input('pass1');
+
         $user = User::find($id);
         
         $firstname = $request->input('firstname');
@@ -297,6 +303,10 @@ class CustomersController extends Controller
         $user->firstname = $firstname;
         $user->lastname = $lastname;
         $user->fullname = $firstname.' '.$lastname;
+        if ($password != NULL)
+        {
+            $user->password = bcrypt($password);
+        }
         $user->phone = $request->input('phone');
         $user->email = $request->input('email');
         $user->station_id = $station_id;

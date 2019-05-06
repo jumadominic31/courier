@@ -1,8 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+<h2>Edit Shipment</h2>
 <div class="row">
-    <div ><h2>Edit Shipment <br> <a href="{{ route('shipments.index') }}" class=" btn btn-default btn-xs">Go Back</a></h2></div>
+    <div class="col-sm-2"><a class="btn btn-default btn-xs" target="_blank" href="{{ route('shipments.print', ['awb' => $txn->id ]) }}">Print</a></div>
+    <div class="col-sm-2"><a href="{{ route('shipments.index') }}" class=" btn btn-default btn-xs">Go Back</a></div>
+    <div class="col-sm-2">
+        @if ($txn->parcel_status_id == '7')
+            {!!Form::open(['action' => ['TxnsController@cancel', $txn->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure you want to cancel this booking?")'])!!}
+              {{Form::hidden('_method', 'PUT')}}
+              {{Form::submit('Cancel', ['class' => 'btn btn-danger btn-xs'])}}
+            {!! Form::close() !!}
+        @elseif ($txn->parcel_status_id == '6')
+            {!!Form::open(['action' => ['TxnsController@uncancel', $txn->id],'method' => 'POST', 'class' => 'pull-left', 'onsubmit' => 'return confirm("Are you sure you want to uncancel this booking?")'])!!}
+              {{Form::hidden('_method', 'PUT')}}
+              {{Form::submit('Uncancel', ['class' => 'btn btn-primary btn-xs'])}}
+            {!! Form::close() !!}
+        @endif
+    </div>
 </div>
 
 <hr>

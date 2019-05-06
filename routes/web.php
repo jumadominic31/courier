@@ -115,6 +115,11 @@ Route::group(['middleware' => 'auth'] , function () {
             'as' => 'shipments.postreturnShipment'
         ]);
 
+        Route::match(array('PUT', 'PATCH'), '/shipment/uncancel/{awb}', [
+            'uses' => 'TxnsController@uncancel' , 
+            'as' => 'shipments.uncancel'
+        ]);
+
         Route::get('/shipment/{awb}/return_confirm', [
             'uses' => 'TxnsController@return_confirm' , 
             'as' => 'shipments.return_confirm'
@@ -200,6 +205,11 @@ Route::group(['middleware' => 'auth'] , function () {
         Route::post('/shipments/returnedShipments', [
             'uses' => 'TxnsController@returnedShipments',
             'as' => 'shipments.returnedShipments'
+        ]);
+
+        Route::match(array('PUT', 'PATCH'), '/shipment/cancel/{awb}', [
+            'uses' => 'TxnsController@cancel' , 
+            'as' => 'shipments.cancel'
         ]);
 
         //tokens

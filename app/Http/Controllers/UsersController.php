@@ -413,25 +413,28 @@ class UsersController extends Controller
             'username' => 'required|unique:users',
             'firstname' => 'required',
             'lastname' => 'required',
+            'pass1' => 'required|same:pass1',
+            'pass2' => 'required|same:pass1',
             'phone' => array('required', 'regex:/^[0-9]{12}$/'),
             'status' => 'required',
             'usertype' => 'required' 
         ]);
 
         //Set new random password
-        function randomPassword() {
-            $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
-            $pass = array(); //remember to declare $pass as an array
-            $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-            for ($i = 0; $i < 8; $i++) {
-                $n = rand(0, $alphaLength);
-                $pass[] = $alphabet[$n];
-            }
-            return implode($pass); //turn the array into a string
-        }
+        // function randomPassword() {
+        //     $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+        //     $pass = array(); //remember to declare $pass as an array
+        //     $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        //     for ($i = 0; $i < 8; $i++) {
+        //         $n = rand(0, $alphaLength);
+        //         $pass[] = $alphabet[$n];
+        //     }
+        //     return implode($pass); //turn the array into a string
+        // }
         
         //$password = randomPassword();
-        $password = 'courier123';
+        // $password = 'courier123';
+        $password = $request->input('pass1');
         $email = $request->input('email');
         $firstname = $request->input('firstname');
         $lastname = $request->input('lastname');
@@ -516,9 +519,12 @@ class UsersController extends Controller
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
+            'pass1' => 'same:pass1',
+            'pass2' => 'same:pass1',
             'phone' => ['required', 'regex:/^[0-9]{12}$/']
         ]);
         
+        $password = $request->input('pass1');
         
         $user = User::find($id);
         
@@ -528,6 +534,10 @@ class UsersController extends Controller
         $user->firstname = $firstname;
         $user->lastname = $lastname;
         $user->fullname = $firstname.' '.$lastname;
+        if ($password != NULL)
+        {
+            $user->password = bcrypt($password);
+        }
         $user->phone = $request->input('phone');
         $user->email = $request->input('email');
         if ($station_id != NULL) {
@@ -542,7 +552,7 @@ class UsersController extends Controller
         $user->updated_by = $user_id;
         $user->save();
         
-        return redirect('/users/profile')->with('success', 'User details updated');
+        return redirect('/users')->with('success', 'User details updated');
     }
 
     public function destroy($id)

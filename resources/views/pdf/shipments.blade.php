@@ -43,11 +43,11 @@
     Phone: {{$company_details[0]['phone']}}
   </header>
   <footer>
-    <div style="text-align: left;">Date: {{$curr_date}}</div>
+    <div style="text-align: left;">Date: {{date('d-m-Y', strtotime($curr_date))}}</div>
     Powered by Avanet Technologies
   </footer>
   <h1 style="text-align:center;">Shipments Report </h1>
-  Date: {{$curr_date}}<br>
+  Date: {{date('d-m-Y', strtotime($curr_date))}}<br>
 
   <!-- Options chosen -->
   <h3>Options</h3>
@@ -66,9 +66,9 @@
           <td width="14.6%"><strong>Parcel Status</strong></td>
           <td width="16.6%">{{$parcel_status_name}}</td>
           <td width="16.6%"><strong>First Booked Date</strong></td>
-          <td width="18.6%">{{$first_date}}</td>
+          <td width="18.6%">{{date('d-m-Y', strtotime($first_date))}}</td>
           <td width="16.6%"><strong>End Booked Date</strong></td>
-          <td width="16.7%">{{$last_date}}</td>
+          <td width="16.7%">{{date('d-m-Y', strtotime($last_date))}}</td>
         </tr>
       </tbody>
     </table>
@@ -91,11 +91,8 @@
         <th width="10.33%">Sender Company</th>
         <th width="9.33%">AWB#</th>
         <th width="13.33%">Origin</th>
-        <th width="13.33%">Destination</th>
-        <th width="8.33%">Parcel Type</th>
-        <th width="8.33%">Mode</th>
-        <th width="8.33%">Parcel Status</th>         
-        <th width="11.33%">Date/Time Created</th>
+        <th width="13.33%">Destination</th>    
+        <th width="11.33%">Date Booked</th>
       </tr>
       @foreach($txns as $txn)
       <tr>
@@ -104,14 +101,7 @@
         <td>{{$txn['awb_num']}}</td>
         <td>{{$txn['origin_addr']}}</td>
         <td>{{$txn['dest_addr']}}</td>
-        <td>{{$txn['parcel_type']['name']}}</td>
-        @if ($txn['mode'] == 0)
-        <td>Normal</td>
-        @else ($txn['mode'] == 1)
-        <td>Express</td>
-        @endif
-        <td>{{$txn['parcel_status']['name']}}</td>
-        <td>{{$txn['created_at']}}</td>
+        <td>{{date('d-m-Y', strtotime($txn['created_at']))}}</td>
     </tr>
     <?php $i++ ?>
       @endforeach

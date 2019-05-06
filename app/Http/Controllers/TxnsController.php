@@ -1221,6 +1221,37 @@ class TxnsController extends Controller
         return redirect('/shipments')->with('success', 'Shipment details updated for '. $txn->awb_num);
     }
 
+    public function uncancel(Request $request, $id)
+    {
+        $user = Auth::user();
+        $company_id = Auth::user()->company_id;
+
+        $txn = Txn::find($id);
+        $txn->parcel_status_id = '7';
+        $txn->updated_by = $user->id;
+        $txn->save();
+
+        $sender_company_id = $txn->sender_company_id;
+
+        $txnlog = new TxnLog();
+        $txnlog->awb_id = $id;
+        $txnlog->status_id = '7';
+        $txnlog->updated_by = $user->id;
+        $txnlog->company_id = $company_id;
+        $txnlog->sender_company_id = $sender_company_id;
+        $txnlog->save();
+
+        $userlog = new UserLog();
+        $userlog->username = $user->username;
+        $userlog->activity = "Updated txn ".$txn->awb_num;
+        $userlog->ipaddress = $_SERVER['REMOTE_ADDR'];
+        $userlog->useragent = $_SERVER['HTTP_USER_AGENT'];
+        $userlog->company_id = $company_id;
+        $userlog->save();
+
+        return redirect('/shipments');
+    }
+
     public function print_awb($id)
     {
         $company_id = Auth::user()->company_id;
@@ -1238,6 +1269,37 @@ class TxnsController extends Controller
         }
         
         return view('pdf.shipment.print', ['txn' => $txn, 'parent_company' => $parent_company]);
+    }
+
+    public function cancel(Request $request, $id)
+    {
+        $user = Auth::user();
+        $company_id = Auth::user()->company_id;
+
+        $txn = Txn::find($id);
+        $txn->parcel_status_id = '6';
+        $txn->updated_by = $user->id;
+        $txn->save();
+
+        $sender_company_id = $txn->sender_company_id;
+
+        $txnlog = new TxnLog();
+        $txnlog->awb_id = $id;
+        $txnlog->status_id = '6';
+        $txnlog->updated_by = $user->id;
+        $txnlog->company_id = $company_id;
+        $txnlog->sender_company_id = $sender_company_id;
+        $txnlog->save();
+
+        $userlog = new UserLog();
+        $userlog->username = $user->username;
+        $userlog->activity = "Updated txn ".$txn->awb_num;
+        $userlog->ipaddress = $_SERVER['REMOTE_ADDR'];
+        $userlog->useragent = $_SERVER['HTTP_USER_AGENT'];
+        $userlog->company_id = $company_id;
+        $userlog->save();
+
+        return redirect('/shipments');
     }
 
     public function return_page($id)
