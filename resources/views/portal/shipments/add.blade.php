@@ -64,19 +64,19 @@
                 <div class="panel-body">
                     <div class="input-group">
                         <span class="input-group-addon" >Building Name *</span>
-                        <input type="text" id="origin_addr_1" name="origin_addr_1" value="{{ old('origin_addr_1')  }}" class="form-control"  aria-describedby="basic-addon1" >
+                        <input type="text" id="origin_addr_1" name="origin_addr_1" value="{{$orig_addr_det['building']}}" class="form-control"  aria-describedby="basic-addon1" >
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon" >Floor no/Office no</span>
-                        <input type="text" id="origin_addr_2" name="origin_addr_2" value="{{ old('origin_addr_2')  }}" class="form-control"  aria-describedby="basic-addon1" >
+                        <input type="text" id="origin_addr_2" name="origin_addr_2" value="{{$orig_addr_det['floor_office']}}" class="form-control"  aria-describedby="basic-addon1" >
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon" >Street/Road Name</span>
-                        <input type="text" id="origin_addr_3" name="origin_addr_3" value="{{ old('origin_addr_3')  }}" class="form-control"  aria-describedby="basic-addon1" >
+                        <input type="text" id="origin_addr_3" name="origin_addr_3" value="{{$orig_addr_det['street']}}" class="form-control"  aria-describedby="basic-addon1" >
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon" >Area Name</span>
-                        <input type="text" id="origin_addr_4" name="origin_addr_4" value="{{ old('origin_addr_4')  }}" class="form-control"  aria-describedby="basic-addon1" >
+                        <input type="text" id="origin_addr_4" name="origin_addr_4" value="{{$orig_addr_det['area']}}" class="form-control"  aria-describedby="basic-addon1" >
                     </div>
                 </div>
             </div>

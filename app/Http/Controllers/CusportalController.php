@@ -359,13 +359,14 @@ class CusportalController extends Controller
         $company_id = $user->company_id;
         $company_addr = Company::select('address')->where('id', '=', $company_id)->pluck('address')->first();
         $parent_company_id = Company::select('parent_company_id')->where('id', '=', $company_id)->pluck('parent_company_id')->first();
+        $orig_addr_det = Station::select('building', 'floor_office', 'street', 'area')->where('id', '=', $user->station_id)->first();
         // $token_bal = Token_bal::where('company_id', '=', $parent_company_id)->where('sender_company_id', '=', $company_id)->pluck('balance')->first();
         // if ($token_bal == NULL)
         // {
         //     $token_bal = 0;
         // }
         $parcel_types = ParcelType::where('company_id', '=', $parent_company_id)->pluck('name','id')->all();
-        return view('portal.shipments.add', ['user' => $user, 'company_addr' => $company_addr, 'parcel_types' => $parcel_types]);
+        return view('portal.shipments.add', ['user' => $user, 'company_addr' => $company_addr, 'orig_addr_det' => $orig_addr_det, 'parcel_types' => $parcel_types]);
     }
 
     public function storeShipment(Request $request)

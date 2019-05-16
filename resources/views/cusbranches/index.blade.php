@@ -16,12 +16,20 @@
         <table class="table table-striped" >
               <tr>
                   <th>Branch Name</th>
+                  <th>Building Name</th>
+                  <th>Floor no/Office no</th>
+                  <th>Street/Road Name</th>
+                  <th>Area Name</th>
                   <th>Status</th>
                   <th></th>
               </tr>
               @foreach($stations as $station)
               <tr>
                   <td>{{$station['name']}}</td>
+                  <td>{{$station['building']}}</td>
+                  <td>{{$station['floor_office']}}</td>
+                  <td>{{$station['street']}}</td>
+                  <td>{{$station['area']}}</td>
                   <td><?php if ($station['status'] == 1 ) {echo "Active";} else {echo "Inactive";} ?></td>
                   <td><span class="center-block"><a class="pull-right btn btn-default btn-xs" href="{{ route('cusbranches.editCusbranch', ['station' => $station->id ]) }}">Edit</a></span></td>
               </tr>

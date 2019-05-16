@@ -167,6 +167,10 @@ class StationsController extends Controller
 
         $station = new Station;
         $station->name = $request->input('name');
+        $station->building = $request->input('building');
+        $station->floor_office = $request->input('floor_office');
+        $station->street = $request->input('street');
+        $station->area = $request->input('area');
         $station->status = $request->input('status');
         $station->company_id = $company_id;
         $station->updated_by = $user_id;
@@ -202,6 +206,10 @@ class StationsController extends Controller
         
         $station = Station::find($id);
         $station->name = $request->input('name');
+        $station->building = $request->input('building');
+        $station->floor_office = $request->input('floor_office');
+        $station->street = $request->input('street');
+        $station->area = $request->input('area');
         $station->status = $request->input('status');
         $station->updated_by = $user_id;
         $station->save();

@@ -14,6 +14,22 @@
             {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Branch Name'])}}
         </div>
         <div class="form-group">
+            {{Form::label('building', 'Building Name')}}
+            {{Form::text('building', '', ['class' => 'form-control', 'placeholder' => 'Building Name'])}}
+        </div>
+        <div class="form-group">
+            {{Form::label('floor_office', 'Floor no/Office no')}}
+            {{Form::text('floor_office', '', ['class' => 'form-control', 'placeholder' => 'Floor no/Office no'])}}
+        </div>
+        <div class="form-group">
+            {{Form::label('street', 'Street/Road Name')}}
+            {{Form::text('street', '', ['class' => 'form-control', 'placeholder' => 'Street/Road Name'])}}
+        </div>
+        <div class="form-group">
+            {{Form::label('area', 'Area Name')}}
+            {{Form::text('area', '', ['class' => 'form-control', 'placeholder' => 'Area Name'])}}
+        </div>
+        <div class="form-group">
             {{Form::label('status', 'Branch Active Status')}}
             {{Form::select('status', ['' => '', 1 => 'Active', 0 => 'Inactive'], 1, ['class' => 'form-control'])}}
         </div>
