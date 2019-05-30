@@ -444,7 +444,7 @@ class CusportalController extends Controller
         $receiver_code_hash = Hash::make($receiver_code);
 
         $txn = new Txn;
-        $txn->awb_num = $awb;
+        $txn->awb_num = 0;
         $txn->clerk_id = $user_id;
         $txn->mode = '0';
         // $txn->round = $request->input('round');
@@ -471,6 +471,9 @@ class CusportalController extends Controller
         $txn->updated_by = $user->id;
         $txn->save();
 
+        $txn2 = Txn::find($txn->id);
+        $txn2->awb_num = $txn->id + 20002;
+        $txn2->save();
 
         if ($txn->round == 0)
         {
@@ -552,7 +555,7 @@ class CusportalController extends Controller
         //     $txnlog->save();
         // }
 
-        $awb_num = $txn->awb_num;
+        $awb_num = $txn2->awb_num;
         $txn_id = $txn->id;
 
         $data = [

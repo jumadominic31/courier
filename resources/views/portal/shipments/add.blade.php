@@ -170,7 +170,7 @@
 </div>
 <div class="row">
     <div class="col-md-12 text-center"> 
-        {{Form::submit('Submit', ['class'=>'btn btn-primary btn-xl'])}}
+        <input type="submit" value="Submit" class="btn btn-primary btn-xl" name="submitBtn" onclick="this.disabled=true;this.form.submit();">
     </div>
 </div>
 {!! Form::close() !!}
